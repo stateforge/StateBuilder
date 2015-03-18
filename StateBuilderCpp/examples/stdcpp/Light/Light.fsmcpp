@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+
+  <!-- general settings -->
+  <settings asynchronous="false" library="std">
+    <object instance="light" class="LightPrivate" include="LightPrivate.h"/>
+  </settings>
+  <!-- events -->
+  <events>
+    <eventSource name="SwitchEvent">
+      <event id="evOn"/>
+      <event id="evOff"/>
+    </eventSource>
+  </events>
+
+  <!-- States -->
+  <state name="Light">
+    <state name="Off">
+      <onEntry action="light.doOff();"/>
+      <transition event="evOn" nextState="On"/>
+    </state>
+    <state name="On">
+      <onEntry action="light.doOn();"/>
+      <transition event="evOff" nextState="Off"/>
+    </state>
+  </state>
+</sm:StateMachine>

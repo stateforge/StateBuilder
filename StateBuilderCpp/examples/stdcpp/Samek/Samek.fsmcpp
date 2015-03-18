@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+
+  <!-- general settings -->
+  <settings asynchronous="false" library="std">
+    <description>Samek fsm example</description>
+    <object instance="samek" class="Samek" include="Samek.h"/>
+  </settings>
+  
+  <!-- events -->
+  <events>
+    <eventSource name="HelloWorldEvent">
+      <event id="a"/>
+      <event id="b"/>
+      <event id="c"/>
+      <event id="d"/>
+      <event id="e"/>
+      <event id="f"/>
+      <event id="g"/>
+      <event id="h"/>
+    </eventSource>
+  </events>
+
+  <!-- States -->
+  <state name="Samek">
+    <transition event="e" nextState="S211"/>
+    <state name="S1">
+      <transition event="a" nextState="S12"/>
+      <transition event="c"/>
+      <transition event="d" nextState="Samek"/>
+      <transition event="f" nextState="S211"/>
+      <transition event="g" nextState="S21"/>
+      <state name="S11">
+      </state>
+      <state name="S12">
+      </state>
+    </state>
+    <state name="S2">
+      <transition event="c" nextState="S1"/>
+      <transition event="f" nextState="S11"/>
+      <state name="S21">
+        <transition event="b" nextState="S211"/>
+        <transition event="h" condition="samek.foo == 0" action="samek.foo = 1;"/>
+        <state name="S211">
+          <transition event="d" nextState="S21"/>
+          <transition event="g" nextState="Samek"/>
+          <transition event="h" condition="samek.foo == 0" action="samek.foo = 0;"/>
+        </state>
+      </state>
+    </state>
+    <state name="End" kind="final">
+    </state>
+  </state>
+</sm:StateMachine>
+

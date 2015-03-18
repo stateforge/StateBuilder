@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+
+  <!-- General settings -->
+  <settings asynchronous="true" library="boost">
+    <description>Door</description>
+    <object instance="door" class="DoorPrivate" include="DoorPrivate.h"/>
+  </settings>
+  
+  <!-- Events -->
+  <events>
+    <eventSource name="RemoteControl">
+      <event id="EvOpen"/>
+      <event id="EvClose"/>
+    </eventSource>
+    <eventSource name="Sensors">
+      <event id="EvSensorOpened"/>
+      <event id="EvSensorClosed"/>
+    </eventSource>
+    <eventSource name="Management">
+      <event id="EvQuit"/>
+    </eventSource>
+  </events>
+
+  <state name="Door">
+    <transition event="EvQuit" nextState="End"/>
+    <state name="Closed">
+      <transition event="EvOpen" action="door.engine.StartOpen()" nextState="Opening"/>
+    </state>
+    <state name="Opening">
+      <transition event="EvSensorOpened" action="door.engine.Stop()" nextState="Opened"/>
+    </state>
+    <state name="Opened">
+      <transition event="EvClose" action="door.engine.StartClose()" nextState="Closing"/>
+    </state>
+    <state name="Closing">
+      <transition event="EvSensorClosed" action="door.engine.Stop()" nextState="Closed"/>
+    </state>
+    <state name="End" kind="final">
+    </state>
+  </state>
+</sm:StateMachine>
+

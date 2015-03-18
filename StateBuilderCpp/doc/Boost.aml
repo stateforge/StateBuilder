@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="639911e9-6de8-4547-b463-db2942623f4c" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <autoOutline>2</autoOutline>
+            <para>
+                <externalLink>
+                    <linkText>Boost</linkText>
+                    <linkUri>http://www.boost.org/</linkUri>
+                </externalLink> is collection of portable C++ libraries, they provide time related function, threads, mutexes, event loop classes and so on.</para>
+        </introduction>
+
+        <section address="Windows">
+            <title>Boost on Windows</title>
+            <content>
+                <para>Boost libraries needs to be compiled on Windows, here is a brief description on how to compile the necessary part of Boost for the Microsoft compiler and Gcc:</para>
+                <list class="bullet">
+                    <listItem>
+                        <para>
+                            Download
+                            <externalLink>
+                                <linkText>here</linkText>
+                                <linkUri>http://www.boost.org/users/download/</linkUri>
+                            </externalLink>
+                            the Boost source code libraries
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Extract <localUri>boost_1_xx.zip</localUri> somewhere, e.g: <localUri>C:\Users\joe\boost_1_45_0</localUri>
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Set the enviromnent variable <environmentVariable>%BOOST_ROOT%</environmentVariable> to the directory to where Boost was extracted, e.g: <localUri>C:\Users\joe\boost_1_45_0</localUri> 
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Download
+                            <externalLink>
+                                <linkText>here</linkText>
+                                <linkUri>http://www.boost.org/users/download/</linkUri>
+                            </externalLink>
+                            the tool called Boost Jam to build the Boost libraries.
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Unzip <localUri>boost-jam-3.1.x-1-ntx86.zip</localUri>
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            move <application>bjam.exe</application> to where Boost was extracted, e.g <environmentVariable>%BOOST_ROOT%</environmentVariable> 
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Open a console and change to the directory <environmentVariable>%BOOST_ROOT%</environmentVariable>
+                        </para>
+                        <code>cd %BOOST_ROOT%</code>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Compile the Boost libraries with Visual Studio
+                        </para>
+                        <code>bjam --with-date_time --with-regex --with-system --with-thread --with-filesystem --build-type=complete --toolset=msvc stage</code>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Compile the Boost libraries with Gcc
+                        </para>
+                        <code> bjam --with-date_time --with-regex --with-system --with-thread --with-filesystem --build-type=complete --toolset=gcc stage</code>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+        <section address="MacOsX">
+            <title>Boost on MacOSX</title>
+            <content>
+                <para>Boost libraries needs to be compiled on MacOSX, here is a brief description on how to compile the necessary part of Boost.</para>
+                <list class="bullet">
+                    <listItem>
+                        <para>
+                            Download
+                            <externalLink>
+                                <linkText>here</linkText>
+                                <linkUri>http://www.boost.org/users/download/</linkUri>
+                            </externalLink>
+                            the Boost source code libraries
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Extract <localUri>boost_1_xx.tar.gz</localUri> somewhere, e.g: <localUri>/Users/joe/boost_1_46_0</localUri>
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Set the enviromnent variable <environmentVariable>BOOST_ROOT</environmentVariable> to the directory to where Boost was extracted, e.g: <localUri>C:\Users\joe\boost_1_45_0</localUri>. Edit <localUri>.bash_login</localUri> and add the following code:
+                        </para>
+                        <code>export BOOST_ROOT=/Users/joe/boost_1_46_0</code>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Download
+                            <externalLink>
+                                <linkText>here</linkText>
+                                <linkUri>http://www.boost.org/users/download/</linkUri>
+                            </externalLink>
+                            the tool called Boost Jam to build the Boost libraries.
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Extract <localUri>boost-jam-3.1.x-1-macosxx86_64.tar.gz</localUri>
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Move <application>bjam</application> to where Boost was extracted, e.g <environmentVariable>BOOST_ROOT</environmentVariable>
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Open a console and change to the directory <environmentVariable>BOOST_ROOT</environmentVariable>
+                        </para>
+                        <code>cd $BOOST_ROOT</code>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Compile the Boost libraries for MacOsX
+                        </para>
+                        <code>./bjam --toolset=darwin --link=static --with-filesystem --with-date_time --with-thread macosx-version=10.6 macosx-version-min=10.5 stage</code>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+
+        <section address="Linux">
+            <title>Boost on Linux</title>
+            <content>
+                <para>Boost comes precompiled for every major distribution, how to download and install Boost depends on the distribution package manager: yum or apt-get</para>
+            </content>
+            <sections>
+                <section address="RedHatFedoraCentOS">
+                    <title>RedHat/Fedora/CentOS</title>
+                    <content>
+                        <code>
+                            yum install boost-devel
+                        </code>
+                    </content>
+                </section>
+                <section address="UbuntuDebian">
+                    <title>Ubuntu/Debian</title>
+                    <content>
+                        <code>
+                            sudo apt-get install libboost-dev
+                        </code>
+                    </content>
+                </section>
+            </sections>
+        </section>
+        <section address="Usage">
+            <title>Usage</title>
+            <content>
+                <para>
+                    The attribute <codeInline>library="boost"</codeInline> tells <application>StateBuilderCpp</application> to generate code that integrates well with Boost.
+                </para>
+                <code language="xml">
+                    <![CDATA[
+  <settings asynchronous="true" library="boost">
+    <object instance="door" class="DoorPrivate" include="DoorPrivate.h"/>
+  </settings>
+                    ]]>
+                </code>                
+                <para>
+                    Examples that uses Boost are listed below:
+                </para>
+            </content>
+        </section>
+        <relatedTopics>
+            <link xlink:href="28bb5d53-b5dd-48c2-99ad-14be11a49af5">HelloWorld</link>
+            <link xlink:href="5a26797e-e46b-45ac-b48e-e0772ead3110">Door</link>
+            <link xlink:href="13afaa12-ae68-478d-aec1-0b07dd863f27">Microwave</link>
+            <link xlink:href="e0f5a3a6-881f-4adf-9521-c6780f206fa1">Microwave02</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="StateBuilderJava" default="installer.izpack" basedir=".">
+
+	<description>
+        StateBuilder for Java
+    </description>
+
+	<!-- Optional add this file to override any of the properties below -->
+	<!--<property file="${basedir}/build/build.properties"/>-->
+	<property name="version.major" value="2"/>
+	<property name="version.minor" value="4"/>
+	<property name="version.revision" value="0"/>
+	<property name="version.extra" value=""/>
+	<property name="version" value="${version.major}-${version.minor}-${version.revision}"/>
+	<property name="version-jar" value="${version.major}-${version.minor}"/>
+	<property name="version.dot" value="${version.major}.${version.minor}.${version.revision}"/>
+	<property name="version-jar.dot" value="${version.major}.${version.minor}"/>
+	<!-- For 'beta' or 'alpha' -->
+
+
+	<description>StateBuilderJava Build</description>
+	<!--set global properties for this build-->
+	<property name="src" location="${basedir}/src/java"/>
+	<property name="target" location="${basedir}/target"/>
+	<property name="classes" location="${target}/classes"/>
+	<property name="target.build" location="${target}/build"/>
+	<property name="releaseDir" location="${basedir}/../../StateForgeWebSite/StateForgeWebSite/Files"/>
+	<!-- Installer Ant Script -->
+
+	<property name="installer.install4j.home" value="c:\\Program Files\\install4j"/>
+	<property name="installer.dest.dir" value="${target}/installer"/>
+	<property name="installer.install4j.srcfile" value="${basedir}/Packaging/Install4j/install4j.xml"/>
+	<property name="installer.app_name" value="StateBuilderJava"/>
+	<property name="installer.app_short_name" value="StateBuilderJava"/>
+	<property name="installer.product_name" value="StateBuilderJava"/>
+	<property name="installer.publisher" value="StateForge"/>
+	<property name="installer.publisher_url" value="www.stateforge.com"/>
+	<property name="installer.file_prefix" value="${installer.app_short_name}"/>
+	<property name="installer.release_root_path" value="${target.build}"/>
+
+	<!-- IzPack Installer -->
+	<property name="installer.izpack.dir" value="C:\Program Files (x86)\IzPack"/>
+
+	<!-- User Defined Properties -->
+	<property file="build.properties"/>
+
+	<!-- Ftp -->
+	<property name="ftp.server" value="ftp.acme.com"/>
+	<property name="ftp.user" value="myuser"/>
+	<property name="ftp.password" value="mypassword"/>
+
+	<!-- clean =================================================================================== -->
+	<target name="clean" description="Deletes files generated during the build.">
+		<!--Delete created directory trees-->
+		<delete failonerror="false">
+			<fileset dir="${target}" followsymlinks="false"/>
+		</delete>
+		<delete dir="${release.dir}"  failonerror="false" followsymlinks="false" />
+		<delete dir="${basedir}/work" failonerror="false" followsymlinks="false" />
+	</target>
+
+	<!-- init =================================================================================== -->
+	<target name="init">
+
+		<!--creates the build directory-->
+		<mkdir dir="${target}"/>
+		<mkdir dir="${classes}"/>
+		<mkdir dir="${target.build}"/>
+	</target>
+
+	<!-- IzPack package ========================================================================= -->
+	<target name="installer.izpack" description="build release a izpack installer">
+		<mkdir dir="${target}"/>
+		<taskdef name="IzPack" 
+	             classpath="${installer.izpack.dir}/lib/standalone-compiler.jar"
+				 classname="com.izforge.izpack.ant.IzPackTask"/>
+
+		<IzPack input="${basedir}/Packaging/IzPack/IzPackWinConf.xml"
+                output="${releaseDir}/StateBuilderJava-WinSetup.jar"
+                installerType="standard" izPackDir="${installer.izpack.dir}" basedir="${basedir}"/>
+
+		<IzPack input="${basedir}/Packaging/IzPack/IzPackLinuxConf.xml"
+                output="${releaseDir}/StateBuilderJava-LinuxSetup.jar" 
+			        	installerType="standard" izPackDir="${installer.izpack.dir}" basedir="${basedir}"/>
+
+		<IzPack input="${basedir}/Packaging/IzPack/IzPackLinuxConf.xml"
+                output="${releaseDir}/StateBuilderJava-MacSetup.jar"
+                installerType="standard" izPackDir="${installer.izpack.dir}" basedir="${basedir}"/>
+
+
+		<copy file="${releaseDir}/StateBuilderJava-WinSetup.jar" tofile="${releaseDir}/StateBuilderJava-WinSetup-${version}.jar"/>
+		<copy file="${releaseDir}/StateBuilderJava-LinuxSetup.jar" tofile="${releaseDir}/StateBuilderJava-LinuxSetup-${version}.jar"/>
+		<copy file="${releaseDir}/StateBuilderJava-MacSetup.jar" tofile="${releaseDir}/StateBuilderJava-MacSetup-${version}.jar"/>
+
+	</target>
+
+	<!--<target name="deploy.xsd" description="deploy xsd">
+        <echo message="uploading xsd files" />
+        <ftp server="${ftp.server}"
+             remotedir="/xsd"
+             userid="${ftp.user}"
+             password="${ftp.password}"
+             passive="no"
+             depends="yes"
+             binary="no">
+            <fileset dir="../Compiler/java/src/main/resources">
+                <include name="**/*.xsd"/>
+            </fileset>
+        </ftp>
+    </target>-->
+
+	<target name="deploy.setup" description="deploy setup jar">
+		<echo message="uploading setup files StateBuilderJava-WinSetup-${version}.jar" />
+		<ftp server="${ftp.server}"
+             remotedir="/Files"
+             userid="${ftp.user}"
+             password="${ftp.password}"
+             passive="no"
+             depends="yes"
+             binary="yes">
+			<fileset dir="${releaseDir}">
+				<include name="StateBuilderJava-WinSetup-${version}.jar"/>
+				<include name="StateBuilderJava-LinuxSetup-${version}.jar"/>
+				<include name="StateBuilderJava-MacSetup-${version}.jar"/>
+			</fileset>
+		</ftp>
+	</target>
+
+	<target name="deploy.maven">
+		<exec dir="StateMachine" executable="mvn.bat">
+			<arg line="deploy"/>
+		</exec>
+		<exec dir="../Compiler/java" executable="mvn.bat">
+			<arg line="deploy:deploy-file -DrepositoryId=ftp-repository -Durl=ftp://ftp.stateforge.com/repository -DgroupId=com.stateforge.statebuilder -DartifactId=statebuilder-java -Dversion=${version-jar.dot} -Dpackaging=jar -Dfile=target/statebuilder-java-${version-jar.dot}.jar"/>
+		</exec>
+		<exec dir="../Compiler/MavenPlugin" executable="mvn.bat">
+	    	<arg line="-U"/>
+			<arg line="deploy"/>
+		</exec>
+	</target>
+
+	<target name="deploy" description="deploy all" depends="deploy.maven">
+		<echo message="uploading all files" />
+	</target>
+
+	<taskdef name="xmltask" 
+	            classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+
+	<target name="setVersion">
+		<xmltask source="Packaging/IzPack/IzPackWinConf.xml" dest="Packaging/IzPack/IzPackWinConf.xml">
+			<replace path="/installation/info/appversion/text()" withText="${version.dot}" />
+			<attr path="/installation/packs/pack/file[contains(@src,'statebuilder-java')]" attr="src" value="../Compiler/java/target/statebuilder-java-${version-jar.dot}.jar" />
+			<attr path="/installation/packs/pack/file[contains(@src,'statebuilder-ant-task')]" attr="src" value="../Compiler/AntTask/target/statebuilder-ant-task-${version-jar.dot}.jar" />
+			<attr path="/installation/packs/pack/file[contains(@src,'statemachine')]" attr="src" value="StateMachine/target/statemachine-${version-jar.dot}.jar" />
+		</xmltask>
+        <xmltask source="Packaging/IzPack/IzPackLinuxConf.xml" dest="Packaging/IzPack/IzPackLinuxConf.xml">
+            <replace path="/installation/info/appversion/text()" withText="${version.dot}" />
+        	<attr path="/installation/packs/pack/file[contains(@src,'statebuilder-java')]" attr="src" value="../Compiler/java/target/statebuilder-java-${version-jar.dot}.jar" />            
+        	<attr path="/installation/packs/pack/file[contains(@src,'statebuilder-ant-task')]" attr="src" value="../Compiler/AntTask/target/statebuilder-ant-task-${version-jar.dot}.jar" />
+            <attr path="/installation/packs/pack/file[contains(@src,'statemachine')]" attr="src" value="StateMachine/target/statemachine-${version-jar.dot}.jar" />
+        </xmltask>		
+		<xmltask source="StateMachine/pom.xml" dest="StateMachine/pom.xml">
+			<replace path="/:project/:version/text()" withText="${version-jar.dot}" />
+		</xmltask>
+		<xmltask source="../Compiler/java/pom.xml" dest="../Compiler/java/pom.xml">
+			<replace path="/:project/:version/text()" withText="${version-jar.dot}" />
+		</xmltask>
+		<xmltask source="../Compiler/AntTask/pom.xml" dest="../Compiler/AntTask/pom.xml">
+			<replace path="/:project/:version/text()" withText="${version-jar.dot}" />
+			<replace path="/:project/:dependencies/:dependency/:artifactId[text()='statebuilder-java']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+			<replace path="//:Class-Path/text()" withText="statebuilder-java-${version-jar.dot}.jar" />
+		</xmltask>
+		<xmltask source="../Compiler/MavenPlugin/pom.xml" dest="../Compiler/MavenPlugin/pom.xml">
+			<replace path="/:project/:version/text()" withText="${version-jar.dot}" />
+			<replace path="/:project/:dependencies/:dependency/:artifactId[text()='statebuilder-java']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+		</xmltask>
+		
+        <xmltask source="Examples/HelloWorld/build.xml" dest="Examples/HelloWorld/build.xml">
+        	 <attr path="/project/property[contains(@value,'statebuilder-ant-task')]" attr="value" value="${statebuilder.dir}/lib/statebuilder-ant-task-${version-jar.dot}.jar" />
+        	 <attr path="/project/property[contains(@value,'lib/statemachine')]" attr="value" value="${statebuilder.dir}/lib/statemachine-${version-jar.dot}.jar" />
+        </xmltask>		
+		
+		<xmltask source="Examples/HelloWorld/pom.xml" dest="Examples/HelloWorld/pom.xml">
+			<replace path="/:project/:dependencies/:dependency/:artifactId[text()='statemachine']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+			<replace path="/:project/:build/:plugins/:plugin/:artifactId[text()='maven-statebuilder-plugin']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+		</xmltask>
+		<xmltask source="Examples/Led/pom.xml" dest="Examples/Led/pom.xml">
+			<replace path="/:project/:dependencies/:dependency/:artifactId[text()='statemachine']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+			<replace path="/:project/:build/:plugins/:plugin/:artifactId[text()='maven-statebuilder-plugin']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+		</xmltask>
+		<xmltask source="Examples/Microwave/pom.xml" dest="Examples/Microwave/pom.xml">
+			<replace path="/:project/:dependencies/:dependency/:artifactId[text()='statemachine']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+			<replace path="/:project/:build/:plugins/:plugin/:artifactId[text()='maven-statebuilder-plugin']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+		</xmltask>
+		<xmltask source="Examples/TrafficLight/pom.xml" dest="Examples/TrafficLight/pom.xml">
+			<replace path="/:project/:dependencies/:dependency/:artifactId[text()='statemachine']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+			<replace path="/:project/:build/:plugins/:plugin/:artifactId[text()='maven-statebuilder-plugin']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+		</xmltask>
+		<xmltask source="Examples/Ping/pom.xml" dest="Examples/Ping/pom.xml">
+			<replace path="/:project/:dependencies/:dependency/:artifactId[text()='statemachine']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+			<replace path="/:project/:build/:plugins/:plugin/:artifactId[text()='maven-statebuilder-plugin']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+		</xmltask>
+		<xmltask source="Examples/RoundsClient/pom.xml" dest="Examples/RoundsClient/pom.xml">
+			<replace path="/:project/:dependencies/:dependency/:artifactId[text()='statemachine']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+			<replace path="/:project/:build/:plugins/:plugin/:artifactId[text()='maven-statebuilder-plugin']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+		</xmltask>
+        <xmltask source="Examples/Unitest/pom.xml" dest="Examples/Unitest/pom.xml">
+            <replace path="/:project/:dependencies/:dependency/:artifactId[text()='statemachine']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+            <replace path="/:project/:build/:plugins/:plugin/:artifactId[text()='maven-statebuilder-plugin']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
+        </xmltask>		
+	</target>
+</project>
+
+

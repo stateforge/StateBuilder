@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <!-- The configuration and platform will be used to determine which
+         assemblies to include from solution and project documentation
+         sources -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{62224b16-ba4f-4b43-b45c-2062f213931a}</ProjectGuid>
+    <SHFBSchemaVersion>1.9.3.0</SHFBSchemaVersion>
+    <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual
+         Studio adds them anyway -->
+    <AssemblyName>Documentation</AssemblyName>
+    <RootNamespace>Documentation</RootNamespace>
+    <Name>Documentation</Name>
+    <!-- SHFB properties -->
+    <OutputPath>..\..\..\..\StateForgeWebSite\dev\StateForgeWebSite\Doc\StateBuilderJava\</OutputPath>
+    <HtmlHelpName>StateBuilderJavaDocumentation</HtmlHelpName>
+    <Language>en-US</Language>
+    <HelpFileFormat>HtmlHelp1, Website</HelpFileFormat>
+    <HelpTitle>StateBuilderJava documentation</HelpTitle>
+    <DocumentationSources>
+    </DocumentationSources>
+    <NamespaceSummaries>
+      <NamespaceSummaryItem name="(global)" isDocumented="False" />
+      <NamespaceSummaryItem name="StateForge.StateMachine" isDocumented="True">Contains all the classes needed by the StateBuilderJava generated code.</NamespaceSummaryItem>
+    </NamespaceSummaries>
+    <FeedbackEMailAddress>support%40stateforge.com</FeedbackEMailAddress>
+    <CopyrightText>Copyright %28c%29 2011 StateForge</CopyrightText>
+    <CopyrightHref>
+    </CopyrightHref>
+    <ProjectSummary>The StateBuilderJava documentation</ProjectSummary>
+    <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
+    <MSHelp2SdkLinkType>None</MSHelp2SdkLinkType>
+    <MSHelpViewerSdkLinkType>None</MSHelpViewerSdkLinkType>
+    <PlugInConfigurations>
+      <PlugInConfig id="XML Schema Documenter" enabled="False">
+        <configuration>
+          <document rootSchemas="true" rootElements="true" constraints="true" schemas="true" syntax="true" />
+          <schemaSet container="true" title="State Machine Schema References" />
+          <namespace container="true" />
+          <sortOrder>2</sortOrder>
+          <includeLinkUriInKeywordK>false</includeLinkUriInKeywordK>
+          <annotationTransformFile path="" />
+          <schemaFiles>
+            <schemaFile path="../../Compiler/java/src/main/resources/StateMachineJava-v1.xsd" />
+          </schemaFiles>
+          <dependencyFiles />
+        </configuration>
+      </PlugInConfig>
+      <PlugInConfig id="Additional Content Only" enabled="True">
+        <configuration />
+      </PlugInConfig>
+    </PlugInConfigurations>
+    <CleanIntermediates>False</CleanIntermediates>
+    <RootNamespaceContainer>True</RootNamespaceContainer>
+    <RootNamespaceTitle>StateMachine API</RootNamespaceTitle>
+    <ContentPlacement>BelowNamespaces</ContentPlacement>
+    <SyntaxFilters>None</SyntaxFilters>
+    <ComponentConfigurations>
+      <ComponentConfig id="Post-transform Component" enabled="True">
+        <component id="Post-transform Component" type="SandcastleBuilder.Components.PostTransformComponent" assembly="{@SHFBFolder}SandcastleBuilder.Components.dll">
+          <!-- Code colorizer files (required).
+                 Attributes:
+                    Stylesheet file (required)
+                    Script file (required)
+                    "Copy" image file (required) -->
+          <colorizer stylesheet="{@SHFBFolder}Colorizer\highlight.css" scriptFile="{@SHFBFolder}Colorizer\highlight.js" copyImage="{@SHFBFolder}Colorizer\CopyCode.gif" />
+          <!-- Base output paths for the files (required).  These should match
+                 the parent folder of the output path of the HTML files (see
+                 each of the SaveComponent instances below). -->
+          <outputPaths>
+{@HelpFormatOutputPaths}
+            </outputPaths>
+          <!-- Logo image file (optional).  Filename is required. The height,
+                 width, altText, placement, and alignment attributes are
+                 optional. -->
+          <logoFile filename="{@ProjectFolder}\Images\LogoWheel_320x320.png" height="100" width="100" altText="StateForge logo" placement="left" alignment="left" />
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="Code Block Component" enabled="True">
+        <component id="Code Block Component" type="SandcastleBuilder.Components.CodeBlockComponent" assembly="{@SHFBFolder}SandcastleBuilder.Components.dll">
+          <basePath value="{@HtmlEncProjectFolder}" />
+          <languageFilter value="true" />
+          <allowMissingSource value="false" />
+          <removeRegionMarkers value="false" />
+          <colorizer syntaxFile="{@SHFBFolder}Colorizer\highlight.xml" styleFile="{@SHFBFolder}Colorizer\highlight.xsl" copyImageUrl="../icons/CopyCode.gif" language="none" tabSize="0" numberLines="false" outlining="false" keepSeeTags="false" defaultTitle="true" />
+        </component>
+      </ComponentConfig>
+    </ComponentConfigurations>
+    <PresentationStyle>Prototype</PresentationStyle>
+    <KeepLogFile>False</KeepLogFile>
+  </PropertyGroup>
+  <!-- There are no properties for these groups.  AnyCPU needs to appear in
+       order for Visual Studio to perform the build.  The others are optional
+       common platform types that may appear. -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Win32' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Win32' ">
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Building.aml" />
+    <None Include="Examples\Ping.aml" />
+    <None Include="Examples\Microwave.aml" />
+    <None Include="Features.aml" />
+    <None Include="Examples\HelloWorld.aml" />
+    <None Include="Examples.aml" />
+    <None Include="Welcome.aml" />
+    <None Include="GettingStarted.aml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ContentLayout Include="ContentLayout.content" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\LightClassDiagram.png">
+      <ImageId>LightClassDiagram</ImageId>
+      <AlternateText>Light Class Diagram</AlternateText>
+    </Image>
+    <Image Include="Images\LightStateDiagram.PNG">
+      <ImageId>LightStateDiagram</ImageId>
+      <AlternateText>Light State Diagram</AlternateText>
+    </Image>
+    <Image Include="Images\ArrowButtonGreen.png">
+      <ImageId>ArrowButtonGreen</ImageId>
+      <AlternateText>Yes</AlternateText>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Examples\" />
+    <Folder Include="Content\" />
+    <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\HelloWorldClassDiagram.png">
+      <ImageId>HelloWorldClassDiagram</ImageId>
+      <AlternateText>Hello World Class Diagram</AlternateText>
+    </Image>
+    <Image Include="Images\HelloWorldStateDiagram.png">
+      <ImageId>HelloWorldStateDiagram</ImageId>
+      <AlternateText>Hello World State Diagram</AlternateText>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\TurnstileClassDiagram.png">
+      <ImageId>TurnstileClassDiagram</ImageId>
+      <AlternateText>Turnstile Class Diagram</AlternateText>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\StateBuilderJavaPrinciplesLandscape.png">
+      <ImageId>StateBuilderJavaPrinciplesLandscape</ImageId>
+      <AlternateText>StateBuilderJava Principles</AlternateText>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\WashingMachineStateDiagram.PNG">
+      <ImageId>WashingMachineStateDiagram</ImageId>
+      <AlternateText>Washing Machine State Diagram</AlternateText>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\SynchronousAsynchronousContext.png">
+      <ImageId>SynchronousAsynchronousContext</ImageId>
+      <AlternateText>Synchronous Asynchronous Context</AlternateText>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\WashingMachineHistoryStateDiagram.PNG">
+      <ImageId>WashingMachineHistoryStateDiagram</ImageId>
+      <AlternateText>Washing Machine History State Diagram</AlternateText>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\LedStateDiagram.PNG">
+      <ImageId>LedStateDiagram</ImageId>
+      <AlternateText>Led State Diagram</AlternateText>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\LogoWheel_320x320.png">
+      <ImageId>LogoWheel_320x320</ImageId>
+      <AlternateText>Logo Wheel 320x 320</AlternateText>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\LedClassDiagramAll.PNG">
+      <ImageId>LedClassDiagramAll</ImageId>
+      <AlternateText>Led Class Diagram All</AlternateText>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\LedClassDiagram.PNG">
+      <ImageId>LedClassDiagram</ImageId>
+      <AlternateText>Led Class Diagram</AlternateText>
+    </Image>
+  </ItemGroup>
+  <!-- Import the SHFB build targets -->
+  <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
+</Project>

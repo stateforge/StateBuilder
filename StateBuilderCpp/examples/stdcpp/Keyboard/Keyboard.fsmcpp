@@ -1,0 +1,40 @@
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1                                      http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd">
+    <!-- general settings -->
+    <settings asynchronous="false" library="std">
+        <object instance="action" class="Action" include="Action.h"/>
+    </settings>
+    <!-- events -->
+    <events>
+        <eventSource name="Event">
+            <event id="evAnyKey"/>
+            <event id="evCapslock"/>
+            <event id="evNumKey" name="evNumKey"/>
+            <event id="evNumLock"/>
+        </eventSource>
+    </events>
+    <!-- states -->
+    <state name="Keyboard">
+        <parallel>
+            <state name="MainKeypad">
+                <state name="Default">
+                    <transition event="evAnyKey" nextState="Default"/>
+                    <transition event="evCapslock" nextState="CapsLocked"/>
+                </state>
+                <state name="CapsLocked">
+                    <transition event="evAnyKey" nextState="CapsLocked"/>
+                    <transition event="evCapslock" nextState="Default"/>
+                </state>
+            </state>
+            <state name="NumericKeypad">
+                <state name="Numbers">
+                    <transition event="evNumKey" nextState="Numbers"/>
+                    <transition event="evNumLock" nextState="Arrows"/>
+                </state>
+                <state name="Arrows">
+                    <transition event="evNumKey" nextState="Arrows"/>
+                    <transition event="evNumLock" nextState="Numbers"/>
+                </state>
+            </state>
+        </parallel>
+    </state>
+</sm:StateMachine>

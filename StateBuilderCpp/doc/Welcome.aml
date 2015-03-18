@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="ef1d2f62-dc0d-4d0c-8801-c892fb50d804" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>
+                <application>StateMachineCpp</application> is a software that helps software designer to create, build and debug state machines.
+            </para>
+            <para>
+                From a description of a state machine in Xml format, <application>StateMachineCpp</application> generates C++ source code.
+            </para>
+            <mediaLink>
+                <image xlink:href="StateBuilderCppPrinciplesLandscape"/>
+            </mediaLink>
+
+            <alert>
+                <para>
+                    For other languages such as C#, VB.NET and Java, please visit the <externalLink>
+                        <linkText>StateForge</linkText>
+                        <linkUri>http://www.stateforge.com</linkUri>
+                    </externalLink> website.
+                </para>
+            </alert>
+            
+            <para>
+                Here is the content of this software package:
+            </para>
+            <list class="bullet">
+                <listItem>
+                    <para>
+                        The executable <localUri>StateBuilderCpp.exe</localUri> needed at build time to generate the state machine source code.
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        The header files needed by the generated code.
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        More than 20 finite state machines in 13 different <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">examples</link>.
+                    </para>
+                </listItem>                
+                <listItem>
+                    <para>
+                        Files to integrate to existing build system such as Visual Sudio and CMake.
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        The file W3C Schema file <localUri>StateMachineCpp-v1.xsd</localUri> needed by XML editors to validate and enable code completion.
+                    </para>
+                </listItem>
+            </list>
+
+            <para>
+                The table below illustrates the features and benefits:
+            </para>
+            <para></para>
+            <table>
+                <tableHeader>
+                    <row>
+                        <entry>
+                            <para>Macro Features</para>
+                        </entry>
+                        <entry>
+                            <para>Features and Benefits</para>
+                        </entry>
+                    </row>
+                </tableHeader>
+                <row>
+                    <entry>
+                        <para>
+                            Finite State Machine Markup Language
+                        </para>
+                    </entry>
+                    <entry>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Finite State Machine are described in XML format.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    FsmML stands for Finite State Machine Markup Language.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    FsmML conforms to the schema file StateMachineCpp-v1.xsd .
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    FsmML can be authored with any text or XML editor.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Syntax highlighting provided by XML editors.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Code completion also known as Intellisense for maximum productivity.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Validation on the fly while writing.
+                                </para>
+                            </listItem>
+                        </list>
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <para>
+                            <link xlink:href="a7a0191a-4cde-4a40-913f-d43c55a5467d#Hierarchical" >Hierarchical</link>
+                        </para>
+                    </entry>
+                    <entry>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Hierarchical state machine allows to group states together.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    States can be represented as a tree.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Each state can have any number of child states.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Transitions can then be shared among states.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Transition duplication can be eliminated.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Avoid the "state explosion" problem.
+                                </para>
+                            </listItem>
+                        </list>
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <para>
+                            <link xlink:href="a7a0191a-4cde-4a40-913f-d43c55a5467d#Asynchronous" >Asynchronous</link>
+                        </para>
+                    </entry>
+                    <entry>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    State machines can be either synchronous or asynchronous.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Asynchronous state machine holds a queue where events are stored, so that feeding
+                                    the state machine never blocks the calling thread.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Events are processed later by the another thread.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    A clear separation exists between feeding the events and processing the events.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    It allows interconnected state machines, the action of a state machine becomes an event
+                                    for the other state machine and vice-versa.
+                                </para>
+                            </listItem>
+                        </list>
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <para>
+                            <link xlink:href="a7a0191a-4cde-4a40-913f-d43c55a5467d#Timers">Timers</link>
+                        </para>
+                    </entry>
+                    <entry>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Timers are used when state machines are asynchrounous.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Each timer have an identifier in order to start and stop the timer.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    An event is fired when the timer expires.
+                                </para>
+                            </listItem>
+                        </list>
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <para>
+                            <link xlink:href="a7a0191a-4cde-4a40-913f-d43c55a5467d#Parallel">Parallel</link>
+                        </para>
+                    </entry>
+                    <entry>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    State machine can hold parallel states also known as regions.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Multiple sub-state machines react to the same set of events.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Each sub-state machine evolves on its own.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Upon entering a parallel state, the sub-state machines enter in their initial state.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    When every states have reached their final state, the parallel state is left.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    The parallel state is also left when a transition goes to a state outside the parallel
+                                    state.
+                                </para>
+                            </listItem>
+                        </list>
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <para>
+                            <link xlink:href="a7a0191a-4cde-4a40-913f-d43c55a5467d#Events">Events</link>
+                        </para>
+                    </entry>
+                    <entry>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Events are sent to state machine through methods of the <codeInline>context</codeInline> generated class.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Any existing class can be an event parameter.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    The event method can have any kind and any number of parameters.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Parameters does NOT need to inherit from an "EventBase" class.
+                                </para>
+                            </listItem>
+                        </list>
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <para>
+                            <link xlink:href="a7a0191a-4cde-4a40-913f-d43c55a5467d#Observable">Observable</link>
+                        </para>
+                    </entry>
+                    <entry>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Observers can be attached to the state machine to report what is happening.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Find out when a state is entered and left.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Find out when a transition begins and ends.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Debugging becomes much easier through logging.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Use the provided Qt or Boost observers.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    User defined observers can be implemented to accomodate existing logging facility.
+                                </para>
+                            </listItem>
+                        </list>
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <para>
+                            
+                            <link xlink:href="a7a0191a-4cde-4a40-913f-d43c55a5467d#OnEntryOnExit">OnEntry and OnExit</link>
+                            
+                        </para>
+                    </entry>
+                    <entry>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    States eventually have an <codeInline>OnEntry</codeInline> and <codeInline>OnExit</codeInline> method.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    <codeInline>OnEntry</codeInline> is executed when entering the state.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    <codeInline>OnExit</codeInline> is executed when leaving the state.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Special handling is done during a transition between states in different postion
+                                    in the state hierarchy.
+                                </para>
+                            </listItem>
+                        </list>
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <para>
+                            <link xlink:href="ef3b3e3e-e2b5-4461-bd74-10e2cc3b6187">Third party library integration</link>
+                        </para>
+                    </entry>
+                    <entry>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Code can be generated to be integrated to the <link xlink:href="a0f3c46f-0fb3-48ea-a622-235140c90404">Qt</link> library.
+                                    In practice, the generated context class uses signal/slot and inherits the QObject class.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    <link xlink:href="639911e9-6de8-4547-b463-db2942623f4c">Boost</link> can also be used to provide timers, event loop, threading and logging facilities.
+                                </para>
+                            </listItem>
+                        </list>
+                    </entry>
+                </row>
+                <!--<row>
+                    <entry>
+                        <para>
+                            <link xlink:href="ef3b3e3e-e2b5-4461-bd74-10e2cc3b6187">Build System Integration</link>
+                        </para>
+                    </entry>
+                    <entry>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Visual Studio integration is provided.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    CMake integration for cross-platform build.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Incremental compilation, do not waste time by rebuilding state machine if not necessary.
+                                </para>
+                            </listItem>
+                        </list>
+                    </entry>
+                </row>-->
+            </table>
+        </introduction>
+
+        <relatedTopics>
+            <link xlink:href="32b960d9-f56e-40d4-bfea-2366aa0eb50d">Getting Started</link>
+            <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">List of examples</link>
+            <link xlink:href="ef3b3e3e-e2b5-4461-bd74-10e2cc3b6187">Visual Studio Integration</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

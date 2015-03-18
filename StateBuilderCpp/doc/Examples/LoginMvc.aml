@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="f9fdd532-a137-4818-9c36-738c783f7232" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <introduction>
+          <para>Here is LoginMvc example.</para>
+          <autoOutline/>
+      </introduction>
+      <section address="Description">
+          <title>Description</title>
+          <content>
+              <para>
+                  The is LoginMvc, a Qt example with a GUI that tries to login using a Model View Controller.
+              </para>
+          </content>
+      </section>
+      <section address="LoginMvc_fsmcpp">
+          <title>LoginMvc.fsmcpp</title>
+          <content>
+              <code source="..\examples\qt\LoginMvc\LoginMvc.fsmcpp" language="xml"/>
+          </content>
+      </section>
+      <section address="LoginMvc_h">
+          <title>LoginMvc.h</title>
+          <content>
+              <code source="..\examples\qt\LoginMvc\LoginMvc.h" language="cpp"/>
+          </content>
+      </section>
+      <section address="LoginMvc_cpp">
+          <title>LoginMvc.cpp</title>
+          <content>
+              <code source="..\examples\qt\LoginMvc\LoginMvc.cpp" language="cpp"/>
+          </content>
+      </section>
+      <section address="main">
+          <title>main.cpp</title>
+          <content>
+              <code source="..\examples\qt\LoginMvc\main.cpp" language="cpp"/>
+          </content>
+      </section>
+      <section address="CMakeList">
+          <title>CMakeLists.txt</title>
+          <content>
+              <code source="..\examples\qt\LoginMvc\CMakeLists.txt"/>
+          </content>
+      </section>
+      <relatedTopics>
+          <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">List of examples</link>
+      </relatedTopics>    
+  </developerConceptualDocument>
+</topic>

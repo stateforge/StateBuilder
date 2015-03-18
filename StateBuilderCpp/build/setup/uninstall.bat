@@ -1,0 +1,1 @@
+call java -jar C:\Users\frederic\AppData\Local\StateForge\StateBuilderCpp\Uninstaller\Uninstaller.jar -c -f

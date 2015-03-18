@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="6ef348e8-e508-422d-8c81-8b60d6cdd349" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>Here is the documentation for the Turnstile example</para>
+      <autoOutline/>
+    </introduction>
+    <section address="Description">
+      <title>Description</title>
+      <content>
+        <para>
+          A Turnstile is a simple mechanism that let someone to go through a barrier. Let's identify the events, the various states, the transitions and the actions to perform.
+        </para>
+      </content>
+      <sections>
+        <section address="TurnstileDescriptionEvent">
+          <title>Events</title>
+          <content>
+            <para>
+              Events: This system receives 2 events:
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
+                  <codeInline>EvCoin()</codeInline> is sent from a coin machine.
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  <codeInline>EvPass()</codeInline> is sent from a sensor that indicates the person is behind the barrier.
+                </para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section address="TurnstileDescriptionActions">
+          <title>Actions</title>
+          <content>
+            <para>
+              Actions: the turnstile is composed of three sub systems: a barrier, an alarm and a coind machine:
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
+                  The <codeInline>Barrier</codeInline> Object knows how to lock and unlock the barrier, through the method <codeInline>DoLock()</codeInline> and <codeInline>DoUnlock()</codeInline>.
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  The <codeInline>Alarm</codeInline>  Object alerts the passenger or the staff through the method <codeInline>DoAlertStaff()</codeInline> and <codeInline>DoRing()</codeInline>.
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  The <codeInline>CoinMachine</codeInline> Object accepts or rejects coins through the method <codeInline>DoAccept()</codeInline> and <codeInline>DoReject()</codeInline>.
+                </para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section address="TurnstileDescriptionState">
+          <title>States and Transitions</title>
+          <content>
+            <para>
+              States: The turnstile can be in two state, either <codeInline>Locked</codeInline> or <codeInline>Unlocked</codeInline>.
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
+                  <codeInline>Locked</codeInline>
+                </para>
+                <para>
+                  Upon entering the state <codeInline>Locked</codeInline>, call <codeInline>barrier.DoLock()</codeInline>.
+                </para>
+                <para>
+                  When the event <codeInline>EvCoin()</codeInline> is received, call <codeInline>coinMachine.DoAccept()</codeInline> and go to state <codeInline>Unlocked</codeInline>.
+                </para>
+                <para>
+                  When the event <codeInline>EvPass()</codeInline> is received, call <codeInline>alarm.DoAlertStaff()</codeInline> and stay in the state <codeInline>Locked</codeInline>.
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  <codeInline>UnLocked</codeInline>
+                </para>
+                <para>
+                  Upon entering the state <codeInline>Unlocked</codeInline>, call <codeInline>barrier.DoUnlock()</codeInline>.
+                </para>
+                <para>
+                  When the event <codeInline>EvPass()</codeInline> is received, go to state <codeInline>Locked</codeInline>.
+                </para>
+                <para>
+                  When the event <codeInline>EvCoin()</codeInline> is received, call <codeInline>alarm.DoRing()</codeInline> and <codeInline>alarm.DoRing()</codeInline>,
+                  stay in the state <codeInline>UnLocked</codeInline>.
+                </para>                
+              </listItem>
+            </list>
+          </content>
+        </section>
+      </sections>
+    </section>
+
+    <section address="TurnstileStateMachineDiagram">
+      <title>State machine diagram</title>
+      <content>
+        <para>Here is the Turnstile state machine diagram:</para>
+        <mediaLink>
+          <caption>Turnstile state diagram</caption>
+          <image xlink:href="TurnstileStateDiagram"/>
+        </mediaLink>
+      </content>
+    </section>
+
+    <section address="TurnstileExampleClassDiagram">
+      <title>Class Diagram</title>
+      <content>
+        <para>The following picture is a UML class diagram of the HelloWord system:</para>
+        <mediaLink>
+          <caption>Turnstile class diagram</caption>
+          <image xlink:href="TurnstileClassDiagram"/>
+        </mediaLink>
+        <para>
+          This class diagram is composed of 3 kind of classes:
+        </para>
+        <list class="ordered">
+          <listItem>
+            <para>
+              <codeInline>Barrier</codeInline>, <codeInline>Alarm</codeInline> and <codeInline>CoinMachine</codeInline> are responsible of performing the actions.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <codeInline>TurnstileContext:</codeInline>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
+                  is generated by <application>StateBuilderCpp</application>.
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  has instances of <codeInline>Barrier</codeInline>, <codeInline>Alarm</codeInline> and <codeInline>CoinMachine</codeInline> which are given through its constructor.
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  invokes the actions.
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  holds the current state.
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  has methods corresponding to events such as <codeInline>TurnstileContext.EvCoin()</codeInline> and <codeInline>TurnstileContext.EvPass()</codeInline>
+                </para>
+              </listItem>
+            </list>
+          </listItem>
+          <listItem>
+            <para>
+              <codeInline>Turnstile:</codeInline>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
+                  is exposed to the outside world.
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  holds and creates instances of <codeInline>TurnstileContext</codeInline>, <codeInline>Barrier</codeInline>, <codeInline>Alarm</codeInline> and <codeInline>CoinMachine</codeInline>
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  feeds <codeInline>TurnstileContext</codeInline> with events.
+                </para>
+              </listItem>
+            </list>
+          </listItem>
+        </list>
+      </content>
+    </section>
+
+    <section address="TurnstileExampleFsm">
+      <title>Finite State Machine Markup Language</title>
+      <content>
+        <para>
+          The following code represents the state machine in the FsmML format:
+        </para>
+        <!--<code source="..\examples\std\Turnstile\Turnstile.fsmcpp" language="xml"/>-->
+      </content>
+    </section>
+
+    <section address="TurnstileCode">
+      <title>C++ Code</title>
+      <content>
+        <para>
+          Here the Turnstile header file:
+        </para>
+        <!--<code source="..\examples\std\Turnstile\Turnstile.h" language="cpp"/>-->
+      </content>
+    </section>
+      
+    <relatedTopics>
+      <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">List of examples</link>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

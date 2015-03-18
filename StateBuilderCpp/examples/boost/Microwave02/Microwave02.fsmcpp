@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+    
+  <!-- general settings -->
+  <settings asynchronous="false" library="boost">
+    <description>Microwave</description>
+    <object instance="microwave" class="Microwave" include="Microwave.h"/>
+    <context class="MicrowaveContext"/>
+  </settings>
+  <!-- events -->
+  <events>
+    <eventSource name="Microwave">
+      <event id="evStart"/>
+      <event id="evStop"/>
+      <event id="evTurnOn"/>
+      <event id="evTurnOff"/>
+    </eventSource>
+    <eventSource name="CookingAnalyzer">
+      <event id="evCookingDone"/>
+    </eventSource>
+
+    <eventSource name="Door">
+      <event id="evDoorOpened"/>
+      <event id="evDoorClosed"/>
+    </eventSource>    
+  </events>
+  
+  <!-- States -->
+  <state name="Microwave">
+    <transition event="evStop" nextState="End"/>
+    <state name="Initial">
+      <transition event="evStart" nextState="Operating"/>
+    </state>
+    <state name="Operating">
+      <parallel nextState="End">
+        <!-- First region is the engine -->
+        <state name="Engine">
+          <state name="Off">
+            <transition event="evTurnOn"
+                        condition="&amp;context.GetParentContext().GetParallelOperating().GetContextDoor().GetState() == &amp;Microwave02DoorOpenState::GetInstance()" 
+                        nextState="Idle"/>
+            <transition event="evTurnOn" nextState="Cooking"/>
+          </state>
+          <state name="On">
+            <transition event="evTurnOff" nextState="Off"/>
+            <transition event="evCookingDone" nextState="Off"/>
+            <state name="Idle">
+              <transition event="evDoorClosed" nextState="Cooking"/>
+            </state>
+            <state name="Cooking">
+              <transition event="evDoorOpened" nextState="Idle"/>
+            </state>
+          </state>
+        </state>
+        <!-- Second region is the door -->
+        <state name="Door">
+          <state name="DoorClose">
+            <transition event="evDoorOpened" nextState="DoorOpen"/>
+          </state>
+          <state name="DoorOpen">
+            <transition event="evDoorClosed" nextState="DoorClose"/>
+          </state>
+        </state>
+      </parallel>
+    </state>
+    <state name="End" kind="final"/>
+  </state>
+</sm:StateMachine>
+

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="5a26797e-e46b-45ac-b48e-e0772ead3110" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>Here is the documentation for the Door example</para>
+            <autoOutline/>
+        </introduction>
+        <section address="Description">
+            <title>Description</title>
+            <content>
+                <para>
+                   The is an example about a remote controlled door than can be opened or closed.
+                   Sensors indicates whether the door is effectively closed or opended so that the door engine can be stopped.
+                </para>
+            </content>
+        </section>
+
+        <section address="Door_fsmcpp">
+            <title>Door.fsmcpp</title>
+            <content>
+                <code source="..\examples\boost\Door\Door.fsmcpp" language="xml"/>
+            </content>
+        </section>
+        <section address="Door_h">
+            <title>Door.h</title>
+            <content>
+                <code source="..\examples\boost\Door\Door.h" language="cpp"/>
+            </content>
+        </section>
+        <section address="Door_cpp">
+            <title>Door.cpp</title>
+            <content>
+                <code source="..\examples\boost\Door\Door.cpp" language="cpp"/>
+            </content>
+        </section>
+        <section address="DoorPrivate_h">
+            <title>DoorPrivate.h</title>
+            <content>
+                <code source="..\examples\boost\Door\DoorPrivate.h" language="cpp"/>
+            </content>
+        </section>
+        <section address="main">
+            <title>main.cpp</title>
+            <content>
+                <code source="..\examples\boost\Door\main.cpp" language="cpp"/>
+            </content>
+        </section>
+        <section address="CMakeList">
+            <title>CMakeLists.txt</title>
+            <content>
+                <code source="..\examples\boost\Door\CMakeLists.txt"/>
+            </content>
+        </section>
+        <relatedTopics>
+            <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">List of examples</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

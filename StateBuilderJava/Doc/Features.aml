@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="a7a0191a-4cde-4a40-913f-d43c55a5467d" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <summary>
+      <para>StateBuilderJava features</para>
+    </summary>
+        <introduction>
+            <autoOutline>2</autoOutline>
+            <para></para>
+        </introduction>
+        <section address="Hierarchical">
+            <title>Hierarchical state machine</title>
+            <content>
+                <para>
+                    Hierarchical state machine allows to group states together inside another state, each state can have any number of child states. This implies that states can be represented as a tree.
+                </para>
+                <para>
+                    The fundamental benefit is that transitions can then be shared among states, transition duplication can then be eliminated.
+                    The "state explosion" problem can be avoided by using the hierarchical feature.
+                </para>
+                <para>
+                    Let's have a look at the Washing Machine example:
+                </para>
+                <mediaLink>
+                    <caption> Washing Machine state diagram</caption>
+                    <image xlink:href="WashingMachineStateDiagram"/>
+                </mediaLink>
+                <code language="xml">
+                    <![CDATA[
+    <state name="Top">
+        <state name="Idle">
+            <transition event="Start" nextState="Running"/>
+        </state>
+        <state name="Running">
+            <transition event="Stop" nextState="End"/>
+            <state name="Washing">
+                <transition event="WashingDone" nextState="Rinsing"/>
+            </state>
+            <state name="Rinsing">
+                <transition event="RinsingDone" nextState="Spinning"/>
+            </state>
+            <state name="Spinning">
+                <transition event="SpinningDone" nextState="End"/>
+            </state>
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+                    ]]>
+                </code>
+                <para>
+                    When the event <codeInline>Stop()</codeInline> is received, the machine goes to the state <codeInline>End</codeInline>  if the current state is either <codeInline>Washing</codeInline>, <codeInline>Rinsing</codeInline> or <codeInline>Spinning</codeInline>.
+                </para>
+            </content>
+        </section>
+        <section address="Asynchronous">
+            <title>Asynchronous state machine</title>
+            <content>
+                <para>
+                    State machine can be either synchronous or asynchronous.
+                </para>
+                <para>
+                    Asynchronous state machine have a queue where events are stored, so that feeding the state machine never blocks the calling thread. Events are processed later, by another thread. At any given time, there is only one thread processing the event queue.
+                    A clear separation exists between feeding the events and processing the events.
+                </para>
+                <para>
+                    A program is usually made of several state machines interconnected, the action of a state machine becomes an event for the other state machine and vice-versa. In this situation, state machines must be asynchronous.
+                </para>
+                <para>
+                    The asynchrounous feature is really what makes <application>StateBuilderJava</application> stand apart from the other state machine generators.
+                </para>
+                <para>
+                    The attribute <codeInline>asynchronous</codeInline> controls whether the machine is asynchronous or synchronous:
+                </para>
+                <code language="xml">
+                    <![CDATA[
+    <settings asynchronous="true" namespace="com.stateforge.statemachine.examples.ping">
+        <object instance="ping" class="Ping"/>
+    </settings>
+                    ]]>
+                </code>
+            </content>
+        </section>
+        <section address="Timers">
+            <title>Timers</title>
+            <content>
+                <para>
+                    Timers can be only used when the state machine is asynchrounous.
+                </para>
+                <para>
+                    A timer is a type of event,
+                    it is defined by the attribute <codeInline>id</codeInline> and <codeInline>name</codeInline>.
+                </para>
+                <para>
+                    The <codeInline>id</codeInline> is the id of the event being triggered when the timer expired, <codeInline>id</codeInline> is referenced in the attribute <codeInline>transition@event</codeInline>.
+                </para>
+                <para>
+                    The <codeInline>name</codeInline> is the name of the timer and is being used to start and stop the timer
+                    with the <codeInline>timerStart</codeInline> and <codeInline>timerStop</codeInline> element.
+                </para>
+                <code language="xml" >
+                    <![CDATA[
+    <eventSource name="Timers">
+      <timer id="evTimerOpen" name="TimerOpen" description="opening duration"/>
+      <timer id="evTimerClose" name="TimerClose" description="closing duration"/>
+    </eventSource>
+              ]]>
+                </code>
+                <para>
+                    This code shows how to start and stop a timer, as well as handle a transition when the timer expires:
+                </para>
+                <code language="xml">
+                    <![CDATA[
+    <state name="OpenAndWaitForOpened">
+      <onEntry>
+        <action>doorTester.GetDoor().EvOpen()</action>
+        <timerStart timer="TimerOpen" duration="doorTester.GetOpenDuration()"/>
+      </onEntry>
+      <onExit>
+        <timerStop timer="TimerOpen"/>
+      </onExit>
+      <transition event="evTimerOpen" action="doorTester.GetDoor().EvSensorOpened()"
+                  nextState="CloseAndWaitForClosed"/>
+    </state>
+                    ]]>
+                </code>
+                <para>
+                    The duration in milliseconds can be obtained through one of the method of the object instance, in this case <codeInline>doorTester.GetOpenDuration()</codeInline>. There is no need to insert numerical value inside the state machine description.
+                </para>
+                <para>
+                    <codeInline>timerStart</codeInline> and <codeInline>timerStop</codeInline> can alo be places inside a <codeInline>transition</codeInline> element:
+                </para>
+                <code language="xml">
+                    <![CDATA[
+      <transition event="evStart" nextState="Running">
+          <timerStart timer="TimerMaxDuration" duration="urlGet.GetMaxDuration()"/>
+      </transition>
+                    ]]>
+                </code>
+            </content>
+        </section>
+        <section address="Parallel">
+            <title>Parallel state machine</title>
+            <content>
+                <para>
+                    State machine can hold parallel states also known as regions. This feature allows multiple sub state machine to react to the same set of events. Each sub state machine evolves on its own.
+                </para>
+                <para>
+                    Upon entering a parallel state, the sub state machines enter in their initial state.
+                </para>
+                <para>
+                    When all states have reached their final state, the parallel state is left.
+                    Another way to leave a parallel state is when a transition goes to a state outside the parallel state.
+                </para>
+                <para>Here is the <link xlink:href="6386d6e6-83ea-4a33-819c-b3f1f9947d35">UrlGet</link>  example where a web page is fetched through HTTP and a file is downloaded through FTP.</para>
+                <!--<mediaLink>
+                    <caption>Parallel state diagram</caption>
+                    <image xlink:href="XmppAliceBobOpenClose"/>
+                </mediaLink>-->
+                <code language="xml">
+                    <![CDATA[
+        <state name="Running">
+            <parallel name="Protocols" nextState="End">
+                <!-- State Http -->
+                <state name="Http">
+                    <!-- State HttpGet -->
+                    <state name="HttpGet" description="fetch a web page">
+                        <onEntry action="urlGet.httpStart()"/>
+                        <transition event="evHttpDone" nextState="HttpEnd" description="http done"/>
+                        <transition event="evHttpDoneError" nextState="End" description="http error"/>
+                    </state>
+                    <!-- State HttpEnd -->
+                    <state name="HttpEnd" kind="final"/>
+                </state>
+                <!-- State Http -->
+
+                <!-- State Ftp -->
+                <state name="Ftp">
+                    <!-- State FtpGet -->
+                    <state name="FtpGet" description="get a file from Ftp">
+                        <onEntry action="urlGet.ftpStart()"/>
+                        <transition event="evFtpDone" nextState="FtpEnd" description="ftp done"/>
+                        <transition event="evFtpDoneError" nextState="End" description="ftp error"/>
+                    </state>
+                    <!-- State FtpEnd -->
+                    <state name="FtpEnd" kind="final"/>
+                </state>
+                <!-- State Ftp -->
+            </parallel>
+        </state>
+        <state name="End" kind="final"/>
+        ]]>
+                </code>
+                <para>
+                    For many more examples of parallel state machines and how they can be used to implement complex test cases, have a look at the <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709" >examples</link> matrix
+                </para>
+            </content>
+        </section>
+        <section address="Events">
+            <title>Events</title>
+            <content>
+                <para>
+                    Events are sent to state machine through method of the <codeInline>context</codeInline> generated class.
+                </para>
+                <para>The events method can have any kind and any number of parameters.</para>
+                <para>Each parameter have a name, a type, can be passed as a variable, a pointer or a reference, can be const or not.</para>
+                <para>Every existing class can be an event parameter, parameters do NOT need to inherit from an "EventBase" class.</para>
+            </content>
+            <sections>
+                <section address="InternalEvents">
+                    <title>
+                        Internal events
+                    </title>
+                    <content>
+                        <para>Here is the Acs example with external class as event parameters</para>
+                        <para>
+                            The <codeInline>AcsConnection</codeInline> class present in <codeInline>AcsConnection.h</codeInline> is included with the <codeInline>include</codeInline> element. 
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+    <!-- general settings -->
+    <settings asynchronous="true" namespace="com.stateforge.acscore">
+        <object instance="request" class="AcsRequestRebootPrivate"/>
+    </settings>
+
+    <!-- events -->
+    <events>
+        <!-- Management Events -->
+        <eventSource name="ManagementEvent">
+            <event id="evStart">
+                <parameter type="AcsConnection" name="connection"/>
+            </event>
+            <event id="evClose"/>
+        </eventSource>
+        <!-- Sockets Events -->
+        <eventSource name="SocketEvent">
+            <event id="evSocketError"/>
+        </eventSource>
+        <!-- Acs client Events -->
+        <eventSource name="AcsClientEvent">
+            <event id="evInformRequest"/>
+            <event id="evRebootResponse"/>
+            <event id="evHttpPost"/>
+            <event id="evSent"/>
+            <event id="evUnknownRequest"/>
+        </eventSource>
+    </events>
+                    ]]>
+                        </code>
+                    </content>
+                </section>
+                <section address="ExternalEvents">
+                    <title>
+                        External events
+                    </title>
+                    <content>
+                        <para>
+                            When the event list is shared among many state machines, including the same set of events in each state machines would be a maintance nightmare.
+                            The list of events can be imported from an external file thanks the the XInclude technology
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+    <events>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="eventProvider.xml"/>
+        <eventSource name="Timer">
+            <timer id="EvTimerMaxDuration" name="TimerMaxDuration"/>
+        </eventSource>
+    </events>
+                    ]]>
+                        </code>
+                    </content>
+                </section>
+            </sections>
+        </section>
+        <section address="Transition">
+            <title>Transitions</title>
+            <content>
+                <para>
+                    Transition represents a change in the state of the machine, it is defined by an event id, an eventual condition, an eventual set of actions to perform, and usually a next state.
+                </para>
+                <para>
+                    Each state can have any number of transitions.
+                </para>
+            </content>
+            <sections>
+                <section address="NormalTransition">
+                    <title>Normal transition</title>
+                    <content>
+                        <para>
+                            A normal transition is when the next exists and it is not the current state.
+                        </para>
+                        <para>
+                            Let's have a look at the <link xlink:href="f03632ac-f9ac-4db4-b793-29a8250e3629">TrafficLight</link> state machine:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+        <state name="Red">
+            <onEntry>
+                <action>light.turnOnRed()</action>
+                <timerStart timer="TimerRed" duration="light.getRedDuration()"/>
+            </onEntry>
+            <onExit>
+                <action>light.turnOffRed()</action>
+                <timerStop timer="TimerRed"/>
+            </onExit>
+            <transition event="evTimerRed" nextState="Green"/>
+        </state>
+        <state name="Yellow">
+            <onEntry action="light.turnOnYellow()">
+                <timerStart timer="TimerYellow" duration="light.getYellowDuration()"/>
+            </onEntry>
+            <onExit  action="light.turnOffYellow()"/>
+            <transition event="evTimerYellow" nextState="Red"/>
+        </state>
+                    ]]>
+                        </code>
+                        <para>
+                            Suppose the current state is <codeInline>Yellow</codeInline> and the event <codeInline>evTimerYellow</codeInline> is triggered. A transition begins from the state <codeInline>Yellow</codeInline> to <codeInline>Red</codeInline>:
+                        </para>
+                        <list class="ordered">
+                            <listItem>
+                                <para>Set the current state to null</para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Execute the <codeInline>onExit</codeInline> content of the state <codeInline>Yellow</codeInline>, it turns the yellow light off and stop the yellow timer.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Execute the eventual <codeInline>action</codeInline> content of the transition, in this case, nothing.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Execute the <codeInline>onEntry</codeInline> content of the state <codeInline>Red</codeInline>, it turns the red light on and start the red timer.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Set the current state to the <codeInline>Red</codeInline>.
+                                </para>
+                            </listItem>
+                        </list>
+                    </content>
+                </section>
+                <section address="SelfTransition">
+                    <title>Self transition</title>
+                    <content>
+                        <para>
+                            An self transition is when the next state is itself, in this case, <codeInline>onExit</codeInline> and <codeInline>onEntry</codeInline> are executed.
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+        <state name="SendPingAndWaitForReply">
+            <onEntry>
+                <action>ping.send()</action>
+                <timerStart timer="Timer" duration="ping.getTimeout()"/>
+            </onEntry>
+            <onExit>
+                <timerStop timer="Timer"/>
+            </onExit>
+            <transition event="EvCancel" nextState="End"/>
+            <transition event="EvPingReply" condition="ping.getTx() == ping.getCount()" nextState="End"/>
+            <transition event="EvTimer" condition="ping.getTx() == ping.getCount()" nextState="End"/>
+            <transition event="EvTimer" nextState="SendPingAndWaitForReply" />
+        </state>
+                    ]]>
+                        </code>
+                    </content>
+                </section>
+                <section address="InternalTransition">
+                    <title>Internal transition</title>
+                    <content>
+                        <para>
+                            An internal transition is when the next state is not present, in this case, <codeInline>onExit</codeInline> and <codeInline>onEntry</codeInline> are not executed.
+                        </para>
+                    </content>
+                </section>
+
+                <section address="Conditions">
+                    <title>Conditions</title>
+                    <content>
+                        <para>
+                            A condition can be added so that the transition is triggered only when the event is received and the condition is true.
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+        <state name="Alice_Closing" description="Alice is closing">
+            <onEntry action="alice.close()"/>
+            <transition event="Closed" condition="jid.getUser() == alice.getJid().getUser()" nextState="Alice_End"/>
+        </state>
+                    ]]>
+                        </code>
+                        <para>
+                            The condition can also be as an element, this is useful when the condition contains character such as the double quote, which cannot be present in an attribute:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+           <state name="Alice_RegisterNewAccount" description="Alice registers a new account">
+               <onEntry action="alice.registerNewAccount()"/>
+               <transition event="LoggedIn" nextState="Alice_Idle">
+                   <condition>jid.getUser().compareTo("Alice") == 0</condition>
+               </transition>
+           </state>
+                    ]]>
+                        </code>
+                        <para>
+                            In some cases where some symbols such as &amp;, &lt; and &gt; are used, the condition must be places inside CDATA element:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+        <state name="Alice_RosterAdd" description="Alice adds bob in roster">
+            <onEntry action="alice.rosterAddItem(bob.getJid())"/>
+            <transition event="RosterItem" nextState="Alice_Closing">
+                <condition><![CDATA[(jid == alice.getJid()) && (item.getJid() == bob.getJid()))]]]]><![CDATA[></condition>
+            </transition>
+        </state>
+                    ]]>
+                        </code>
+                        <para>
+                            Multiple transitions can have the same event, but beware that the transition order depends of the condition strength. The transition without guard, if any, must be the last one.
+                        </para>
+                        <para>
+                            Here is the <link xlink:href="30475eb5-e334-428d-a945-71a3aec10897">Ping</link> example that demonstrates simple transitions with or without condition, and a self transition:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+    <state name="Root">
+        <state name="Idle">
+            <transition event="evStart" nextState="SendPingAndWaitForReply"/>
+        </state>
+        <state name="SendPingAndWaitForReply">
+            <onEntry>
+                <action>ping.send()</action>
+                <timerStart timer="Timer" duration="ping.getTimeout()"/>
+            </onEntry>
+            <onExit>
+                <timerStop timer="Timer"/>
+            </onExit>
+            <transition event="EvCancel" nextState="End"/>
+            <transition event="EvPingReply" condition="ping.getTx() == ping.getCount()" nextState="End"/>
+            <transition event="EvTimer" condition="ping.getTx() == ping.getCount()" nextState="End"/>
+            <transition event="EvTimer" nextState="SendPingAndWaitForReply" />
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+                    ]]>
+                        </code>
+                    </content>
+                </section>
+                <section address="Actions">
+                    <title>Actions</title>
+                    <content>
+                        <para>
+                            When present, actions in transition are executed upon receiving an event. To be precise, actions are executed after the <codeInline>onExit</codeInline> but before the <codeInline>onEntry</codeInline>
+                        </para>
+                        <para>
+                            Actions can be defined in the <codeInline>action</codeInline> attribute:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+                  <transition event="evTimerOpen" action="endpoint.opened()" nextState="Running"/>
+                            ]]>
+                        </code>
+                        <para>
+                            Actions can be also defined with an <codeInline>action</codeInline> element:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+        <transition event="EvTimerMaxDuration" nextState="End">
+            <action>chatScenario.setError("Maximum duration expired")</action>
+        </transition>
+                            ]]>
+                        </code>
+                        <para>
+                            Furthermore, actions can be defined as a sequence of <codeInline>action</codeInline> elements:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+        <transition event="Pippo" nextState="Plutto">
+            <action>foo.doThis()</action>
+            <action>foo.doThat()</action>
+        </transition>
+                            ]]>
+                        </code>
+                    </content>
+                </section>
+            </sections>
+        </section>
+        <section address="Observable">
+            <title>Observable</title>
+            <content>
+                <para>An observer can be attached to the state machine to report what is happening. Debugging becomes much easier when the state machine is observable</para>
+                <para>
+                    Some observers are already written and are part of the <codeEntityReference>N:StateForge.StateMachine</codeEntityReference> library.
+                </para>
+                <code language="c#">
+                    <![CDATA[
+                    using StateForge.StateMachine;
+                    ]]>
+                </code>
+            </content>
+            <sections>
+                <section address="ObserverConsole">
+                    <title>ObserverConsole</title>
+                    <content>
+                        <para>
+                            The most basic observer is the console observer <codeInline>ObserverConsole</codeInline> which logs all messages to the standard output.
+                        </para>
+                        <para>
+                            Here is how to use the <codeInline>ObserverConsole</codeInline> singleton class:
+                        </para>
+                        <code language="j#">
+                            <![CDATA[
+                    public HelloWorld()
+                    {
+                        this.context = new HelloWorldContext(this);
+                        this.context.setObserver(ObserverConsole.getInstance());
+                    }
+                    ]]>
+                        </code>
+                    </content>
+                </section>
+                <section address="ObserverTrace">
+                    <title>ObserverTrace</title>
+                    <content>
+                        <para>
+                            A powerful observer is <codeInline>ObserverTrace</codeInline> which uses the standasrd java logging system.
+                            it logs messages according to its configuratinon file.
+                            Messages can be sent to according to their level and towards many kind of destination: console, file, database etc ...
+                        </para>
+                        <para>
+                            Here is how to use the <codeInline>ObserverTrace</codeInline> singleton class:
+                        </para>
+                        <code language="j#">
+                            <![CDATA[
+        public TrafficLight()
+        {
+            this.light = new Light();
+            this.context = new TrafficLightContext(light);
+            this.context.setObserver(ObserverTrace.getInstance());
+        }
+                    ]]>
+                        </code>
+                    </content>
+                </section>
+                <section address="UserDefinedObserver">
+                    <title>User defined observer</title>
+                    <content>
+                        <para>
+                            User defined observers can be implemented easily. First create a class that implements the interface <codeEntityReference>com.stateforge.statemachoine.IObserver</codeEntityReference>
+                        </para>
+                        <para>
+                            Then, create an instance of the observer just created and set it to the <codeInline>context</codeInline> class.
+                        </para>
+                        <para>
+                            The special observer <codeInline>ObserverNull</codeInline> can used to remove the current observer in the case logging has to be disabled.
+                        </para>
+                    </content>
+                </section>
+            </sections>
+
+        </section>
+        <section address="Context">
+            <title>The Context</title>
+            <content>
+                <para>
+                    The context class is the fundamental class generated and directly used by your code.
+                    The following documentation explains how the context class is named, what are the constructor parameters, how to perform the second phase initialization with <codeInline>EnterInitialState()</codeInline>, and finally, how to find out that the context has ended.
+                </para>
+            </content>
+            <sections>
+
+                <section address="ContextConstructor">
+                    <title>The context constructor</title>
+                    <content>
+                        <para>
+                            The constructor parameters are defined by the <codeInline>object</codeInline> tag in the <codeInline>settings</codeInline> element:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+    <settings asynchronous="true" namespace="com.mycompany.myproduct.mycomponent">
+        <object instance="foo" class="Foo"/>
+        <object instance="bar" class="Bar"/>
+    </settings>
+                    ]]>
+                        </code>
+                        <code language="c#">
+                            <![CDATA[
+        public MyClass()
+        {
+            Foo foo = new Foo();
+            Bar bar = new Bar();
+            this.context = new MyClassContext(foo, bar);
+        }
+                    ]]>
+                        </code>
+                        <para>
+
+                        </para>
+                    </content>
+                </section>
+                    
+                <section address="EnterInitialState">
+                    <title>enterInitialState()</title>
+                    <content>
+                        <para>
+                            After the creation of an instance of the context, one may invoke the method <codeInline>enterInitialState()</codeInline> to call the <codeInline>
+                                onEntry()
+                            </codeInline> method from root state to the initial state.
+                        </para>
+                        <para>
+                            Consider the Led state machine example:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+  <state name="Root">
+    <state name="SwitchedOff">
+      <onEntry action="led.doOff()"/>
+      <transition event="on" nextState="SwitchedOn"/>
+    </state>
+    <state name="SwitchedOn">
+      <onEntry action="led.doOn()"/>
+      <transition event="off" nextState="SwitchedOff"/>
+    </state>
+  </state>
+                    ]]>
+                        </code>
+                        <code language="cpp">
+                            <![CDATA[
+Led::Led()
+{
+    this.context = new LedContext(this);
+    this.context.enterInitialState();
+}
+                    ]]>
+                        </code>
+                        <para>
+                            In this case, <codeInline>enterInitialState()</codeInline> will call <codeInline>led.DoOff()</codeInline> to make sure the led is swithed off.
+                        </para>
+                        
+                    </content>
+                </section>
+                <section address="FinalState">
+                    <title>Final state</title>
+                    <content>
+                        <para>
+                            A final state is a state which has the attribute kind set to final:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+<state name="End" kind="final"/>
+                    ]]>
+                        </code>
+                        <para>
+                            When the machine enters this final state, the context fires a callback to the application.
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+                            
+    public Ping(final IPingListener listener) {
+        this.listener = listener;
+        this.context = new PingContext(this);
+        this.context.setObserver(ObserverConsole.getInstance());
+        this.context.setEndHandler(new IContextEnd() {
+            public void end() {
+                printStatistics();
+                listener.end(); 
+            }
+        });
+    }   
+               
+                    ]]>
+                        </code>
+                    </content>
+
+                </section>
+                <section address="ContextClassname">
+                    <title>The context class name</title>
+                    <content>
+                        <para>
+                            By default the context class name is based on the filename without extension, then it is suffixed by "Context":
+                        </para>
+                        <para>
+                            <command>
+                                <replaceable>MyClass</replaceable>.fsmjava => <replaceable>MyClass</replaceable>Context
+                            </command>
+                        </para>
+                        <para>
+                            It is also possible to set the context class name with the <codeInline>context</codeInline> element:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+    <settings asynchronous="false" namespace="com.stateforge.statemachine.examples.microwave">
+        <object instance="action" class="MicrowaveAction"/>
+        <context class="MicrowaveContext"/>
+    </settings>
+                    ]]>
+                        </code>
+                        <para>
+                            This can be useful when the default context class name is not appropriate,
+                            for instance, the default context class name for the state machine <localUri>Microwave02.fsm</localUri> would be <codeInline>Microwave02Context</codeInline> ,
+                            but this can be changed with the  <codeInline>settings/context@class</codeInline> attribute.
+                        </para>
+                    </content>
+                </section>
+
+            </sections>
+        </section>
+
+        <section address="OnEntryOnExit">
+            <title>OnEntry and OnExit</title>
+            <content>
+                <para>
+                    Some actions may have to be executed when a state is entered and left.
+                    The element <codeInline>onEntry</codeInline> and <codeInline>onExit</codeInline> holds the actions to performs.
+                    Usually, actions done upon entering and actions done when leaving are opposite: start and stop a timer, open and close a database etc ...
+                </para>
+                <para>
+                    In the <link xlink:href="6386d6e6-83ea-4a33-819c-b3f1f9947d35">UrlGet</link> example, <codeInline>urlGet.httpStart()</codeInline> is called when entering the state <codeInline>HttpGet</codeInline>.
+                </para>
+                <code language="xml">
+                    <![CDATA[
+                    <state name="HttpGet" description="fetch a web page">
+                        <onEntry action="urlGet.httpStart()"/>
+                        <transition event="evHttpDone" nextState="HttpEnd" description="http done"/>
+                        <transition event="evHttpDoneError" nextState="End" description="http error"/>
+                    </state>
+                    ]]>
+                </code>
+                <para>
+                    In the <link xlink:href="5a26797e-e46b-45ac-b48e-e0772ead3110">Door</link> example, The timer <codeInline>TimerOpen</codeInline> is started when entering the state <codeInline>OpenAndWaitForOpened</codeInline>.
+                </para>
+                <code language="xml">
+                    <![CDATA[
+        <state name="OpenAndWaitForOpened">
+            <onEntry>
+                <action>doorTester.GetDoor().EvOpen()</action>
+                <timerStart timer="TimerOpen" duration="doorTester.GetOpenDuration()"/>
+            </onEntry>
+            <onExit>
+                <timerStop timer="TimerOpen"/>
+            </onExit>
+            <transition event="evTimerOpen" 
+                        action="doorTester.GetDoor().EvSensorOpened()"
+                        nextState="CloseAndWaitForClosed"/>
+        </state>        
+                    ]]>
+                </code>
+                <para>
+                    In the <link xlink:href="f03632ac-f9ac-4db4-b793-29a8250e3629">TrafficLight</link> example, <codeInline>light.TurnOnRed()</codeInline> is called and the timer <codeInline>TimerRed</codeInline> is started when entering the state <codeInline>Red</codeInline>. <codeInline>light.TurnOffRed()</codeInline> is called and the timer <codeInline>TimerRed</codeInline> is stopped when leaving this state.
+                </para>
+                <code language="xml">
+                    <![CDATA[
+        <state name="Red">
+            <onEntry>
+                <action>light.TurnOnRed()</action>
+                <timerStart timer="TimerRed" duration="light.getRedDuration()"/>
+            </onEntry>
+            <onExit>
+                <action>light.TurnOffRed()</action>
+                <timerStop timer="TimerRed"/>
+            </onExit>
+            <transition event="EvTimerRed" nextState="Green"/>
+        </state>
+                    ]]>
+                </code>
+            </content>
+        </section>
+
+        <section address="History">
+            <title>History</title>
+            <content>
+                <para>An history state is used in association with a complex state, when the complex state is left, the current state is saved, when a transition occurs to the history state, the machine actually goes back to the saved state.</para>
+                <para>
+                    Let's have a look at the <link xlink:href="df8634f6-4652-4fff-b092-acaba3c3bb66">WashingMachine</link> example:
+                </para>
+                <mediaLink>
+                    <caption>State diagram of a washing machine with history state</caption>
+                    <image xlink:href="WashingMachineHistoryStateDiagram"/>
+                </mediaLink>
+                <code language="xml">
+                    <![CDATA[
+    <state name="Top">
+        <transition event="Stop" nextState="End"/>
+        <state name="Idle">
+            <transition event="Start" nextState="Running"/>
+        </state>
+        <state name="Running">
+            <transition event="Fault" nextState="OutOfService"/>
+            <state name="Washing">
+                <transition event="WashingDone" nextState="Rinsing"/>
+            </state>
+            <state name="Rinsing">
+                <transition event="RinsingDone" nextState="Spinning"/>
+            </state>
+            <state name="Spinning">
+                <transition event="SpinningDone" nextState="End"/>
+            </state>
+            <state name="History" kind="history"/>
+        </state>
+        <state name="OutOfService">
+            <transition event="DiagnoseSuccess" nextState="History"/>
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+                    ]]>
+                </code>
+                <para>
+                    Suppose the machine is in the Rinsing state and the event Fault occurs, the Rinsing state is saved and the machine goes to the OutOfService state, then arrives the event DiagnoseSuccess, the machine then goes back to the Rinsing state.
+                </para>
+                <para>The history state cannot be the first one, otherwise it would be the initial state which is not posssible.</para>
+            </content>
+        </section>
+
+        <relatedTopics>
+            <link xlink:href="32b960d9-f56e-40d4-bfea-2366aa0eb50d">Getting Started</link>
+            <link xlink:href="ef3b3e3e-e2b5-4461-bd74-10e2cc3b6187">Visual Studio Integration</link>
+            <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">List of examples</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

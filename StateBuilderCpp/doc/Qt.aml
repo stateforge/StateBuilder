@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="a0f3c46f-0fb3-48ea-a622-235140c90404" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>
+                <externalLink>
+                    <linkText>Qt</linkText>
+                    <linkUri>http://qt.nokia.com/products/</linkUri>
+                </externalLink> is very large set of C++ libraries well documented and easy to use.
+            </para>
+            <autoOutline>2</autoOutline>
+        </introduction>
+
+        <section address="Windows">
+            <title>Qt 4.7.3 on Windows</title>
+            <content>
+                <para>
+                    Beware that an application and its libraries must be compiled with the same compiler. 
+                    If you use Visual Studio, then Qt must be compiled with Visual Studio. On the other hand, if you use QtCreator, then Qt must be compiled with MinGw/Gcc.
+                </para>
+            </content>
+            <sections>
+                <section address="VisualStudio">
+                    <title>Visual Studio</title>
+                    <content>
+                        <para>
+                            Download the precompiled libraries for Visual Studio 2008 <externalLink>
+                                <linkText>here</linkText>
+                                <linkUri>http://qt.nokia.com/downloads/windows-cpp-vs2008</linkUri>
+                            </externalLink>
+                        </para>
+                        <alert>
+                            <para>The path to <application>qmake.exe</application> is something like <localUri>C:\Qt\4.7.3\bin\qmake.exe</localUri></para>
+                            <para>
+                                Edit <localUri>build/vs2008/qt-env.bat</localUri> and set the correct Qt location.
+                            </para>
+                        </alert>
+                    </content>
+                </section>
+                <section address="MinGw">
+                    <title>MinGw</title>
+                    <content>
+                        <para>
+                            Download the precompiled libraries for MinGw/Gcc <externalLink>
+                                <linkText>here</linkText>
+                                <linkUri>http://qt.nokia.com/downloads/sdk-windows-cpp</linkUri>
+                            </externalLink>
+                        </para>
+                        <alert>
+                            <para>
+                                The path to <application>qmake.exe</application> is something like <localUri>C:\QtSDK\Desktop\Qt\4.7.3\bin\qmake.exe</localUri>
+                            </para>
+                            <para>
+                                Edit <localUri>build/mingw/qt-env.bat</localUri> and set the correct Qt location.
+                            </para>
+                        </alert>
+                    </content>
+                </section>
+            </sections>
+        </section>
+
+        <section address="Linux">
+            <title>Qt on Linux</title>
+            <content>
+                <para>Qt comes precompiled for every major distribution, how to download and install Qt depends on the distribution package manager: yum or apt-get</para>
+            </content>
+            <sections>
+                <section address="RedHatFedoraCentOS">
+                    <title>RedHat/Fedora/CentOS</title>
+                    <content>
+                        <code>
+                            yum install qt-devel
+                        </code>
+                    </content>
+                </section>
+                <section address="UbuntuDebian">
+                    <title>Ubuntu/Debian</title>
+                    <content>
+                        <code>
+                            sudo apt-get install libqt4-dev
+                        </code>
+                    </content>
+                </section>
+            </sections>
+        </section>
+        <section address="Usage">
+            <title>Usage</title>
+            <content>
+                <para>
+                    The attribute <codeInline>library="qt"</codeInline> tells <application>StateBuilderCpp</application> to generate code that integrates well with Qt.
+                </para>
+                <code language="xml">
+                    <![CDATA[
+                    <settings asynchronous="true" library="qt">
+                        <object instance="ping" class="Ping" include="Ping.h"/>
+                    </settings>
+                    ]]>
+                </code>
+                <para>
+                    Examples that uses Qt are listed below:
+                </para>
+            </content>
+        </section>
+        <relatedTopics>
+            <link xlink:href="99660248-3054-43f2-9a97-e9f8a77f9e24">Ping</link>
+            <link xlink:href="6386d6e6-83ea-4a33-819c-b3f1f9947d35">UrlGet</link>
+            <link xlink:href="f03632ac-f9ac-4db4-b793-29a8250e3629">TrafficLight</link>
+            <link xlink:href="f9fdd532-a137-4818-9c36-738c783f7232">LoginMvc</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

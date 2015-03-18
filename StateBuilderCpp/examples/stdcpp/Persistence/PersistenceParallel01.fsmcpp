@@ -1,0 +1,33 @@
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1                                      http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd">
+    <!-- General settings -->
+    <settings asynchronous="false" serialize="true" library="std">
+        <object instance="action" class="Action" include="Persistence.h"/>
+    </settings>
+    
+    <!-- Events -->
+    <events>
+        <eventSource name="PersistenceEvent">
+            <event id="evStart"/>
+            <event id="evStop"/>
+        </eventSource>
+    </events>
+
+    <!-- States -->
+    <state name="Persistence">
+        <state name="Idle">
+            <transition event="evStart" nextState="Running"/>
+        </state>
+        <state name="Running">
+          <parallel nextState="End">
+            <state name="Alice">
+              
+            <state name="AliceIdle"/><state name="AliceEnd"/></state>
+            <state name="Bob">
+
+            <state name="BobIdle"/><state name="BobEnd"/></state>
+          </parallel>
+           
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+</sm:StateMachine>

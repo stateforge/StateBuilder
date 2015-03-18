@@ -1,0 +1,22 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>@CMAKE_CURRENT_BINARY_DIR@/@STATEBUILDERCPP_WINSETUP_JAR@</jar>
+  <outfile>@RELEASES_DIR@/@STATEBUILDERCPP_WINSETUP_EXE@</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>true</stayAlive>
+  <manifest>@CMAKE_CURRENT_SOURCE_DIR@/packaging/Launch4j/uac.exe.manifest</manifest>
+  <icon>@CMAKE_CURRENT_SOURCE_DIR@/icons/StateBuilderCpp.ico</icon>
+  <jre>
+    <path></path>
+    <minVersion>1.6.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+  </jre>
+</launch4jConfig>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+    <!-- General settings -->
+    <settings asynchronous="true" library="qt">
+        <object instance="connection" class="AcsConnection" include="AcsConnection.h"/>
+        <object instance="connectionPrivate" class="AcsConnectionPrivate" include="AcsConnectionPrivate.h"/>
+    </settings>
+
+    <!-- events -->
+    <events>
+        <eventSource name="ManagementEvent">
+            <event id="evStop"/>
+        </eventSource>
+        <eventSource name="QHttpRequest">
+            <event id="evEndRequest"/>
+        </eventSource>
+        <eventSource name="QHttpRequest">
+            <event id="evDoneResponse"/>
+        </eventSource>
+        <eventSource name="TimerEvent">
+            <timer id="evMaxProcessingTimer" name="MaxProcessingTimer"/>
+            <timer id="evHttpResponseDelayTimer" name="HttpResponseDelayTimer"/>
+        </eventSource>
+        <!-- Acs client Events -->
+        <eventSource name="AcsClientEvent">
+            <event id="evInformRequest"/>
+            <event id="evGetParameterNamesResponse"/>
+            <event id="evPost"/>
+            <event id="evSent"/>
+            <event id="evUnknownRequest"/>
+        </eventSource>
+    </events>
+
+    <state name="AcsConnection">
+        <!-- State WaitInformRequest -->
+        <state name="WaitInformRequest">
+            <transition event="evInformRequest" nextState="WaitPost">
+                <!--         <action>connection.sendInformResponse();</action> -->
+            </transition>
+        </state>
+        <state name="WaitPost">
+            <transition event="evPost" nextState="WaitPost">
+                <!--         <action>connection.sendRequest();</action> -->
+            </transition>
+        </state>
+        <state name="WaitAck">
+            <transition event="evSent" nextState="End"/>
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+
+</sm:StateMachine>
+

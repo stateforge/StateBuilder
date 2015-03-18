@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<shortcuts>
+
+    <defaultCurrentUser/>
+    <!--<skipIfNotSupported/>-->
+    <programGroup defaultName="StateBuilderJava"
+                  location="applications"/>
+
+    <!-- StateBuilderJava.exe -->
+    <!--<shortcut
+      name="StateBuilderJava"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      target="$INSTALL_PATH\lib\statebuilder-java-1.0.4.jar"
+      commandLine=""
+      description="Install a StateBuilderJava license"
+      iconFile="$INSTALL_PATH\icons\StateBuilderJava.ico"
+      iconIndex="0">
+    </shortcut>-->
+    <shortcut
+      name="StateEditor"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      target="$INSTALL_PATH\bin\StateEditor.exe"
+      commandLine=""
+      description="State Machine Editor"
+      iconFile="$INSTALL_PATH\bin\StateEditor.exe"
+      iconIndex="0">
+    </shortcut>
+    <!-- Doc -->
+
+    <shortcut
+      name="StateBuilderJava Help"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      target="$INSTALL_PATH\doc\StateBuilderJava.url"
+      description="StateBuilderJava online help"
+      iconFile="%SystemRoot%\system32\url.dll"
+      iconIndex="0">
+    </shortcut>
+    
+    <shortcut
+      name="StateBuilderJava Home"
+      programGroup="yes"
+      desktop="yes"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      target="$INSTALL_PATH"
+      description="StateBuilderJava home directory"
+      iconIndex="0">
+    </shortcut>
+    
+    <!-- Uninstaller -->
+    <shortcut
+      name="StateBuilderJava Uninstaller"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      target="$INSTALL_PATH\Uninstaller\uninstaller.jar"
+      iconFile="%SystemRoot%\system32\SHELL32.dll"
+      iconIndex="31"
+      description="This uninstalls StateBuilderJava $APP_VER">
+    </shortcut>
+</shortcuts>

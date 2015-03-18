@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<shortcuts>
+    <skipIfNotSupported/>
+    <programGroup defaultName="StateBuilderCpp"
+                location="applications"/>
+    <shortcut
+    name="StateBuilderCpp"
+    target="$INSTALL_PATH/bin/StateBuilderCpp.sh"
+    description="StateBuilderCpp $APP_VER"
+    workingDirectory="$INSTALL_PATH"
+    iconFile="$INSTALL_PATH/icons/48-StateBuilderCpp.png"
+    initialState="normal"
+    programGroup="yes"
+    desktop="no"
+    applications="no"
+    startMenu="no"
+    startup="no"
+    type="Application"
+    terminal="true"
+    encoding="UTF-8">
+    </shortcut>
+
+    <shortcut
+      name="Help"
+      target="xdg-open"
+      commandLine="http://www.stateforge.com/Help/StateBuilderCpp/statebuildercpp-state-machine-generator.aspx"
+      description="StateBuilderCpp Help"
+      iconFile="$INSTALL_PATH/icons/32-docs.png"
+      initialState="normal"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      type="Application"
+      terminal="false"
+      encoding="UTF-8">
+    </shortcut>
+
+    <shortcut
+      name="StateBuilderCpp Root Directory"
+      target="xdg-open"
+      commandLine="$INSTALL_PATH"
+      description="StateBuilderCpp root directory"
+      iconFile="$INSTALL_PATH/icons/32-folder.png"
+      initialState="normal"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      type="Application"
+      terminal="false"
+      encoding="UTF-8">
+    </shortcut>
+
+    <shortcut
+       name="Uninstall"
+       target="/usr/bin/java"
+       commandLine="-jar &quot;$INSTALL_PATH/Uninstaller/Uninstaller.jar&quot;"
+       description="Uninstall  StateBuilderCpp"
+       workingDirectory="$INSTALL_PATH"
+       iconFile="$INSTALL_PATH/icons/48-uninstall.png"
+       initialState="normal"
+       programGroup="yes"
+       desktop="no"
+       applications="no"
+       startMenu="no"
+       startup="no"
+       type="Application"
+       terminal="false"
+       encoding="UTF-8">
+    </shortcut>
+    
+</shortcuts>

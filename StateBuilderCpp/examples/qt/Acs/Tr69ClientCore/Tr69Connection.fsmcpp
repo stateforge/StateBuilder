@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+    <!-- General settings -->
+    <settings asynchronous="true" library="qt">
+        <object instance="connection" class="Tr69Connection" include="Tr69Connection.h"/>
+        <object instance="connectionPrivate" class="Tr69ConnectionPrivate" include="Tr69ConnectionPrivate.h"/>
+    </settings>
+
+    <!-- events -->
+    <events>
+        <!-- Management Events -->
+        <eventSource name="ManagementEvent">
+            <event id="EvClose"/>
+        </eventSource>
+        <!-- Acs client Events -->
+        <eventSource name="InternalEvent">
+            <event id="evSendInformRequest"/>
+        </eventSource>
+        <eventSource name="ParserEvent">
+            <event id="evInformResponse"/>
+            <event id="evParserError"/>
+        </eventSource>
+        <eventSource name="SocketEvent">
+            <event id="evSocketError"/>
+            <event id="evSocketDisconnected"/>
+            <event id="evSocketConnected"/>
+        </eventSource>
+        <eventSource name="TimerEvent">
+            <timer id="evRequestTimer" name="RequestTimer"/>
+        </eventSource>
+    </events>
+
+    <state name="Tr69Connection">
+        <transition event="evParserError" nextState="End"/>
+        <transition event="evSocketError" nextState="End"/>
+        <transition event="evSocketDisconnected" nextState="End"/>
+        <!-- State Idle -->
+        
+        <state name="Idle">
+            <transition event="evSendInformRequest" nextState="Connecting"/>
+        </state>
+        <state name="Connecting">
+            <onEntry action="connectionPrivate.doConnect()"/>
+            <transition event="evSocketConnected" nextState="SendInformRequestAndWaitForResponse"/>
+        </state>
+        <state name="SendInformRequestAndWaitForResponse">
+            <onEntry action="connectionPrivate.doSendInformRequest()">
+                <timerStart timer="RequestTimer" duration="connection.conf().requestTimeout"/>
+            </onEntry>
+            <onExit>
+                <action>connectionPrivate.emitFinished()</action>
+            </onExit>
+            <transition event="evRequestTimer" nextState="Idle">
+                <action>connectionPrivate.m_errorMessage = "Timeout waiting for Inform Response"</action>
+            </transition>
+            <transition event="evInformResponse" nextState="SendPost"/>
+        </state>
+        <state name="SendPost">
+            <onEntry action="connectionPrivate.doSendPost()">
+            </onEntry>
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+
+</sm:StateMachine>
+

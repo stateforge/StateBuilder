@@ -1,0 +1,25 @@
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineJava-v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.stateforge.com/StateMachineJava-v1                                      http://www.stateforge.com/xsd/StateMachineJava-v1.xsd">
+    <!-- General settings -->
+    <settings asynchronous="true" namespace="com.stateforge.statemachine.examples.Unitest01">
+        <object instance="action" class="Action"/>
+    </settings>
+    <!-- Events -->
+    <events>
+        <eventSource name="Unitest01Event">
+            <event id="start"/>
+            <event id="stop"/>
+        </eventSource>
+    </events>
+    <!-- States -->
+    <state name="Unitest01">
+        <state name="Idle">
+            <transition event="start" nextState="Running">
+                <action>action.doPrint("HELLO")</action>
+            </transition>
+        </state>
+        <state name="Running">
+            <transition event="stop" nextState="End"/>
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+</sm:StateMachine>

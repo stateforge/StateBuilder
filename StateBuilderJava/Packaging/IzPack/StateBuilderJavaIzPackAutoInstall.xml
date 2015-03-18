@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AutomatedInstallation langpack="eng">
+<com.izforge.izpack.panels.HTMLInfoPanel id="readme"/>
+<com.izforge.izpack.panels.LicencePanel id="UNKNOWN (com.izforge.izpack.panels.LicencePanel)"/>
+<com.izforge.izpack.panels.TargetPanel id="UNKNOWN (com.izforge.izpack.panels.TargetPanel)">
+<installpath>C:\Users\frederic\AppData\Local\StateForge\StateBuilderJava</installpath>
+</com.izforge.izpack.panels.TargetPanel>
+<com.izforge.izpack.panels.InstallPanel id="UNKNOWN (com.izforge.izpack.panels.InstallPanel)"/>
+<com.izforge.izpack.panels.ShortcutPanel id="UNKNOWN (com.izforge.izpack.panels.ShortcutPanel)">
+<programGroup name="StateBuilderJava"/>
+<shortcut KdeSubstUID="false" categories="" commandLine="" createForAll="false" description="State Machine Editor" encoding="" group="true" icon="C:\Users\frederic\AppData\Local\StateForge\StateBuilderJava\bin\StateEditor.exe" iconIndex="0" initialState="1" mimetype="" name="StateEditor" target="C:\Users\frederic\AppData\Local\StateForge\StateBuilderJava\bin\StateEditor.exe" terminal="" terminalOptions="" tryexec="" type="1" url="" usertype="0" workingDirectory=""/>
+<shortcut KdeSubstUID="false" categories="" commandLine="" createForAll="false" description="StateBuilderJava online help" encoding="" group="true" icon="%SystemRoot%\system32\url.dll" iconIndex="0" initialState="1" mimetype="" name="StateBuilderJava Help" target="C:\Users\frederic\AppData\Local\StateForge\StateBuilderJava\doc\StateBuilderJava.url" terminal="" terminalOptions="" tryexec="" type="1" url="" usertype="0" workingDirectory=""/>
+<shortcut KdeSubstUID="false" categories="" commandLine="" createForAll="false" description="StateBuilderJava home directory" encoding="" group="false" icon="" iconIndex="0" initialState="1" mimetype="" name="StateBuilderJava Home" target="C:\Users\frederic\AppData\Local\StateForge\StateBuilderJava" terminal="" terminalOptions="" tryexec="" type="3" url="" usertype="0" workingDirectory=""/>
+<shortcut KdeSubstUID="false" categories="" commandLine="" createForAll="false" description="StateBuilderJava home directory" encoding="" group="true" icon="" iconIndex="0" initialState="1" mimetype="" name="StateBuilderJava Home" target="C:\Users\frederic\AppData\Local\StateForge\StateBuilderJava" terminal="" terminalOptions="" tryexec="" type="1" url="" usertype="0" workingDirectory=""/>
+<shortcut KdeSubstUID="false" categories="" commandLine="" createForAll="false" description="This uninstalls StateBuilderJava 1.4.0" encoding="" group="true" icon="%SystemRoot%\system32\SHELL32.dll" iconIndex="31" initialState="1" mimetype="" name="StateBuilderJava Uninstaller" target="C:\Users\frederic\AppData\Local\StateForge\StateBuilderJava\Uninstaller\uninstaller.jar" terminal="" terminalOptions="" tryexec="" type="1" url="" usertype="0" workingDirectory=""/>
+</com.izforge.izpack.panels.ShortcutPanel>
+<com.izforge.izpack.panels.ProcessPanel id="UNKNOWN (com.izforge.izpack.panels.ProcessPanel)"/>
+<com.izforge.izpack.panels.FinishPanel id="UNKNOWN (com.izforge.izpack.panels.FinishPanel)"/>
+</AutomatedInstallation>

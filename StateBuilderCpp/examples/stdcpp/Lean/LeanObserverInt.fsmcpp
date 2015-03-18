@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+
+    <!-- general settings -->
+    <settings asynchronous="false" library="std" observer="int" namespace="carefusion">
+        <object instance="action" class="Action" include="Action.h"/>
+    </settings>
+    
+    <!-- events -->
+    <events>
+        <eventSource name="Event">
+            <event id="eventA"/>
+            <event id="eventB"/>
+            <event id="eventC"/>
+        </eventSource>
+    </events>
+
+    <!-- states -->
+    <state name="Lean">
+        <state name="S1">
+            <onEntry action="action.Off()"/>
+            <transition event="eventA" nextState="S2"/>
+        </state>
+        <state name="S2">
+            <onEntry action="action.On()"/>
+            <transition event="eventB" nextState="S3"/>
+        </state>
+        <state name="S3">
+            <onEntry action="action.Off()"/>
+            <transition event="eventC" condition="action.HasReachedMaxActions()" nextState="End"/>
+            <transition event="eventC" nextState="S1"/>
+        </state>
+        <state name="End" kind="final"/>
+
+    </state>
+</sm:StateMachine>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<shortcuts>
+    <skipIfNotSupported/>
+    <programGroup defaultName="StateBuilderJava"
+                location="applications"/>
+    <shortcut
+    name="StateBuilderJava"
+    target="$INSTALL_PATH/bin/StateBuilderJava.sh"
+    description="StateBuilderJava $APP_VER"
+    workingDirectory="$INSTALL_PATH"
+    iconFile="$INSTALL_PATH/icons/48-StateBuilderJava.png"
+    initialState="normal"
+    programGroup="yes"
+    desktop="no"
+    applications="no"
+    startMenu="no"
+    startup="no"
+    type="Application"
+    terminal="true"
+    encoding="UTF-8">
+    </shortcut>
+
+    <shortcut
+      name="Help"
+      target="xdg-open"
+      commandLine="http://www.stateforge.com/Help/StateBuilderJava/statebuilderjava-state-machine-generator.aspx"
+      description="StateBuilderJava Help"
+      iconFile="$INSTALL_PATH/icons/32-docs.png"
+      initialState="normal"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      type="Application"
+      terminal="false"
+      encoding="UTF-8">
+    </shortcut>
+
+    <shortcut
+      name="StateBuilderJava Root Directory"
+      target="xdg-open"
+      commandLine="$INSTALL_PATH"
+      description="StateBuilderJava root directory"
+      iconFile="$INSTALL_PATH/icons/32-folder.png"
+      initialState="normal"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      type="Application"
+      terminal="false"
+      encoding="UTF-8">
+    </shortcut>
+
+    <shortcut
+       name="Uninstall"
+       target="/usr/bin/java"
+       commandLine="-jar &quot;$INSTALL_PATH/Uninstaller/Uninstaller.jar&quot;"
+       description="Uninstall  StateBuilderJava"
+       workingDirectory="$INSTALL_PATH"
+       iconFile="$INSTALL_PATH/icons/48-uninstall.png"
+       initialState="normal"
+       programGroup="yes"
+       desktop="no"
+       applications="no"
+       startMenu="no"
+       startup="no"
+       type="Application"
+       terminal="false"
+       encoding="UTF-8">
+    </shortcut>
+    
+</shortcuts>

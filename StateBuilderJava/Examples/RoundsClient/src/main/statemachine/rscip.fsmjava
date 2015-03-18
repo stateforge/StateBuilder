@@ -1,0 +1,149 @@
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineJava-v1"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://www.stateforge.com/StateMachineJava-v1
+				     http://www.stateforge.com/xsd/StateMachineJava-v1.xsd">
+    <!-- general settings -->
+    <settings asynchronous="true" namespace="rounds.rscip.client">
+        <object instance="parameters" class="StateParameters"/>
+    </settings>
+    <!-- events -->
+    <events>
+        <eventSource name="UserAction">
+            <event id="beginConference">
+	      <parameter type="ParticipantID" name="participantId"/>  
+	    </event>
+            <event id="enterConference">
+	      <parameter type="ConferenceID" name="conferenceId"/>  
+	    </event>
+            <event id="exitConference">
+	      <parameter type="ConferenceID" name="conferenceId"/>  
+	    </event>
+            <event id="inviteParticipant">
+	      <parameter type="ConferenceID" name="conferenceId"/>  
+	      <parameter type="ParticipantID" name="participantId"/>
+	    </event>
+            <event id="acceptInvite">
+	      <parameter type="ConferenceID" name="conferenceId"/>  
+	    </event>
+            <event id="rejectInvite">
+	      <parameter type="ConferenceID" name="conferenceId"/>  
+	    </event>
+        </eventSource>
+
+        <eventSource name="MessageReceived">
+            <event id="createConferenceOK">
+	      <parameter type="ConferenceID" name="conferenceId"/>  
+	    </event>
+            <event id="createConferenceFAILED">
+	    </event>
+            <event id="conferenceUpdateMessage">
+	      <parameter type="ConferenceID" name="conferenceId"/>  
+	      <parameter type="MediaConferenceID" name="mediaConfId"/>  
+	    </event>
+            <event id="participantReceivedInviteMessage">
+	      <parameter type="ConferenceID" name="conferenceId"/>  
+	      <parameter type="ParticipantID" name="participantId"/>  
+	    </event>
+            <event id="presenceUpdateMessage">
+	      <parameter type="ConferenceID" name="conferenceId"/>  
+	      <parameter type="ParticipantID" name="participantId"/>  
+	      <parameter type="ActionType" name="action"/>  
+	    </event>
+            <event id="conferenceInviteMessage">
+	      <parameter type="ConferenceID" name="conferenceId"/>  
+	      <parameter type="ParticipantID" name="participantId"/>
+	    </event>
+            <event id="conferenceExitMessage">
+	      <parameter type="ConferenceID" name="conferenceId"/>  
+	      <parameter type="ParticipantID" name="participantId"/>
+	    </event>
+
+        </eventSource>
+
+        <eventSource name="MessageTimeouts">
+            <event id="createConferenceMessageTimeout"/>
+        </eventSource>
+
+        <eventSource name="LocalEvent">
+            <event id="xmppConnected"/>
+            <event id="localConferenceFailed"/>
+        </eventSource>
+
+        <eventSource name="Timer">
+            <timer id="EvMessageTimer" name="MessageTimer"/>
+            <timer id="EvConferenceSetupTimer" name="ConferenceSetupTimer"/>
+        </eventSource>
+    </events>
+    <!-- States -->
+    <state name="RSCIP">
+      <!-- State Idle -->
+      <state name="Idle">
+	<transition event="beginConference" nextState="ConferenceSetup">
+	      <action>parameters.sendConferenceCreateMessage(participantId)</action>
+	</transition>
+	<transition event="conferenceInviteMessage" nextState="ConferenceInviteSetup"/>
+      </state>
+
+      <state name="ConferenceInviteSetup"/>
+
+      <state name="ConferenceSetup">
+	<onEntry>
+	  <timerStart timer="ConferenceSetupTimer" duration="parameters.getConferenceSetupTimeout()"/>
+	</onEntry>
+	<onExit>
+	  <timerStop timer="ConferenceSetupTimer"/>
+	</onExit>
+	<transition event="EvConferenceSetupTimer" nextState="ConferenceSetupTimeout"/>
+	<transition event="EvMessageTimer" nextState="ConferenceSetupTimeout"/>
+	<transition event="createConferenceFAILED" nextState="ConferenceSetupTimeout"/>
+
+	<parallel nextState="InConference">
+
+	  <state name="RoundsConferenceSetup">
+	    <onEntry>
+	      <timerStart timer="MessageTimer" duration="parameters.getConferenceCreateTimeout()"/>
+	    </onEntry>
+	    <onExit>
+	      <timerStop timer="MessageTimer"/>
+	    </onExit>
+
+	    <transition event="createConferenceOK" nextState="RoundsConferenceReady">
+	      <action>parameters.setConferenceId(conferenceId)</action>
+	    </transition>
+
+	    <state name="RoundsConferenceReady" kind="final">
+	      <transition event="presenceUpdateMessage" nextState="RoundsConferenceReady">
+		<action>parameters.notifyUserConferenceParticipant(conferenceId,participantId,action)</action>
+	      </transition>
+	    </state>
+	  </state>
+
+	  <state name="MediaConferenceSetup">
+	    <transition event="conferenceUpdateMessage" nextState="MediaConferenceReady"/>
+
+	    <state name="MediaConferenceReady" kind="final"/>
+	  </state>
+
+	</parallel>
+      </state>
+
+      <state name="InConference">
+	<onEntry action="parameters.notifyUserConferenceActive(parameters.getConferenceId())" />
+	<onExit action="parameters.sendExitConferenceMessage(parameters.getConferenceId())" />
+	<transition event="presenceUpdateMessage" nextState="InConference">
+	  <action>parameters.notifyUserConferenceParticipant(conferenceId,participantId,action)</action>
+	</transition>
+	<transition event="exitConference" nextState="End"/>
+	<transition event="localConferenceFailed" nextState="End"/>
+	<transition event="conferenceExitMessage" nextState="End"/>
+      </state>
+
+      <state name="ConferenceSetupTimeout" kind="final">
+	<onEntry>
+	  <action>parameters.notifyUserConferenceSetupTimeout(parameters.getConferenceId())</action>
+	</onEntry>
+      </state>
+
+      <state name="End" kind="final"/>
+    </state>
+</sm:StateMachine>

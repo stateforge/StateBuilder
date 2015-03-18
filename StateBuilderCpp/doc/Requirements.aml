@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="a8f0c368-0fd0-46d3-807d-0bc31686b330" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>Build time and runtime requirements</para>
+            <autoOutline>2</autoOutline>
+        </introduction>
+
+        <section address="Java">
+            <title>Java Runtime Environment</title>
+            <content>
+                <para>
+                    <application>StateBuilderCpp</application> is written in Java, therefore the Java Runtime Environment 1.6 is required to run it.
+                </para>
+                <para>
+                    In case the JRE is not installed, <application>StateBuilderCpp.exe</application>
+                    will open a webpage where the JRE can be downloaded.
+                </para>
+                <alert>
+                    <para>Java is a build time requirement, not a run time requirement, the generared C++ code does NOT need Java.</para>
+                </alert>
+            </content>
+        </section>
+        <section address="CMake">
+            <title>CMake</title>
+            <content>
+                <para>
+                    CMake is used to generate all the necessary files to compile the helper libraries and the examples.
+                    For instance, CMake is able to generate Visual Studio C++ solutions, XCode project, Unix Makefiles, MinGw Makefiles, etc ...
+                </para>
+                <para>
+                    Download CMake <externalLink>
+                        <linkText>here</linkText>
+                        <linkUri>http://www.cmake.org/cmake/resources/software.html</linkUri>
+                    </externalLink>
+                </para>
+                <para>
+                    The list of available CMake project generators is available <externalLink>
+                        <linkText>here</linkText>
+                        <linkUri>http://www.cmake.org/cmake/help/cmake-2-8-docs.html#section_Generators</linkUri>
+                    </externalLink>
+                </para>
+            </content>
+        </section>
+        <section address="Compilers">
+            <title>Compilers and IDE</title>
+            <content>
+                <para>
+                    <application>StateBuilderCpp.exe</application> generates C++ source code that can be compiled by different compilers on different platforms, here is a list on which this software is tested on a regular basis:
+                </para>
+                <list class="bullet">
+                    <listItem>
+                        <para>
+                            Vista/Visual Studio 2008 express
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Vista/QtCreator/MinGw/Gcc
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            MacOSX/Gcc
+                        </para>
+                    </listItem>					
+                    <listItem>
+                        <para>
+                            Ubuntu/Gcc
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Fedora/Gcc
+                        </para>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+
+        <section address="Libraries">
+            <title>Third party libraries</title>
+            <content>
+                <para>
+                    <application>StateBuilderCpp</application> is able to generate code that integrates well with the <application>Boost</application> and <application>Qt</application> libraries.
+
+                    The source code generated may depend on these libraries, but it depends whether the state machine is synchrounous or asynchrounous:
+                </para>
+                <list class="bullet">
+                    <listItem>
+                        <para>
+                            Asynchronous: either <application>Boost</application> or <application>Qt</application> is required, support for other C++ libraries is possible, please contact us for further information.
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Synchronous: only the standard C++ library (STL) is required, but <application>Boost</application> or <application>Qt</application> can be used.
+                        </para>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+        <relatedTopics>
+            <link xlink:href="a0f3c46f-0fb3-48ea-a622-235140c90404">Qt Integration</link>
+            <link xlink:href="639911e9-6de8-4547-b463-db2942623f4c">Boost Integration</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

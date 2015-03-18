@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<installation version="1.0">
+    <info>
+        <appname>StateBuilderJava</appname>
+        <appversion>2.4.0</appversion>
+        <authors>
+            <author email="frederic.heem@stateforge.com" name="Frederic Heem"/>
+        </authors>
+        <url>http://www.stateforge.com</url>
+        <javaversion>1.6</javaversion>
+        <uninstaller name="Uninstaller.jar" write="yes"/>
+        <requiresjdk>no</requiresjdk>
+        <writeinstallationinformation>no</writeinstallationinformation>
+        <!--<pack200/>-->
+    </info>
+    <guiprefs height="400" resizable="no" width="800">
+        <modifier key="useFlags" value="yes"/>
+        <modifier key="langDisplayType" value="default"/>
+    </guiprefs>
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+    <resources>
+        <res id="HTMLInfoPanel.readme" src="README.html"/>
+        <res id="LicencePanel.licence" parse="yes" src="Copyright.txt"/>
+        <res id="Installer.image" src="Packaging/IzPack/Logo_200x300.png"/>
+        <!--<res id="Heading.image" src="Packaging/IzPack/Header_600x200.png"/>-->
+        <res id="shortcutSpec.xml" src="Packaging/IzPack/default_shortcut_specification.xml"/>
+        <res id="RegistrySpec.xml" src="Packaging/IzPack/RegistrySpec.xml"/>
+        <res id="TargetPanel.dir" src="Packaging/IzPack/Unix_InstallDir.txt"/>
+    </resources>
+    <panels>
+        <!--<panel classname="CheckedHelloPanel"/>-->
+        <panel classname="HTMLInfoPanel" id="readme"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="ShortcutPanel"/>
+        <panel classname="SimpleFinishPanel"/>
+    </panels>
+    <packs>
+        <pack name="Core" preselected="yes" required="yes">
+            <description/>
+            
+            <file override="update" src="../Compiler/java/target/statebuilder-java-2.4.jar" targetdir="$INSTALL_PATH/lib/">
+            </file>
+
+            <file override="update" src="../Compiler/AntTask/target/statebuilder-ant-task-2.4.jar" targetdir="$INSTALL_PATH/lib/">
+            </file>
+            
+            <file override="update" src="StateMachine/target/statemachine-2.4.jar" targetdir="$INSTALL_PATH/lib/">
+            </file>
+
+            <file override="update" src="icons/48-uninstall.png" targetdir="$INSTALL_PATH/icons">
+                <os family="unix"/>
+            </file>
+            <file override="update" src="icons/32-docs.png" targetdir="$INSTALL_PATH/icons">
+                <os family="unix"/>
+            </file>
+            <file override="update" src="icons/32-folder.png" targetdir="$INSTALL_PATH/icons">
+                <os family="unix"/>
+            </file>
+            <file override="update" src="icons/StateBuilderJava.png" targetdir="$INSTALL_PATH/icons">
+                <os family="unix"/>
+            </file>
+        </pack>
+        <pack name="Data" preselected="yes" required="yes">
+            <description/>
+            <file override="update" src="README.html" targetdir="$INSTALL_PATH/"/>
+            <parsable targetfile="$INSTALL_PATH/README.html"/>
+            <file override="update" src="Copyright.txt" targetdir="$INSTALL_PATH/"/>
+            <file override="update" src="../Compiler/java/src/main/resources/StateMachineJava-v1.xsd" targetdir="$INSTALL_PATH/share/xsd"/>
+        </pack>
+
+        <pack name="Help online" preselected="yes" required="yes">
+            <description/>
+            <file override="update" src="doc\StateBuilderJava.url" targetdir="$INSTALL_PATH/doc"/>
+        </pack>
+        
+        <pack name="Examples" preselected="yes" required="yes">
+            <description>The java state machine examples</description>
+            <fileset dir="Examples" targetdir="$INSTALL_PATH/Examples">
+                <exclude name="**/target/"/>
+                <exclude name="**/.settings/"/>
+                <exclude name="**/.project"/>
+                <exclude name="**/.classpath"/>
+                <exclude name="**/*~"/>
+                <exclude name="**/*.log"/>
+                <exclude name="**/*.bak"/>
+            </fileset>
+            <!--<file override="update"
+                src="Examples" targetdir="$INSTALL_PATH/"/>-->
+        </pack>
+        
+        <listeners>
+            <listener installer="SummaryLoggerInstallerListener"/>
+            <listener installer="RegistryInstallerListener" uninstaller="RegistryUninstallerListener"/>
+        </listeners>
+    </packs>
+     
+    <native name="ShellLink.dll" type="izpack"/>
+    <native name="COIOSHelper.dll" stage="both" type="3rdparty">
+        <os family="windows"/>
+    </native>
+</installation>

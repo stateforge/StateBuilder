@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<installation version="1.0">
+    <variables>
+        <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
+    </variables>  
+    <info>
+        <appname>StateBuilderJava</appname>
+        <appversion>2.4.0</appversion>
+        <authors>
+            <author email="frederic.heem@stateforge.com" name="Frederic Heem"/>
+        </authors>
+        <url>http://www.stateforge.com</url>
+        <javaversion>1.6</javaversion>
+        <uninstaller name="Uninstaller.jar" write="yes"/>
+        <requiresjdk>no</requiresjdk>
+        <writeinstallationinformation>no</writeinstallationinformation>
+        <!--<pack200/>-->
+    </info>
+    <guiprefs height="400" resizable="no" width="800">
+        <modifier key="useFlags" value="yes"/>
+        <modifier key="langDisplayType" value="default"/>
+    </guiprefs>
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+    <resources>
+        <res id="HTMLInfoPanel.readme" src="README.html"/>
+        <res id="LicencePanel.licence" parse="yes" src="Copyright.txt"/>
+        <res id="Installer.image" src="Packaging/IzPack/Logo_200x300.png"/>
+        <!--<res id="Heading.image" src="Packaging/IzPack/Header_600x200.png"/>-->
+        <res id="shortcutSpec.xml" src="Packaging/IzPack/default_shortcut_specification.xml"/>
+        <res id="RegistrySpec.xml" src="Packaging/IzPack/RegistrySpec.xml"/>
+        <res id="TargetPanel.dir" src="packaging/IzPack/defaultInstallDir.txt"/>
+        <res id="ProcessPanel.Spec.xml" src="Packaging/IzPack/ProcessPanelSpec.xml"/>
+    </resources>
+    <panels>
+        <!--<panel classname="CheckedHelloPanel"/>-->
+        <panel classname="HTMLInfoPanel" id="readme"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="ShortcutPanel"/>
+        <panel classname="ProcessPanel"/>
+        <panel classname="SimpleFinishPanel"/>
+    </panels>
+    <packs>
+        <pack name="Core" preselected="yes" required="yes">
+            <description/>
+            
+            <file override="update" src="../Compiler/java/target/statebuilder-java-2.4.jar" targetdir="$INSTALL_PATH/lib/">
+            </file>
+            <file override="update" src="../Compiler/AntTask/target/statebuilder-ant-task-2.4.jar" targetdir="$INSTALL_PATH/lib/">
+            </file>
+            <file override="update" src="StateMachine/target/statemachine-2.4.jar" targetdir="$INSTALL_PATH/lib/">
+            </file>
+
+            <file override="update" src="..\..\StateEditor\bin\StateEditor.exe" targetdir="$INSTALL_PATH/bin">
+              <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5Core.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5Gui.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5Widgets.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5Network.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5WebKit.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5WebKitWidgets.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5V8.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5OpenGL.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5PrintSupport.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5Qml.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5XmlPatterns.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5Quick.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\Qt5Sql.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\D3DCOMPILER_43.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\icudt49.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\icuin49.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\icuuc49.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\libEGL.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\libGLESv2.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\msvcr100.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="..\..\StateEditor\bin\msvcp100.dll" targetdir="$INSTALL_PATH/bin">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="C:\Qt\Qt5.0.0\5.0.0\msvc2010\plugins\platforms\qminimal.dll" targetdir="$INSTALL_PATH/bin/platforms">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="C:\Qt\Qt5.0.0\5.0.0\msvc2010\plugins\platforms\qwindows.dll" targetdir="$INSTALL_PATH/bin/platforms">
+                <os family="Windows"/>
+            </file>            
+            <file override="update" src="icons/StateBuilderJava.ico" targetdir="$INSTALL_PATH/icons">
+                <os family="windows"/>
+            </file>
+            <file override="update" src="script\postInstall.bat" targetdir="$INSTALL_PATH/script/">
+                <os family="Windows"/>
+            </file>
+            <file override="update" src="script\preUninstall.bat" targetdir="$INSTALL_PATH/script/">
+                <os family="Windows"/>
+            </file>
+            <executable failure="warn" keep="false" stage="uninstall" targetfile="$INSTALL_PATH/script/preUninstall.bat">
+                <os family="Windows"/>
+            </executable>
+        </pack>
+        <pack name="Data" preselected="yes" required="yes">
+            <description/>
+            <file override="update" src="README.html" targetdir="$INSTALL_PATH/"/>
+            <parsable targetfile="$INSTALL_PATH/README.html"/>
+            <file override="update" src="Copyright.txt" targetdir="$INSTALL_PATH/"/>
+            <file override="update" src="../Compiler/java/src/main/resources/StateMachineJava-v1.xsd" targetdir="$INSTALL_PATH/share/xsd"/>
+        </pack>
+
+        <pack name="Help online" preselected="yes" required="yes">
+            <description/>
+            <file override="update" src="doc\StateBuilderJava.url" targetdir="$INSTALL_PATH/doc"/>
+        </pack>
+        
+        <pack name="Examples" preselected="yes" required="yes">
+            <description>The java state machine examples</description>
+            <fileset dir="Examples" targetdir="$INSTALL_PATH/Examples">
+                <exclude name="**/target/"/>
+                <exclude name="**/.settings/"/>
+                <exclude name="**/.project"/>
+                <exclude name="**/.classpath"/>
+                <exclude name="**/*~"/>
+                <exclude name="**/*.log"/>
+                <exclude name="**/*.bak"/>
+            </fileset>
+        </pack>
+        
+        <listeners>
+            <listener installer="SummaryLoggerInstallerListener"/>
+            <listener installer="RegistryInstallerListener" uninstaller="RegistryUninstallerListener"/>
+        </listeners>
+    </packs>
+     
+    <native name="ShellLink.dll" type="izpack"/>
+    <native name="ShellLink_x64.dll" type="izpack"/>
+    <native name="COIOSHelper.dll" stage="both" type="3rdparty"/>
+    <native name="COIOSHelper_x64.dll" stage="both" type="3rdparty"/>
+</installation>

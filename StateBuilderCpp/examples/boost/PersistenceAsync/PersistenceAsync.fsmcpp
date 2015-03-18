@@ -1,0 +1,37 @@
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1                                      http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd">
+
+  <!-- General settings -->
+  <settings asynchronous="true" serialize="true" library="boost">
+    <description>PersistenceAsync</description>
+    <object instance="action" class="Action" include="Action.h"/>
+  </settings>
+
+  <!-- events -->
+  <events>
+    <eventSource name="PersistenceAsyncEvent">
+      <event id="EvStart"/>
+      <event id="Event2"/>
+      <event id="Event3"/>
+      <event id="EvStop"/>
+    </eventSource>
+  </events>
+
+  <!-- States -->
+  <state name="PersistenceAsync">
+
+    <!-- transitions -->
+    <transition event="EvStop" nextState="End"/>
+    <!-- Children state -->
+    <state name="Idle">
+      <transition event="EvStart" nextState="S1"/>
+    </state>
+    <state name="S1">
+      <transition event="Event2" nextState="S2"/>
+    </state>
+    <state name="S2">
+      <transition event="Event3" nextState="S3"/>
+    </state>
+    <state name="S3"/>
+    <state name="End" kind="final"/>
+  </state>
+</sm:StateMachine>

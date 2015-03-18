@@ -1,0 +1,6 @@
+﻿<SchemaCatalog xmlns="http://schemas.microsoft.com/xsd/catalog">
+  <Schema href="StateMachineCpp.xsd" 
+          targetNamespace="http://www.stateforge.com/smcpp"/>
+  <Association extension="fsm" schema="StateMachineCpp.xsd"/>
+  <Catalog href="%InstallRoot%/xml/schemas/catalog.xml"/>
+</SchemaCatalog>

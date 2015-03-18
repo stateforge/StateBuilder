@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+
+  <!-- General settings -->
+  <settings asynchronous="false" library="std">
+    <description>WashingMachine</description>
+    <object instance="washingMachine" class="WashingMachine" include="WashingMachine.h"/>
+    <context instance="ctxt"/>
+  </settings>
+  
+  <!-- events -->
+  <events>
+    <eventSource name="WashingMachine">
+      <event id="Start"/>
+      <event id="Stop"/>
+      <event id="Fault"/>
+      <event id="DiagnoseSuccess"/>
+      <event id="WashingDone"/>
+      <event id="RinsingDone"/>
+      <event id="SpinningDone"/>
+    </eventSource>
+  </events>
+  <!-- First machine -->
+  <state name="WashingMachine">
+    <transition event="Stop" nextState="End"/>
+    <state name="Idle">
+      <transition event="Start" nextState="Running"/>
+    </state>
+    <state name="Running">
+      <transition event="Fault" nextState="OutOfService"/>
+      <state name="Washing">
+        <transition event="WashingDone" nextState="Rinsing"/>
+      </state>
+      <state name="Rinsing">
+        <transition event="RinsingDone" nextState="Spinning"/>
+      </state>
+      <state name="Spinning">
+        <transition event="SpinningDone" nextState="End"/>
+      </state>
+      <state name="History" kind="history"/>
+    </state>
+    <state name="OutOfService">
+      <transition event="DiagnoseSuccess" nextState="History"/>
+    </state>
+    <state name="End" kind="final"/>
+  </state>
+</sm:StateMachine>
+

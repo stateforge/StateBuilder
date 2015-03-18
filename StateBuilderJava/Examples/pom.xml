@@ -1,0 +1,22 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.stateforge.statemachine.examples</groupId>
+    <version>1.0</version>
+    <artifactId>statemachine-examples</artifactId>
+    <packaging>pom</packaging>
+    <name>StateMachineExamples</name>
+
+    <modules>
+		<module>RoundsClient</module>
+        <module>HelloWorld</module>
+        <module>Led</module>
+        <module>Microwave</module>
+        <module>TrafficLight</module>
+        <module>Ping</module>
+        <module>Unitest</module>
+    </modules>
+
+</project>

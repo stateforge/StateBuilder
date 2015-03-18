@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+    <!-- General settings -->
+    <settings asynchronous="true" library="qt">
+        <description>TR069 client</description>
+        <object instance="client" class="Tr69Client" include="Tr69Client.h"/>
+        <object instance="clientPrivate" class="Tr69ClientPrivate" include="Tr69ClientPrivate.h"/>
+    </settings>
+
+    <!-- events -->
+    <events>
+        <!-- HttpEvent Events -->
+        <eventSource name="ConnectionRequestServerEvent">
+            <event id="evConnectionRequestNew"/>
+        </eventSource>
+        <eventSource name="TimerEvent">
+            <timer id="evHttpResponseDelayTimer" name="HttpResponseDelayTimer"/>
+        </eventSource>
+    </events>
+
+    <state name="Tr69Client">
+        <!-- State Close -->
+        <state name="WaitNewConnectionRequest">
+            
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+</sm:StateMachine>
+

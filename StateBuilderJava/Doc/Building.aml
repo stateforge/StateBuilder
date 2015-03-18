@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="aaf59f61-5b96-4841-a99a-ecc701fa72f8" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <introduction>
+          <para>Building the helper libraries and examples.</para>
+          <autoOutline>2</autoOutline>
+      </introduction>
+
+      <section address="Maven">
+          <title>Building with Maven</title>
+          <content>
+              <para>
+              Here are the instructions to build with maven
+              </para>
+              <list class="bullet">
+                  <listItem>
+                      <para>
+                          Start cmake-gui
+                      </para>
+                  </listItem>
+              </list>
+          </content>
+      </section>
+      <section address="Ant">
+          <title>Building with Ant</title>
+          <content>
+              <para>
+                  Here are the instructions  to compile with Ant
+              </para>
+              <list class="bullet">
+                  <listItem>
+                      <para>
+                          Set the environment variable <environmentVariable>STATEBUILDERCPP_HOME</environmentVariable> to the directory where StateBuilderJava is installed:
+                      </para>
+                      <code># export STATEBUILDERCPP_HOME=$HOME/StateBuilderJava</code>
+                  </listItem>
+                 
+               
+              </list>
+          </content>
+      </section>
+      <relatedTopics>
+      </relatedTopics>
+
+  </developerConceptualDocument>
+</topic>

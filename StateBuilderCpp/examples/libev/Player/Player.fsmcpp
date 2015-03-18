@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+
+    <!-- general settings -->
+    <settings asynchronous="true" library="libev">
+        <object instance="playerPrivate" class="PlayerPrivate" include="PlayerPrivate.h"/>
+    </settings>
+    
+    <!-- events -->
+    <events>
+        <eventSource name="SwitchEvent">
+            <event id="On"/>
+            <event id="Off"/>
+        </eventSource>
+	<eventSource name="Timers">
+            <timer id="EvTimerRetry" name="TimerRetry"/>
+        </eventSource>
+    </events>
+
+    <!-- states -->
+    <state name="Led">
+        <state name="SwitchedOff">
+            <onEntry action="playerPrivate.DoOff()">
+	      <timerStart timer="TimerRetry" duration="2000"/>
+	    </onEntry>
+            <transition event="On" nextState="SwitchedOn"/>
+        </state>
+        <state name="SwitchedOn">
+            <onEntry action="playerPrivate.DoOn()"/>
+            <transition event="Off" nextState="SwitchedOff"/>
+        </state>
+    </state>
+</sm:StateMachine>

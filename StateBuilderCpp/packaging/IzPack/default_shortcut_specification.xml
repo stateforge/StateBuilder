@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<shortcuts>
+
+    <defaultCurrentUser/>
+    <!--<skipIfNotSupported/>-->
+    <programGroup defaultName="StateBuilderCpp"
+                  location="applications"/>
+
+    <!-- StateBuilderCpp.exe -->
+    <!--<shortcut
+      name="StateBuilderCpp"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      target="$INSTALL_PATH\bin\StateBuilderCpp.exe"
+      commandLine=""
+      description="Install a StateBuilderCpp license"
+      iconFile="$INSTALL_PATH\bin\StateBuilderCpp.exe"
+      iconIndex="0">
+    </shortcut>-->
+
+    <shortcut
+      name="StateEditor"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      target="$INSTALL_PATH\bin\StateEditor.exe"
+      commandLine=""
+      description="State Machine Editor"
+      iconFile="$INSTALL_PATH\bin\StateEditor.exe"
+      iconIndex="0">
+    </shortcut>
+    <!-- Doc -->
+    <shortcut
+      name="StateBuilderCpp Help"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      target="$INSTALL_PATH\doc\StateBuilderCpp.url"
+      description="StateBuilderCpp online help"
+      iconFile="%SystemRoot%\system32\url.dll"
+      iconIndex="0">
+    </shortcut>
+
+    <shortcut
+      name="StateBuilderCpp Home"
+      programGroup="yes"
+      desktop="yes"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      target="$INSTALL_PATH"
+      description="StateBuilderCpp home directory"
+      iconIndex="0">
+    </shortcut>
+    
+    <!-- Uninstaller -->
+    <shortcut
+      name="StateBuilderCpp Uninstaller"
+      programGroup="yes"
+      desktop="no"
+      applications="no"
+      startMenu="no"
+      startup="no"
+      target="$INSTALL_PATH\Uninstaller\uninstaller.jar"
+      iconFile="%SystemRoot%\system32\SHELL32.dll"
+      iconIndex="31"
+      description="This uninstalls StateBuilderCpp $APP_VER">
+    </shortcut>
+</shortcuts>

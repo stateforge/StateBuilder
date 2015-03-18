@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+    <!-- General settings -->
+    <settings asynchronous="true" library="qt">
+        <object instance="server" class="Tr69ConnectionRequestServer" include="Tr69ConnectionRequestServer.h"/>
+        <object instance="serverPrivate" class="Tr69ConnectionRequestServerPrivate" include="Tr69ConnectionRequestServerPrivate.h"/>
+    </settings>
+
+    <!-- events -->
+    <events>
+        <eventSource name="HttpEvent">
+            <event id="evConnectionRequestNew"/>
+            <event id="evHttpGet"/>
+        </eventSource>
+        <eventSource name="SocketEvent">
+            <event id="evSocketDisconnected"/>
+            <event id="evSocketError"/>
+        </eventSource>
+        <eventSource name="TimerEvent">
+            <timer id="evProcessingTimer" name="ProcessingTimer"/>
+            <timer id="evHttpResponseDelayTimer" name="HttpResponseDelayTimer"/>
+            <timer id="evInformRequestDelayTimer" name="InformRequestDelayTimer"/>
+        </eventSource>
+    </events>
+
+    <state name="Tr69ConnectionRequestServer">
+        <!-- State Close -->
+        <state name="WaitForIncommingConnection">
+            <transition event="evConnectionRequestNew" nextState="Processing"/>
+        </state>
+        <state name="Processing">
+            <!--<onEntry>
+                <timerStart timer="ProcessingTimer" duration="server.conf().processingMaxDuration"/>
+            </onEntry>
+            <onExit action="serverPrivate.connectionDestroy()"/>
+            <transition event="evProcessingTimer" nextState="WaitForIncommingConnection"/>
+            <transition event="evSocketError" nextState="WaitForIncommingConnection"/>
+            <state name="WaitForHttpGet">
+                <transition event="evHttpGet" nextState="WaitToSendHttpResponse"/>
+            </state>
+            <state name="WaitToSendHttpResponse">
+                <onEntry>
+                    <timerStart timer="HttpResponseDelayTimer" duration="server.conf().httpResponseDelay"/>
+                </onEntry>
+                <transition event="evHttpResponseDelayTimer" nextState="WaitDisconnection">
+                    <action>serverPrivate.sendHttpResponse(200,"OK")</action>
+                    <action>serverPrivate.connectionClose()</action>
+                    <action>serverPrivate.emitReadyToSendInformRequest()</action>
+                </transition>
+            </state>
+            <state name="WaitDisconnection">
+                <transition event="evSocketDisconnected" nextState="WaitForIncommingConnection">
+                </transition>
+            </state>-->
+        </state>
+    </state>
+</sm:StateMachine>
+

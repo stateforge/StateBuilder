@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+    <!-- General settings -->
+    <settings asynchronous="true" library="qt">
+        <object instance="client" class="AcsClient" include="AcsClient.h"/>
+        <object instance="clientPrivate" class="AcsClientPrivate" include="AcsClientPrivate.h"/>        
+    </settings>
+
+    <!-- Events -->
+    <events>
+        <eventSource name="ManagementEvent">
+            <event id="evStart"/>
+            <event id="evStop"/>
+        </eventSource>
+        <eventSource name="ConnectionRequestEvent">
+            <event id="evConnectionRequestError"/>
+            <event id="evConnectionRequestDone"/>
+            <!--<event id="evConnectionRequestUnconnected"/>
+            <event id="evConnectionRequestHostLookup"/>
+            <event id="evConnectionRequestConnecting"/>
+            <event id="evConnectionRequestSending"/>
+            <event id="evConnectionRequestReading"/>
+            <event id="evConnectionRequestConnected"/>
+            <event id="evConnectionRequestClosing"/>-->
+            <timer id="evTimerConnectionRequest" name="TimerConnectionRequest"/>
+        </eventSource>
+        <eventSource name="AcsConnectionEvent">
+            <event id="evSocketError"/>
+            <event id="evHttpPost"/>
+            <event id="evInformRequest"/>
+            <event id="evGetParameterNamesResponse"/>
+            <event id="evSetParameterValuesResponse"/>
+            <event id="evRebootResponse"/>
+            <event id="evDownloadResponse"/>
+            <event id="evTransferComplete"/>
+            <event id="evFault"/>
+            <event id="evSent"/>
+            <event id="evUnknownRequest"/>
+            <timer id="evTimerInformRequest" name="TimerInformRequest"/>
+            <timer id="evTimerHttpPost" name="TimerHttpPost"/>
+        </eventSource>
+        <eventSource name="Request">
+            <event id="evRequestEnd"/>
+        </eventSource>
+    </events>
+
+    <!-- State AcsClient -->
+    <state name="AcsClient">
+        <transition event="evFault" nextState="End"/>
+        <transition event="evSocketError" nextState="End"/>
+        <transition event="evUnknownRequest" nextState="End"/>
+        <!-- State Initial -->
+        <state name="Initial">
+            <transition event="evStart" nextState="ConnectionRequest"/>
+            <transition event="evInformRequest" nextState="SendInformReponseAndWaitPost"/>
+        </state>
+        <!-- State ConnectionRequest -->
+        <state name="ConnectionRequest">
+            <onEntry>
+                <action>clientPrivate.connectionRequestSend()</action>
+                <timerStart timer="TimerConnectionRequest" duration="client.conf().connectionRequestTimeout"/>
+            </onEntry>
+            <onExit>
+                <action>clientPrivate.connectionRequestDestroy()</action>
+            </onExit>
+            <transition event="evConnectionRequestDone" nextState="WaitInformRequest"/>
+            <transition event="evConnectionRequestError" nextState="End"/>
+            <transition event="evTimerConnectionRequest" nextState="End">
+                <action>clientPrivate.m_errorMessage = "Connection Request Timeout"</action>
+            </transition>
+            <transition event="evInformRequest" nextState="SendInformReponseAndWaitPost"/>
+        </state>
+        <!-- State WaitInformRequest -->
+        <state name="WaitInformRequest">
+            <onEntry>
+                <timerStart timer="TimerInformRequest" duration="client.conf().informRequestTimeout"/>
+            </onEntry>
+            <transition event="evTimerInformRequest" nextState="End">
+                <action>clientPrivate.m_errorMessage = "Inform Request Timeout"</action>
+            </transition>
+            <transition event="evInformRequest" nextState="SendInformReponseAndWaitPost"/>
+        </state>
+        <state name="SendInformReponseAndWaitPost">
+            <onEntry>
+                <action>clientPrivate.sendInformResponse();</action>
+                <timerStart timer="TimerHttpPost" duration="client.conf().httpPostTimeout"/>
+            </onEntry>
+            <transition event="evTimerHttpPost" nextState="End">
+                <action>clientPrivate.m_errorMessage = "Http Post Timeout"</action>
+            </transition>
+            <transition event="evHttpPost" nextState="SendRequestAndWaitResponse">
+                <condition>clientPrivate.hasPendingRequest()</condition>
+            </transition>
+            <transition event="evHttpPost" nextState="SendHttpOk"/>
+        </state>
+        <state name="SendRequestAndWaitResponse">
+            <onEntry>
+                <action>clientPrivate.sendRequest()</action>
+            </onEntry>
+            <transition event="evRequestEnd" nextState="SendRequestAndWaitResponse">
+                <condition>clientPrivate.hasPendingRequest()</condition>
+            </transition>
+            <transition event="evRequestEnd" nextState="SendHttpOk"/>
+            <transition event="evSocketError"/>
+        </state>
+        <state name="SendHttpOk">
+            <onEntry>
+                <action>clientPrivate.sendHttpResponse()</action>
+            </onEntry>
+            <transition event="evSocketError" nextState="End"/>
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+</sm:StateMachine>
+

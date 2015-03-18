@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VisualStudioToolFile
+	Name="FsmCpp"
+	Version="8.00"
+	>
+  <Rules>
+    <CustomBuildRule
+			Name="FsmCpp"
+			DisplayName="Finite State Machine Code Generator for C++"
+			CommandLine="StateBuilderCpp.exe [AllOptions] [AdditionalOptions] [Inputs]"
+			Outputs="$(InputName)Fsm.cpp;$(InputName)Fsm.h"
+			FileExtensions="*.fsm"
+			ExecutionDescription="FsmCpp: generate $(InputName)Fsm.h and $(InputName)Fsm.cpp from $(InputName).fsm"
+			>
+      <Properties>
+        <BooleanProperty
+           Name="Debug"
+           DisplayName="Generate debug code information"
+           Description="Generate additional code for debug purposes"
+           Switch="-g"
+				/>
+        <StringProperty
+           Name="PrependFile"
+           DisplayName="Prepend File"
+           Description="The file to prepend to the generated files, e.g Copyright"
+           Switch="-p &quot;[value]&quot;"
+				/>
+      </Properties>
+    </CustomBuildRule>
+  </Rules>
+</VisualStudioToolFile>

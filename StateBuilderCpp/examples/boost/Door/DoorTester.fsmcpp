@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+
+    <!-- General settings -->
+    <settings asynchronous="true" library="boost">
+        <description>DoorTester</description>
+        <object instance="doorTester" class="DoorTester" include="DoorTester.h"/>
+    </settings>
+
+    <!-- Events -->
+    <events>
+        <eventSource name="RemoteControl">
+            <event id="EvOpen"/>
+            <event id="EvClose"/>
+        </eventSource>
+
+        <eventSource name="Management">
+            <event id="EvStartTest"/>
+            <event id="EvQuit"/>
+        </eventSource>
+
+        <eventSource name="Timers">
+            <timer id="evTimerOpen" name="TimerOpen" description="opening duration"/>
+            <timer id="evTimerClose" name="TimerClose" description="closing duration"/>
+        </eventSource>
+    </events>
+
+    <!-- States  -->
+    <state name="DoorTester">
+        <transition event="EvQuit" nextState="End"/>
+        <state name="Idle">
+            <transition event="EvStartTest" nextState="OpenAndWaitForOpened"/>
+        </state>
+        <state name="OpenAndWaitForOpened">
+            <onEntry>
+                <action>doorTester.GetDoor().EvOpen()</action>
+                <timerStart timer="TimerOpen" duration="doorTester.GetOpenDuration()"/>
+            </onEntry>
+            <onExit>
+                <timerStop timer="TimerOpen"/>
+            </onExit>
+            <transition event="evTimerOpen" 
+                        action="doorTester.GetDoor().EvSensorOpened()"
+                        nextState="CloseAndWaitForClosed"/>
+        </state>
+        <state name="CloseAndWaitForClosed">
+            <onEntry>
+                <action>doorTester.GetDoor().EvClose()</action>
+                <timerStart timer="TimerClose" duration="500"/>
+            </onEntry>
+            <onExit>
+                <timerStop timer="TimerClose"/>
+            </onExit>
+            <transition event="evTimerClose" nextState="End">
+                <action>doorTester.GetDoor().EvSensorClosed()</action>
+                <action>doorTester.GetDoor().EvQuit()</action>
+            </transition>
+        </state>
+        <state name="End" kind="final">
+        </state>
+    </state>
+</sm:StateMachine>

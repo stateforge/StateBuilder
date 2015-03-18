@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<installation version="1.0">
+    <info>
+        <appname>@CPACK_PACKAGE_NAME@</appname>
+        <appversion>@CPACK_PACKAGE_VERSION@</appversion>
+        <authors>
+            <author email="frederic.heem@stateforge.com" name="Frederic Heem"/>
+        </authors>
+        <url>http://www.stateforge.com</url>
+        <javaversion>1.6</javaversion>
+        <uninstaller name="Uninstaller.jar" write="yes"/>
+        <requiresjdk>no</requiresjdk>
+        <writeinstallationinformation>no</writeinstallationinformation>
+        <!--<pack200/>-->
+    </info>
+    <guiprefs height="400" resizable="no" width="700">
+        <modifier key="useFlags" value="yes"/>
+        <modifier key="langDisplayType" value="default"/>
+    </guiprefs>
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+    <resources>
+        <res id="HTMLInfoPanel.readme" src="README.html"/>
+
+        <res id="LicencePanel.licence" src="Copyright.txt"/>
+        <res id="Installer.image" src="packaging/IzPack/LogoCppSide_200x300.png"/>
+        <!--<res id="Heading.image" src="doc\Images\LogoCpp_320x320.png"/>-->
+        <res id="shortcutSpec.xml" src="packaging/IzPack/Unix_shortcutSpec.xml" />
+        <!--<res id="RegistrySpec.xml" src="packaging/IzPack/RegistrySpec.xml" />-->
+        <res id="TargetPanel.dir" src="packaging/IzPack/Unix_InstallDir.txt" />
+    </resources>
+    <panels>
+        <panel classname="HTMLInfoPanel" id="readme" />
+        <panel classname="LicencePanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="ShortcutPanel"/>
+        <panel classname="SimpleFinishPanel"/>
+    </panels>
+    <packs>
+        <pack name="Core" preselected="yes" required="yes">
+            <description/>
+            <file override="update"
+                src="bin/StateBuilderCpp.sh" targetdir="$INSTALL_PATH/bin">
+            </file>
+            <file override="update"
+                src="bin/statebuilder-cpp.jar" targetdir="$INSTALL_PATH/bin">
+            </file>
+
+            <executable keep="true" stage="never" targetfile="$INSTALL_PATH/bin/StateBuilderCpp.sh">
+            </executable>
+
+            <file override="update"
+                src="icons/48-uninstall.png" targetdir="$INSTALL_PATH/icons">
+                <os family="unix"/>
+            </file>
+            <file override="update"
+                src="icons/32-docs.png" targetdir="$INSTALL_PATH/icons">
+                <os family="unix"/>
+            </file>
+            <file override="update"
+                src="icons/32-folder.png" targetdir="$INSTALL_PATH/icons">
+                <os family="unix"/>
+            </file>
+            <file override="update"
+                src="icons/48-StateBuilderCpp.png" targetdir="$INSTALL_PATH/icons">
+                <os family="unix"/>
+            </file>
+        </pack>
+        <pack name="Header files and Library" preselected="yes" required="yes">
+            <description/>
+            <file override="update"
+                src="src" targetdir="$INSTALL_PATH/"/>
+        </pack>
+        <pack name="Help online" preselected="yes" required="yes">
+            <description/>
+            <file override="update"
+                src="doc\StateBuilderCpp.url" targetdir="$INSTALL_PATH/doc"/>
+        </pack>
+        <pack name="Data" preselected="yes" required="yes">
+            <description/>
+            <file override="update"
+                src="share" targetdir="$INSTALL_PATH/"/>
+            <file override="update"
+                src="READMELinux.txt" targetdir="$INSTALL_PATH/"/>
+            <file override="update"
+                src="Copyright.txt" targetdir="$INSTALL_PATH/"/>
+        </pack>
+        
+        <pack name="Build" preselected="yes" required="yes">
+            <description>The files needed to compile the state machine libraries and the examples</description>
+            
+            <file override="update"
+                src="build/makefile/gen-makefile.sh" targetdir="$INSTALL_PATH/build/makefile/"/>
+            <executable keep="true" targetfile="$INSTALL_PATH/build/makefile/gen-makefile.sh"/>
+                
+            <file override="update"
+                src="build/xcode/gen-xcode.sh" targetdir="$INSTALL_PATH/build/xcode/"/>
+            <executable keep="true" targetfile="$INSTALL_PATH/build/xcode/gen-xcode.sh"/>
+                
+            <singlefile override="update"
+                src="CMakeListsBinPackage.txt" target="$INSTALL_PATH/CMakeLists.txt"/>
+        </pack>
+        <pack name="Examples" preselected="yes" required="yes">
+            <description/>
+            <fileset dir="examples" targetdir="$INSTALL_PATH/examples">
+                <exclude name="**/*~"/>
+                <exclude name="**/*.log"/>
+                <exclude name="**/*.bak"/>
+            </fileset>
+        </pack>
+        <listeners>
+            <listener installer="SummaryLoggerInstallerListener"/>
+            <listener installer="RegistryInstallerListener" uninstaller="RegistryUninstallerListener" />
+        </listeners>
+    </packs>
+    <native type="izpack" name="ShellLink.dll"/>
+    <native type="3rdparty" name="COIOSHelper.dll" stage="both">
+        <os family="windows"/>
+    </native>
+</installation>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<registry>
+    <pack name="Core">
+        
+        <value name="STATEBUILDERJAVA_HOME"
+        	   keypath="Environment"
+        	   root="HKCU"
+        	   string="$INSTALL_PATH"/>
+        
+        <value name="InstallLocation"
+        	   keypath="SOFTWARE\StateForge\StateBuilderJava"
+        	   root="HKCU"
+        	   string="$INSTALL_PATH"/>
+        <value name="DWORD"
+        	   keypath="SOFTWARE\StateForge\StateBuilderJava"
+        	   root="HKCU"
+        	   dword="42"/>
+
+        <value name=""
+        	   keypath="Software\Classes\.fsmjava"
+        	   root="HKCU"
+        	   string="StateMachine.java"/>
+
+        <value name=""
+        	   keypath="Software\Classes\StateMachine.java"
+        	   root="HKCU"
+        	   string="State Machine for Java"/>
+
+        <value name=""
+        	   keypath="Software\Classes\StateMachine.java\DefaultIcon"
+        	   root="HKCU"
+        	   string="$INSTALL_PATH\icons\StateBuilderJava.ico"/>
+
+        <!--<value name=""
+        	   keypath="Software\Classes\StateMachine.java\shell\Generate\command"
+        	   root="HKCU"
+        	   string="&quot;$JAVA_HOME\bin\java&quot; -jar &quot;$INSTALL_PATH\lib\statebuilder-java-1.0.4.jar&quot; &quot;%1&quot;"/>-->
+        <value name=""
+               keypath="Software\Classes\StateMachine.java\shell\Edit\command"
+               root="HKCU"
+               string="&quot;$INSTALL_PATH\bin\StateEditor.exe&quot; &quot;%1&quot;"/>
+    </pack>
+    <pack name="UninstallStuff">
+        <!-- Special "pack", if not defined an uninstall key will be generated automatically -->
+        <!-- The variable $UNINSTALL_NAME can be only used if CheckedHelloPanel will be used
+	               because there the variable will be declared. With that variabel it is possible
+	               to install more as one instances of the product on one machine each with an
+	               unique uninstall key. -->
+        <value name="DisplayName"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\StateBuilderJava"
+               root="HKCU"
+               string="StateBuilderJava"/>
+        <value name="DisplayIcon"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\StateBuilderJava"
+               root="HKCU"
+               string="$INSTALL_PATH\icons\StateBuilderJava.ico"/>
+        <value name="DisplayVersion"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\StateBuilderJava"
+               root="HKCU"
+               string="$APP_VER"/>
+        <value name="Version"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\StateBuilderJava"
+               root="HKCU"
+               string="$APP_VER"/>
+        <!--Include jar and uninstaller directory to help IzPaxk to locate the former installations-->
+        <value name="UninstallString"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\StateBuilderJava"
+               root="HKCU"
+               string="&quot;$JAVA_HOME\bin\java&quot; -jar &quot;$INSTALL_PATH\uninstaller\uninstaller.jar&quot;"/>
+        <value name="HelpLink"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\StateBuilderJava"
+               root="HKCU"
+               string="$APP_URL"/>
+        <value name="URLInfoAbout"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\StateBuilderJava"
+               root="HKCU"
+               string="$APP_URL"/>        
+        <value name="Publisher"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\StateBuilderJava"
+               root="HKCU"
+               string="StateForge"/>
+        <value name="InstallLocation"
+               keypath="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\StateBuilderJava"
+               root="HKCU"
+               string="$INSTALL_PATH"/>
+    </pack>
+</registry>

@@ -1,0 +1,36 @@
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1                                      http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd">
+    <!-- General settings -->
+    <settings asynchronous="false" library="std">
+        <object instance="action" class="Action" include="Action.h"/>
+    </settings>
+    <!-- Events -->
+    <events>
+        <eventSource name="MainEvent">
+            <event id="evStart"/>
+            <event id="evStop"/>
+        </eventSource>
+    </events>
+    <!-- States -->
+    <state name="ParallelRoot">
+        <parallel>
+            <state name="S0">
+                <state name="SInit0">
+                    <transition event="evStart" nextState="SRunning0"/>
+                </state>
+                <state name="SRunning0">
+                    <transition event="evStop" nextState="SEnd0"/>
+                </state>
+                <state name="SEnd0" kind="final"/>
+            </state>
+            <state name="S1">
+                <state name="SInit1">
+                    <transition event="evStart" nextState="SRunning1"/>
+                </state>
+                <state name="SRunning1">
+                    <transition event="evStop" nextState="SEnd1"/>
+                </state>
+                <state name="SEnd1" kind="final"/>
+            </state>
+        </parallel>
+    </state>
+</sm:StateMachine>

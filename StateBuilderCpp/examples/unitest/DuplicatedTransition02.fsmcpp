@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 >
+
+  <!-- general settings -->
+  <settings asynchronous="false" library="std">
+    <object instance="businessObject" class="BusinessObject" include="BusinessObject.h"/>
+  </settings>
+  
+  <!-- events -->
+  <events>
+    <eventSource name="HelloWorldEvent">
+      <event id="evStart"/>
+      <event id="evStop">
+        <parameter name="force" type="bool"/>
+      </event>
+    </eventSource>
+  </events>
+
+  <!-- States -->
+  <state name="Top">
+    <state name="Idle">
+      <transition event="evStart" nextState="Running"/>
+    </state>
+    <state name="Running">
+      <transition event="evStop" condition="force == true" nextState="End"/>
+      <transition event="evStop" condition="force == true" nextState="End"/>
+      <state name="Washing">
+      </state>
+      <state name="Drying">
+
+      </state>
+    </state>
+    <state name="End" kind="final"/>
+  </state>
+</sm:StateMachine>

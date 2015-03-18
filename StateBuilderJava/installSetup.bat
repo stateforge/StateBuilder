@@ -1,0 +1,1 @@
+call ..\..\StateForgeWebSite\StateForgeWebSite\Files\StateBuilderJava-WinSetup.jar Packaging\IzPack\StateBuilderJavaIzPackAutoInstall.xml

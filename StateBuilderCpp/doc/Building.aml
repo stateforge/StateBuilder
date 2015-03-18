@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="aaf59f61-5b96-4841-a99a-ecc701fa72f8" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <introduction>
+          <para>Building the helper libraries and examples.</para>
+          <autoOutline>2</autoOutline>
+      </introduction>
+
+      <section address="VisualStudio">
+          <title>Building with Visual Studio</title>
+          <content>
+              <para>
+              Here are the instructions to generate the Visual Studio solution file with <externalLink>
+                  <linkText>CMake</linkText>
+                  <linkUri>http://www.cmake.org/</linkUri>
+              </externalLink>:
+              </para>
+             
+              <list class="bullet">
+                  <listItem>
+                      <para>
+                          Start <application>cmake-gui</application>
+                      </para>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Select where is the source code, e.g <localUri>C:/Users/yourusername/AppData/Local/StateForge/StateBuilderCpp</localUri>
+                      </para>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Select where to build the binaries, e.g <localUri>C:/Users/yourusername/AppData/Local/StateForge/StateBuilderCpp/build/vs2008</localUri>
+                      </para>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Click on Configure
+                      </para>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Select the desired <application>Visual Studio</application> version and click on finished
+                      </para>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Click a second time on Configure
+                      </para>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Click on Generate
+                      </para>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Now open the file explorer to <localUri>C:/Users/yourusername/AppData/Local/StateForge/StateBuilderCpp/build/vs2008</localUri>
+                      </para>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Double click on the <application>Visual Studio</application> solution file <localUri>StateBuilderCpp.sln</localUri> to start Visual Studio
+                      </para>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          In the solution explorer, right click on the project "ALL_BUILD" and select "build"
+                      </para>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          To run the test, right click on the project "RUN_TESTS" and select "build"
+                      </para>
+                  </listItem>
+              </list>
+          </content>
+      </section>
+      <section address="BuildingMacOSX">
+          <title>Building on MacOSX with Xcode</title>
+          <content>
+              <para>
+                  Here are the instructions to get started on MacOSX with Xcode:
+              </para>
+              <list class="bullet">
+                  
+                  <listItem>
+                      <para>
+                          Change to the directory where the libraries and examples will be build:
+                      </para>
+                      <code># cd $HOME/StateBuilderCpp/build/xcode</code>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Invoke <localUri>build.sh</localUri> which calls <application>cmake</application> to generate the <application>Xcode</application> project file:
+                      </para>
+                      <code># ./gen-xcode.sh</code>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Start Finder and locate the directory <localUri>$HOME/StateBuilderCpp/build/xcode</localUri>
+                      </para>
+                      
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Double click on <localUri>StateBuilderCpp.xcodeproj</localUri> to start <application>Xcode</application>
+                      </para>
+                  </listItem>
+              </list>
+          </content>
+      </section>
+          <section address="BuildingLinux">
+          <title>Building on Linux</title>
+          <content>
+              <para>
+                  Here are the instructions to get started on Linux:
+              </para>
+              <list class="bullet">
+                  <listItem>
+                      <para>
+                          Set the environment variable <environmentVariable>STATEBUILDERCPP_HOME</environmentVariable> to the directory where <application>StateBuilderCpp</application> is installed:
+                      </para>
+                      <code># export STATEBUILDERCPP_HOME=$HOME/StateBuilderCpp</code>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Change to the directory where the libraries and examples will be build:
+                      </para>
+                      <code># cd $STATEBUILDERCPP_HOME/build/makefile</code>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Invoke <localUri>gen-makefile.sh</localUri> which calls <codeInline>cmake</codeInline> to generate the Makefiles:
+                      </para>
+                      <code># ./gen-makefile.sh</code>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Now explore the different examples that can be build:
+                      </para>
+                      <code>make help</code>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          To compile the HelloWorld example:
+                      </para>
+                      <code>make HelloWorld</code>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          Alternatively, change to the example build directory and run <application>make</application> without argument:
+                      </para>
+                      <code>cd $STATEBUILDERCPP_HOME/build/makefile/examples/boost/HelloWorld</code>
+                      <code>make</code>
+                  </listItem>
+                  <listItem>
+                      <para>
+                          To test the examples:
+                      </para>
+                      <code>ctest -V</code>
+                  </listItem>
+              </list>
+          </content>
+      </section>
+      <relatedTopics>
+          <link xlink:href="a8f0c368-0fd0-46d3-807d-0bc31686b330">Requirements</link>
+          <link xlink:href="a0f3c46f-0fb3-48ea-a622-235140c90404">Qt Integration</link>
+          <link xlink:href="639911e9-6de8-4547-b463-db2942623f4c">Boost Integration</link>
+      </relatedTopics>
+
+  </developerConceptualDocument>
+</topic>

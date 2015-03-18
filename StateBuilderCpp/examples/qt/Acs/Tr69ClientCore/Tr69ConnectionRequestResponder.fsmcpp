@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+    <!-- General settings -->
+    <settings asynchronous="true" library="qt">
+        <description>Respond to incoming connection request from Acs server</description>
+        <object instance="responder" class="Tr69ConnectionRequestResponder" include="Tr69ConnectionRequestResponder.h"/>
+        <object instance="responderPrivate" class="Tr69ConnectionRequestResponderPrivate" include="Tr69ConnectionRequestResponderPrivate.h"/>
+        <object instance="request" class="QHttpRequest" include="qhttprequest.h"/>
+        <object instance="response" class="QHttpResponse" include="qhttpresponse.h"/>
+    </settings>
+
+    <!-- events -->
+    <events>
+        <eventSource name="ManagementEvent">
+            <event id="evStop"/>
+        </eventSource>
+        <eventSource name="QHttpRequest">
+            <event id="evEndRequest"/>
+        </eventSource>
+        <eventSource name="QHttpRequest">
+            <event id="evDoneResponse"/>
+        </eventSource>
+        <eventSource name="TimerEvent">
+            <timer id="evMaxProcessingTimer" name="MaxProcessingTimer"/>
+            <timer id="evHttpResponseDelayTimer" name="HttpResponseDelayTimer"/>
+        </eventSource>
+    </events>
+
+    <state name="Tr69ConnectionRequestResponder">
+        <onEntry>
+            <timerStart timer="MaxProcessingTimer" duration="responder.conf().maxProcessingDuration"/>
+        </onEntry>
+        <transition event="evMaxProcessingTimer" nextState="End">
+            <action>responderPrivate.m_errorMessage = "Processing Timeout"</action>
+        </transition>
+        <transition event="evStop" nextState="End">
+            <action>responderPrivate.m_errorMessage = "Responder stoppped"</action>
+        </transition>
+        <!-- State Close -->
+        <state name="WaitEndRequest">
+            <transition event="evEndRequest" nextState="WaitToSendResponse"/>
+        </state>
+        <state name="WaitToSendResponse">
+            <onEntry>
+                <timerStart timer="HttpResponseDelayTimer" duration="responder.conf().httpResponseDelay"/>
+            </onEntry>
+            <transition event="evHttpResponseDelayTimer" nextState="SendResponseAndWaitDone"/>
+        </state>
+        <state name="SendResponseAndWaitDone">
+            <onEntry>
+                <action>response.writeHead(200)</action>
+                <action>response.end()</action>
+            </onEntry>
+            <transition event="evDoneResponse" nextState="End"/>
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+</sm:StateMachine>
+

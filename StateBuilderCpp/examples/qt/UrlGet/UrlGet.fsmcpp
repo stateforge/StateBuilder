@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+    <!-- General settings -->
+    <settings asynchronous="true" library="qt">
+        <description>get a web page from http and a file from ftp by using the parallel feature</description>
+        <object instance="urlGet" class="UrlGet" include="UrlGet.h"/>
+    </settings>
+
+    <!-- Events -->
+    <events>
+        <eventSource name="ManagementEvent">
+            <event id="evStart"/>
+            <event id="evStop"/>
+        </eventSource>
+        <eventSource name="HttpEvent">
+            <event id="evHttpDone"/>
+            <event id="evHttpDoneError"/>
+        </eventSource>
+        <eventSource name="FtpEvent">
+            <event id="evFtpDone"/>
+            <event id="evFtpDoneError"/>
+        </eventSource>
+        <eventSource name="Timers">
+            <timer id="evTimerMaxDuration" name="TimerMaxDuration"/>
+        </eventSource>
+    </events>
+
+    <!-- States -->
+    <state name="UrlGet">
+        <!-- default transitions -->
+        <transition event="evTimerMaxDuration" nextState="End" description="time out error">
+            <action>//TODO</action>
+        </transition>
+        <!-- Idle state -->
+        <state name="Idle">
+            <transition event="evStart" nextState="Running">
+                <timerStart timer="TimerMaxDuration" duration="30000"/>
+            </transition>
+        </state>
+        <state name="Running">
+            <parallel nextState="End">
+                <!-- State Http -->
+                <state name="Http">
+                    <!-- State HttpGet -->
+                    <state name="HttpGet" description="fetch a web page">
+                        <onEntry action="urlGet.httpStart()"/>
+                        <transition event="evHttpDone" nextState="HttpEnd" description="http done"/>
+                        <transition event="evHttpDoneError" nextState="End" description="http error"/>
+                    </state>
+                    <!-- State HttpEnd -->
+                    <state name="HttpEnd" kind="final"/>
+                </state>
+                <!-- State Http -->
+
+                <!-- State Ftp -->
+                <state name="Ftp">
+                    <!-- State FtpGet -->
+                    <state name="FtpGet" description="get a file from Ftp">
+                        <onEntry action="urlGet.ftpStart()"/>
+                        <transition event="evFtpDone" nextState="FtpEnd" description="ftp done"/>
+                        <transition event="evFtpDoneError" nextState="End" description="ftp error"/>
+                    </state>
+                    <!-- State FtpEnd -->
+                    <state name="FtpEnd" kind="final"/>
+                </state>
+                <!-- State Ftp -->
+            </parallel>
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+</sm:StateMachine>
+

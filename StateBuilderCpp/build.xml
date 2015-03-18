@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="StateBuilderCpp" default="deploy" basedir=".">
+
+    <description>
+        StateBuilder for C++, use to upload everything to the website: setup, xsd, doc etc ...
+    </description>
+
+    <!-- Ftp -->
+    <property name="ftp.server" value="ftp.acme.com"/>
+    <property name="ftp.user" value="myuser"/>
+    <property name="ftp.password" value="mypassword"/>
+    
+    <target name="deploy.xsd" description="deploy xsd">
+        <echo message="uploading xsd files" />
+        <ftp server="${ftp.server}"
+             remotedir="/xsd"
+             userid="${ftp.user}"
+             password="${ftp.password}"
+             passive="no"
+             depends="yes"
+             binary="no">
+            <fileset dir="../Compiler/cpp/src/main/resources">
+                <include name="**/*.xsd"/>
+            </fileset>
+        </ftp>
+    </target>
+    <target name="deploy.setup" description="deploy setup jar">
+        <echo message="uploading setup files" />
+        <ftp server="${ftp.server}"
+             remotedir="/Files"
+             userid="${ftp.user}"
+             password="${ftp.password}"
+             passive="no"
+             depends="yes"
+             binary="yes">
+            <fileset dir="build/setup">
+                <include name="StateBuilderCpp-WinSetup.exe"/>
+                <include name="StateBuilderCpp-MacSetup.jar"/>
+                <include name="StateBuilderCpp-LinuxSetup.jar"/>
+            </fileset>
+        </ftp>
+    </target>
+
+    <target name="deploy.doc" description="deploy doc">
+        <echo message="uploading doc files" />
+        <ftp server="${ftp.server}"
+             remotedir="/Doc/StateBuilderCpp"
+             userid="${ftp.user}"
+             password="${ftp.password}"
+             passive="no"
+             depends="yes">
+            <fileset dir="doc/Help"/>
+        </ftp>
+    </target>
+
+
+    <target name="deploy" description="deploy all" depends="deploy.setup,deploy.xsd,deploy.doc">
+        <echo message="uploading all files" />
+    </target>
+</project>
+
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+    <!-- General settings -->
+    <settings asynchronous="true" library="qt" namespace="stateforge::network">
+        <object instance="ping" class="stateforge::network::Ping" include="Ping.h"/>
+    </settings>
+    
+    <!-- events -->
+    <events>
+        <eventSource name="Ping">
+            <event id="EvStart"/>
+            <event id="EvCancel"/>
+        </eventSource>
+        <eventSource name="Internal">
+            <event id="EvError"/>
+            <event id="EvPingReply"/>
+            <timer id="EvTimer" name="Timer"/>
+        </eventSource>
+    </events>
+
+    <!-- States -->
+    <state name="Ping">
+        <state name="Idle">
+            <transition event="EvStart" nextState="SendPingAndWaitForReply"/>
+        </state>
+        <state name="SendPingAndWaitForReply">
+            <onEntry>
+                <action>ping.send()</action>
+                <timerStart timer="Timer" duration="ping.getTimeout()"/>
+            </onEntry>
+            <onExit>
+                <timerStop timer="Timer"/>
+            </onExit>
+            <transition event="EvCancel" nextState="End"/>
+            <transition event="EvPingReply" condition="ping.getTx() == ping.getCount()" nextState="End"/>
+            <transition event="EvTimer" condition="ping.getTx() == ping.getCount()" nextState="End"/>
+            <transition event="EvTimer" nextState="SendPingAndWaitForReply" />
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+</sm:StateMachine>
+

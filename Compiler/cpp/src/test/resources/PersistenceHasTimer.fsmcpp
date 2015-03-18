@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+    
+  <!-- general settings -->
+  <settings asynchronous="true" serialize="true" library="std">
+    <object instance="minimal" class="Minimal" include="Minimal.h"/>
+  </settings>
+
+  <!-- events -->
+  <events>
+    <eventSource name="MinimalEvent">
+      <event id="EvStart"/>
+      <timer id="EvTimer" name="TimerName"/>
+    </eventSource>
+  </events>
+
+  <!-- First machine -->
+  <state name="Top">
+    <state name="On"/>
+    <state name="Off"/>
+  </state>
+</sm:StateMachine>
+

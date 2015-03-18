@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="e255e8c9-98cd-4479-bb31-bb106056f709" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <!--
+    <summary>
+      <para>Optional summary abstract</para>
+    </summary>
+    -->
+        <introduction>
+            <!-- Uncomment this to generate an outline of the section and sub-section
+           titles.  Specify a numeric value as the inner text to limit it to
+           a specific number of sub-topics when creating the outline.  Specify
+           zero (0) to limit it to top-level sections only.  -->
+            <!-- <autoOutline /> -->
+            <para>
+                This software comes with numerous examples, they are used to demonstrate the StateBuilder features to users.
+                Internally, these samples are integral part of the Test Driven Development methodology (TDD).
+            </para>
+            <para>
+                The table below is the feature matrix which lists for each example the features used.
+            </para>
+            <table>
+                <tableHeader>
+                    <row>
+                        <entry>Examples</entry>
+                        <entry>States</entry>
+                        <entry>Events</entry>
+                        <entry>Asynchronous</entry>
+                        <entry>Hierarchical</entry>
+                        <entry>Parallel</entry>
+                        <entry>History</entry>
+                        <entry>Objects</entry>
+                    </row>
+                </tableHeader>
+
+                
+         
+                <row>
+                    <entry>
+                        <para>
+                            <link xlink:href="28bb5d53-b5dd-48c2-99ad-14be11a49af5">HelloWorld</link>
+                        </para>
+                    </entry>
+                    <entry>3</entry>
+                    <entry>2</entry>
+                    <entry>
+                        <mediaLinkInline>
+                            <image xlink:href="ArrowButtonGreen" />
+                        </mediaLinkInline>
+                    </entry>
+                    <entry>1</entry>
+                    <entry></entry>
+                    <entry></entry>
+                    <entry>1</entry>
+                </row>                
+                <row>
+                    <entry>
+                        <para>
+                            <link xlink:href="13afaa12-ae68-478d-aec1-0b07dd863f27">Microwave</link>
+                        </para>
+                    </entry>
+                    <entry>10</entry>
+                    <entry>7</entry>
+                    <entry></entry>
+                    <entry>3</entry>
+                    <entry>
+                        <mediaLinkInline>
+                            <image xlink:href="ArrowButtonGreen" />
+                        </mediaLinkInline>
+                    </entry>
+                    <entry></entry>
+                    <entry>2</entry>
+                </row>
+              
+                <row>
+                    <entry>
+                        <para>
+                            <link xlink:href="99660248-3054-43f2-9a97-e9f8a77f9e24">Ping</link>
+                        </para>
+                    </entry>
+                    <entry>3</entry>
+                    <entry>5</entry>
+                    <entry>
+                        <mediaLinkInline>
+                            <image xlink:href="ArrowButtonGreen" />
+                        </mediaLinkInline>
+                    </entry>
+                    <entry>1</entry>
+                    <entry></entry>
+                    <entry></entry>
+                    <entry>1</entry>
+                </row>
+               
+              
+            </table>
+
+            <para>
+                The column meaning is defined here:
+            </para>
+            <list class="bullet">
+                <listItem>
+                    <para>"States" indicates how many states compose the state machine, the root state being excluded.</para>
+                </listItem>
+                <listItem>
+                    <para>"Events" indicates how many events can be sent the state machine.</para>
+                </listItem>
+                <listItem>
+                    <para>"Conditions" indicates how many transitions have a condition.</para>
+                </listItem>
+                <listItem>
+                    <para>"Asynchronous" indicates whether the state machine is asynchronous or synchronous.</para>
+                </listItem>
+                <listItem>
+                    <para>The column "Hierarchical" indicates the state machine depth in term of states.</para>
+                </listItem>
+                <listItem>
+                    <para>The column "Parallel" indicates if the state machine has at least one parallel state.</para>
+                </listItem>
+                <listItem>
+                    <para>The column "History" if the state machine has at least one history state.</para>
+                </listItem>
+                <listItem>
+                    <para>The column "Objects" indicates how many objects drive the state machine.</para>
+                </listItem>
+            </list>
+        </introduction>
+        <relatedTopics>
+            <link xlink:href="32b960d9-f56e-40d4-bfea-2366aa0eb50d">Getting Started</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

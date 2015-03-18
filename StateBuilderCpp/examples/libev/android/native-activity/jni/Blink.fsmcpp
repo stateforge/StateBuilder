@@ -1,0 +1,43 @@
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1                                      http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd">
+
+    <!-- General settings -->
+    <settings asynchronous="true" library="libev">
+        <description>Blink</description>
+        <object instance="blink" class="Blink" include="Blink.h"/>
+    </settings>
+
+    <!-- events -->
+    <events>
+        <eventSource name="BlinkEvent">
+            <event id="EvStart"/>
+            <event id="EvStop"/>
+        </eventSource>
+        <eventSource name="Timers">
+            <timer id="EvTimerRetry" name="TimerRetry"/>
+        </eventSource>
+    </events>
+
+    <!-- States -->
+    <state name="Top">
+
+        <!-- transitions -->
+        <transition event="EvStop" nextState="End"/>
+        <!-- Children state -->
+        <state name="Idle">
+            <transition event="EvStart" nextState="Running"/>
+        </state>
+        <state name="Running">
+            <onEntry>
+                <timerStart timer="TimerRetry" duration="1000"/>
+                <action>// TODO helloWorld.Print("Ciao")</action>
+            </onEntry>
+            <!--<transition event="EvTimerRetry" condition="helloWorld.HasReachedLimit()" nextState="End">
+                <action>helloWorld.Print("Bye")</action>
+            </transition>-->
+            <transition event="EvTimerRetry" nextState="Running">
+                <action>//TODO helloWorld.IncrementCounter();</action>
+            </transition>
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+</sm:StateMachine>

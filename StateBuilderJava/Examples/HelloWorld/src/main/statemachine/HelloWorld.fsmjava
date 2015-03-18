@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineJava-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineJava-v1
+                                     http://www.stateforge.com/xsd/StateMachineJava-v1.xsd" >
+    <!-- General settings -->
+    <settings asynchronous="false" namespace="com.stateforge.statemachine.examples.HelloWorld">
+        <object instance="action" class="HelloWorldAction"/>
+    </settings>
+
+    <!-- Events -->
+    <events>
+        <eventSource name="HelloWorldEvent">
+            <event id="start"/>
+            <event id="stop"/>
+        </eventSource>
+    </events>
+
+    <!-- States -->
+    <state name="HelloWorld">
+        <state name="Idle">
+            <transition event="start" nextState="Running"/>
+        </state>
+        <state name="Running">
+            <onEntry action="action.doPrint(&quot;HELLO&quot;)"/>
+            <onExit action="action.doPrint(&quot;BYE&quot;)"/>
+            <transition event="stop" nextState="End"/>
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+</sm:StateMachine>

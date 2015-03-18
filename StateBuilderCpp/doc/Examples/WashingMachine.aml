@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="df8634f6-4652-4fff-b092-acaba3c3bb66" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>Here is the documentation for the WashingMachine example</para>
+            <autoOutline/>
+        </introduction>
+        <section address="Description">
+            <title>Description</title>
+            <content>
+                <para>
+                    The WashingMachine example demonstrates the history state.
+                </para>
+            </content>
+        </section>
+
+        <section address="WashingMachine_fsmcpp">
+            <title>WashingMachine.fsmcpp</title>
+            <content>
+                <code source="..\examples\stdcpp\WashingMachine\WashingMachine.fsmcpp" language="xml"/>
+            </content>
+        </section>
+        <section address="WashingMachine_h">
+            <title>WashingMachine.h</title>
+            <content>
+                <code source="..\examples\stdcpp\WashingMachine\WashingMachine.h" language="cpp"/>
+            </content>
+        </section>
+        <section address="WashingMachine_cpp">
+            <title>WashingMachine.cpp</title>
+            <content>
+                <code source="..\examples\stdcpp\WashingMachine\WashingMachine.cpp" language="cpp"/>
+            </content>
+        </section>
+        <section address="main">
+            <title>main.cpp</title>
+            <content>
+                <code source="..\examples\stdcpp\WashingMachine\main.cpp" language="cpp"/>
+            </content>
+        </section>
+        <section address="CMakeList">
+            <title>CMakeLists.txt</title>
+            <content>
+                <code source="..\examples\stdcpp\WashingMachine\CMakeLists.txt"/>
+            </content>
+        </section> 
+        <relatedTopics>
+            <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">List of examples</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+
+</topic>

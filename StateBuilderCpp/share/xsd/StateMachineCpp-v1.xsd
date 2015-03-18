@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+    targetNamespace="http://www.stateforge.com/StateMachineCpp-v1" version="4">
+
+    <!--
+    ChangeLog 
+    2013/08/09 version 4, add attribute observer which can be set to "no", "int" or the default "string"
+    2013/03/10 version 3, the attribute nextState of the element parallel is now optional. 
+    2012/10/20 version 2, add the optional attribute "serialize" to the settings element, compatible with StateBuilder 1.4.x 
+     -->
+    <xsd:annotation>
+        <xsd:documentation>
+            This schema definition defines common structure types for the State Machine C++ Schema.
+            Xml files conforming to this schema are used by StateBuilderCpp to generate C++ source code.
+            Visit http://www.stateforge.com for more information.
+        </xsd:documentation>
+    </xsd:annotation>
+    
+    <xsd:simpleType name="PassedByType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Define how a parameter is passed by: value, pointer or reference.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="reference"/>
+            <xsd:enumeration value="pointer"/>
+            <xsd:enumeration value="value"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ParameterType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Define an event parameter.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="type" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>
+                    The type of the parameter.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="name" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>
+                    The name of the parameter that is referenced in the action or condition element.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="passedBy" type="sm:PassedByType" use="optional" default="value">
+        </xsd:attribute>
+        <xsd:attribute name="const" type="xsd:boolean" use="optional" default="false">
+            <xsd:annotation>
+                <xsd:documentation>
+                  Is the paremeter constant ?
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="EventType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Definition of an event that may trigger a transition from a state to another. An event can have any number of parameters of any type.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:annotation>
+                <xsd:documentation>
+                    The list of event parameter(s).
+                </xsd:documentation>
+            </xsd:annotation>
+            <xsd:element name="parameter" type="sm:ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>The event identifier. The attribute transaction@event references this id.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="description" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>The event decription</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="name" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+                    The name of the event, typically used by timer events to start and stop the timer.
+                    The attribute timerStart@timer and timerStart@timer references this name.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="EventSourceType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Groups related events together.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        <xsd:element name="event" type="sm:EventType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        The list of events for this event source.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="timer" type="sm:TimerType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        The list of timers for this event source.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>The name of this event source. If the attribute file is present, name means the name of the interface to find in the file.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="description" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>The description of this event source.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="EventsType">
+        <xsd:sequence>
+            <xsd:annotation>
+                <xsd:documentation>The list of event sources.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:element name="eventSource" type="sm:EventSourceType" minOccurs="1" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TimerType">
+        <xsd:complexContent>
+            <xsd:restriction base="sm:EventType">
+                <xsd:attribute name="description" type="xsd:string" use="optional"/>
+                <xsd:attribute name="id" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>The timer identifier referenced in transition@event.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="name" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>The timer name referenced in timerStart and timerStop.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:restriction>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="TimerStartActionType">
+        <xsd:attribute name="timer" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>The name of the timer to start, must be one of eventList/eventProvider/timer@name</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="duration" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>The duration is milliseconds after which a timer event is triggered.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="TimerStopActionType">
+        <xsd:attribute name="timer" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>The name of the timer to stop, must be one of eventList/eventProvider/timer@name</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:simpleType name="CodeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+                    Execute C++ code. The instances that can be used are in settings/object/name.
+                    The final ';' is not necessary.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:group name="ActionGroupType" >
+        <xsd:choice>
+            <xsd:element name="action" type="sm:CodeType"/>
+            <xsd:element name="timerStart" type="sm:TimerStartActionType"/>
+            <xsd:element name="timerStop" type="sm:TimerStopActionType"/>
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:complexType  name="ActionsType">
+        <xsd:group ref="sm:ActionGroupType" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:attribute name="action" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="TransitionType">
+        <xsd:annotation>
+            <xsd:documentation>
+                When an event is received and the eventual condition is true,
+                a transition occurs from the state that contains this transition to the state specified in transtion@nextState.
+                Actions are performed during this transition
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="condition" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        The action to execute if this transition is triggered.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:group ref="sm:ActionGroupType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="description" type="xsd:string" use="optional" default="">
+            <xsd:annotation>
+                <xsd:documentation>A description of the transition.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="event" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>The event that can triggered the transition from one state to another.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="condition" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>This condition must be true to trigger to transition.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="action" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+                    The action to execute if this transition is triggered.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="nextState" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+                    A transition without the attribute nextState is an internal transition,
+                    in this case, onEntry and onExit action lists are *not* executed
+                    A transition with the attribute nextState equal to the state containing this transition is a self-transition,
+                    in this case, onEntry and onExit action lists are executed.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:simpleType name="StateKindType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="final">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        When the state machine reaches a final state,
+                        the object which hold the context is informed about the end of the state machine.
+                        A final state cannot have child states or transitions
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="history">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        An history state allows to remember in which state the machine was before a transition to this state.
+                        When the opposite transition happens, the machines goes into the remembered state intead of the initial state.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="StateType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Define a state. A state can have any number of child state.
+                A state usually has transitions that allows to go to another state.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="onEntry" type="sm:ActionsType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Actions to be executed upon entering this state.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="onExit" type="sm:ActionsType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Actions to be executed when leaving this state.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="transition" type="sm:TransitionType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="state" type="sm:StateType" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="parallel" type="sm:ParallelType" minOccurs="0" maxOccurs="1" >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        A parallel state is a container for multiple independent states evolving on their own.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>
+                    The name of the state. It must be unique.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="kind" type="sm:StateKindType" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+                    The kind of state which could be final, error or history.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="description" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+                    The description of the state.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="ParallelType">
+        <xsd:sequence>
+            <xsd:element name="state" type="sm:StateType" minOccurs="1" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="nextState" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>When all sub-states have reached their final state, go to the next state.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="ObjectType">
+        <xsd:attribute name="instance" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>The object instance name to used used through the state machine to perform actions and get some variables value.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="class" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>The name of the object class.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="include" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>The name of include file where the class is declared.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="ContextType">
+        <xsd:attribute name="class" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>The name of the context class to generate. Default is the state machine name ending with Context, e.g DoorContext </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="instance" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>The context instance name that is eventually used in this file. Default instance name is "context".</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:simpleType name="LibraryType">
+        <xsd:annotation>
+            <xsd:documentation>
+                The third party libraries.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="qt"/>
+            <xsd:enumeration value="boost"/>
+            <xsd:enumeration value="std"/>
+            <xsd:enumeration value="libev"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="ObserverType">
+        <xsd:annotation>
+            <xsd:documentation>
+                The type of observer.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="no"/>
+            <xsd:enumeration value="string"/>
+            <xsd:enumeration value="int"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="SettingsType">
+        <xsd:sequence>
+            <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>The description of the state machine.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="object" type="sm:ObjectType" minOccurs="1" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>The object that the context can have access to.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="context" type="sm:ContextType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Informations about the generated context. Overrides the default settings.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="include" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>A list of eventual include files where parameter classes or other classes are declared.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="asynchronous" type="xsd:boolean" use="required">
+            <xsd:annotation>
+                <xsd:documentation>Is the state machine asynchronous or synchronous ?</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="serialize" type="xsd:boolean" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>Is the state machine serializable ?</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>        
+        <xsd:attribute name="library" type="sm:LibraryType" use="required"/>
+        <xsd:attribute name="observer" type="sm:ObserverType" use="optional"/>
+        <xsd:attribute name="name" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>The name of the state machine. Default is the name of the file without the extension.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="namespace" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>The namespace for the generated code.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="StateMachineType">
+        <xsd:annotation>
+            <xsd:documentation>Xml description of a finite state machine.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="settings" type="sm:SettingsType" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>The settings necessary to generate the state machine</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="events" type="sm:EventsType" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>The list of events the state machine handles.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="state" type="sm:StateType" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>The root state. All states must be placed inside this root state.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="StateMachine" type="sm:StateMachineType"/>
+</xsd:schema>

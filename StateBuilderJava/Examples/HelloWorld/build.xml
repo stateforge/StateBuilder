@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="package" name="HelloWorld">
+	<property name="build.srcDir" value="${basedir}/src/main/java"/>
+	<property name="build.target" value="${basedir}/target"/>
+	<property name="build.outputDir" value="${build.target}/classes"/>
+	<property name="build.finalName" value="HelloWorld-1.0.0"/>
+
+	<condition property="statebuilder.dir" value="${user.home}/StateBuilderJava">
+		<os family="unix"/>
+	</condition>
+	<condition property="statebuilder.dir" value="${user.home}/AppData/Local/StateForge/StateBuilderJava">
+		<os family="windows"/>
+	</condition>
+	<property name="statebuilder-ant-task.jar" value="${statebuilder.dir}/lib/statebuilder-ant-task-2.4.jar"/>
+	<property name="statemachine.jar" value="${statebuilder.dir}/lib/statemachine-2.4.jar"/>
+	<property name="statemachine.input.dir" value="${basedir}/src/main/statemachine"/>
+	<property name="statemachine.output.dir" value="${build.target}/generated-sources/statebuilder"/>
+
+	<path id="build.classpath">
+		<pathelement location="${statemachine.jar}"/>
+	</path>
+
+	<!-- ====================================================================== -->
+	<!-- StateBuilder target                                                    -->
+	<!-- ====================================================================== -->
+	<target description="Generate the state machine Java source code from Xml description" name="StateBuilder">
+		<mkdir dir="${build.target}"/>
+		<taskdef classname="com.stateforge.statebuilder.ant.StateBuilderAntTask" classpath="${statebuilder-ant-task.jar}" name="StateBuilder"/>
+
+		<StateBuilder input="${statemachine.input.dir}" output="${statemachine.output.dir}"/>
+	</target>
+
+	<!-- ====================================================================== -->
+	<!-- Compile target                                                         -->
+	<!-- ====================================================================== -->
+	<target depends="StateBuilder" description="Compiles the java source code" name="compile">
+		<mkdir dir="${build.outputDir}"/>
+
+		<javac destdir="${build.outputDir}">
+			<src path="${build.srcDir}"/>
+			<src path="${statemachine.output.dir}"/>
+			<classpath refid="build.classpath"/>
+		</javac>
+	</target>
+
+	<!-- ====================================================================== -->
+	<!-- Package target                                                         -->
+	<!-- ====================================================================== -->
+	<target depends="compile" description="Package the application" name="package">
+		<jar basedir="${build.outputDir}" compress="true" excludes="**/package.html" index="false" jarfile="${build.target}/${build.finalName}.jar"/>
+	</target>
+
+	<!-- ====================================================================== -->
+	<!-- Cleaning up target                                                     -->
+	<!-- ====================================================================== -->
+	<target description="Clean the output directory" name="clean">
+		<delete dir="${build.target}"/>
+	</target>
+</project>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.stateforge.statebuilder.ant</groupId>
+    <artifactId>statebuilder-ant-task</artifactId>
+    <packaging>jar</packaging>
+    <version>2.4</version>
+    <name>StateBuilder Ant Task</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.stateforge.statebuilder</groupId>
+            <artifactId>statebuilder-java</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <addMavenDescriptor>false</addMavenDescriptor>
+                    <archive>
+                        <manifestEntries>
+                            <Class-Path>statebuilder-java-2.4.jar</Class-Path>
+                        </manifestEntries>
+                        <manifest>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

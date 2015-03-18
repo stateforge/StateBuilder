@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="28bb5d53-b5dd-48c2-99ad-14be11a49af5" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>Here is the documentation for the HelloWorld asynchrounous example based on Boost.</para>
+            <autoOutline/>
+        </introduction>
+        <section address="Description">
+            <title>Description</title>
+            <content>
+                <para>
+                    This example illustrates an asynchrounous state machine which involves timers. It prints "Ciao" 3 times every seconds and quit.
+                </para>
+            </content>
+        </section>
+
+        <section address="HelloWorld_fsmcpp">
+            <title>HelloWorld.fsmcpp</title>
+            <content>
+                <code source="..\examples\boost\HelloWorld\HelloWorld.fsmcpp" language="xml"/>
+            </content>
+        </section>
+        <section address="HelloWorld_h">
+            <title>HelloWorld.h</title>
+            <content>
+                <code source="..\examples\boost\HelloWorld\HelloWorld.h" language="cpp"/>
+            </content>
+        </section>
+        <section address="HelloWorld_cpp">
+            <title>HelloWorld.cpp</title>
+            <content>
+                <code source="..\examples\boost\HelloWorld\HelloWorld.cpp" language="cpp"/>
+            </content>
+        </section>
+        <section address="main">
+            <title>main.cpp</title>
+            <content>
+                <code source="..\examples\boost\HelloWorld\main.cpp" language="cpp"/>
+            </content>
+        </section>
+        <section address="CMakeList">
+            <title>CMakeLists.txt</title>
+            <content>
+                <code source="..\examples\boost\HelloWorld\CMakeLists.txt"/>
+            </content>
+        </section>
+        <section address="Output">
+            <title>Output</title>
+            <content>
+                <code>
+                    <![CDATA[
+13:00:09.498000,4,App::Main:39:HelloWorld
+13:00:09.499000,8,SmBoostObserver::OnEntry:62:HelloWorldContext, state Top
+13:00:09.500000,8,SmBoostObserver::OnEntry:62:HelloWorldContext, state Idle
+13:00:09.501000,4,App::Main:48:Start Time : 2011-Feb-11 13:00:09.500000
+13:00:09.502000,8,SmBoostObserver::OnProcessEventStart:72:HelloWorldContext, remaining event(s) 1
+13:00:09.502000,8,SmBoostObserver::OnTransitionBegin:39:HelloWorldContext, from Idle to Running, event EvStart
+13:00:09.502000,8,SmBoostObserver::OnExit:67:HelloWorldContext, state Idle
+13:00:09.503000,8,SmBoostObserver::OnEntry:62:HelloWorldContext, state Running
+13:00:09.503000,8,SmBoostObserver::OnTimerStart:52:HelloWorldContext, timer TimerRetry, duration 1000 msec
+13:00:09.504000,2,HelloWorld::Print:29:Ciao
+13:00:09.505000,8,SmBoostObserver::OnTransitionEnd:47:HelloWorldContext, from Idle to Running, event EvStart
+13:00:09.505000,8,SmBoostObserver::OnProcessEventStop:77:HelloWorldContext, remaining event(s) 0
+13:00:10.504000,8,SmBoostObserver::OnTransitionBegin:39:HelloWorldContext, from Running to Running, event EvTimerRetry
+13:00:10.504000,8,SmBoostObserver::OnExit:67:HelloWorldContext, state Running
+13:00:10.505000,8,SmBoostObserver::OnEntry:62:HelloWorldContext, state Running
+13:00:10.506000,8,SmBoostObserver::OnTimerStart:52:HelloWorldContext, timer TimerRetry, duration 1000 msec
+13:00:10.507000,2,HelloWorld::Print:29:Ciao
+13:00:10.507000,8,SmBoostObserver::OnTransitionEnd:47:HelloWorldContext, from Running to Running, event EvTimerRetry
+13:00:11.506000,8,SmBoostObserver::OnTransitionBegin:39:HelloWorldContext, from Running to Running, event EvTimerRetry
+13:00:11.506000,8,SmBoostObserver::OnExit:67:HelloWorldContext, state Running
+13:00:11.507000,8,SmBoostObserver::OnEntry:62:HelloWorldContext, state Running
+13:00:11.508000,8,SmBoostObserver::OnTimerStart:52:HelloWorldContext, timer TimerRetry, duration 1000 msec
+13:00:11.509000,2,HelloWorld::Print:29:Ciao
+13:00:11.509000,8,SmBoostObserver::OnTransitionEnd:47:HelloWorldContext, from Running to Running, event EvTimerRetry
+13:00:12.508000,8,SmBoostObserver::OnTransitionBegin:39:HelloWorldContext, from Running to End, event EvTimerRetry[helloWorld.HasReachedLimit()]
+13:00:12.508000,8,SmBoostObserver::OnExit:67:HelloWorldContext, state Running
+13:00:12.510000,2,HelloWorld::Print:29:Bye
+13:00:12.510000,8,SmBoostObserver::OnEntry:62:HelloWorldContext, state End
+13:00:12.511000,8,SmBoostObserver::OnTransitionEnd:47:HelloWorldContext, from Running to End, event EvTimerRetry[helloWorld.HasReachedLimit()]
+13:00:12.512000,4,App::Main:52:End Time : 2011-Feb-11 13:00:09.500000
+13:00:12.513000,4,App::Main:53:Duration: 00:00:03.011000
+13:00:12.514000,1,App::Main:63:test runs within margin
+13:00:12.517000,4,App::Main:73:HelloWorld ends                  
+                    
+                    ]]>
+                </code>
+            </content>
+        </section>        
+        <relatedTopics>
+            <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">List of examples</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

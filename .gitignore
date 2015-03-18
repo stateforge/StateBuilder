@@ -1,0 +1,12 @@
+**/target
+**/.project
+**/.classpath
+**/.settings
+**/*.*~
+**/*.zip
+**/*.bak
+**/*.log
+tlc
+TrueLicenseManager
+LicenserCpp
+LicenserJava

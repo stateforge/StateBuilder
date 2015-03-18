@@ -1,0 +1,36 @@
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 >
+
+  <!-- general settings -->
+  <settings asynchronous="false" library="std">
+    <object instance="businessObject" class="BusinessObject" include="BusinessObject.h"/>
+  </settings>
+    invalidtexthere
+    <!-- events -->
+    <events>
+        <eventSource name="FixMachine">
+            <event id="EvCreate">
+                <parameter name="sessionID" type="SessionID"/>
+            </event>
+
+        </eventSource>
+    </events>
+
+    <!-- States -->
+    <state name="Top">
+        <state name="Initial">
+            
+        </state>
+        <state name="Logging">
+            <transition event="EvCreate" nextState="LoggedIn"/>
+        </state>
+
+        <state name="LoggedIn">
+
+        </state>
+
+        <state name="LoggedOut">
+        </state>
+    </state>
+</sm:StateMachine>

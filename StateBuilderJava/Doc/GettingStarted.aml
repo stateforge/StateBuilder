@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="32b960d9-f56e-40d4-bfea-2366aa0eb50d" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+        <introduction>
+            <para>
+                Here is the Getting Started, this will guide through the first thing to know about <application>StateBuilderJava</application>.
+            </para>
+            <autoOutline>1</autoOutline>
+        </introduction>
+        <section address="Download">
+            <title>Installation instructions</title>
+            <content>
+            </content>
+            <sections address="Installations">
+                <section address="InstallationWindows">
+                    <title>Installation on Windows</title>
+                    <content>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Download the installer <externalLink>
+                                        <linkText>StateBuilderJava-WinSetup.jar</linkText>
+                                        <linkUri>http://www.stateforge.com/Files/StateBuilderJava-WinSetup.jar</linkUri>
+                                    </externalLink>.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Double click on <application>StateBuilderJava-WinSetup.exe</application> and follow the instructions.
+                                </para>
+                            </listItem>
+                        </list>
+                    </content>
+                </section>
+                <section address="InstallationMac">
+                    <title>Installation on Mac</title>
+                    <content>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Download and double click on the installer <externalLink>
+                                        <linkText>StateBuilderJava-MacSetup.jar</linkText>
+                                        <linkUri>http://www.stateforge.com/Files/StateBuilderJava-MacSetup.jar</linkUri>
+                                    </externalLink>.
+                                </para>
+                            </listItem>
+                            
+                        </list>
+                    </content>
+                </section>                
+                <section address="InstallationLinux">
+                    <title>Installation on Linux</title>
+                    <content>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Download the installer <externalLink>
+                                        <linkText>StateBuilderJava-LinuxSetup.jar</linkText>
+                                        <linkUri>http://www.stateforge.com/Files/StateBuilderJava-LinuxSetup.jar</linkUri>
+                                    </externalLink>.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Run the installer with the following command:
+                                </para>
+                                <code>java -jar StateBuilderJava-LinuxSetup.jar</code>
+                            </listItem>
+                        </list>
+                    </content>
+                </section>
+            </sections>
+        </section>
+
+        <section address="Description">
+            <title>Description</title>
+            <content>
+                <para>
+                    Let's start with a LED system, this example has a very simple state machine: 2 leaf states <codeInline>SwitchedOff</codeInline> and <codeInline>SwitchedOn</codeInline>, 2 events <codeInline>on()</codeInline> and <codeInline>off()</codeInline>, 2 actions <codeInline>doOff()</codeInline> and <codeInline>doOn()</codeInline> and 2 transitions.
+                </para>
+                <para>
+                    The diagram below is a visual representation of this state machine:
+                </para>
+                <mediaLink>
+                    <caption>Led State Diagram</caption>
+                    <image xlink:href="LedStateDiagram"/>
+                </mediaLink>
+            </content>
+        </section>
+
+        <section address="LedExampleFsm">
+            <title>Finite State Machine Markup Language</title>
+            <content>
+                <para>
+                    The following file <localUri>Led.fsmjava</localUri> represents the state machine in the FsmML format:
+                </para>
+                <code source="..\Examples\Led\src\main\statemachine\Led.fsmjava" language="xml"/>
+            </content>
+        </section>
+
+        <section address="LedClassDiagramAll">
+            <title>Generated code class diagram</title>
+            <content>
+                <para>
+                    From the descripion of the LED state machine in <localUri>Led.fsmjava</localUri> listed above, <application>StateBuilderJava</application> generates a set of classes: a context class and various state classes.
+                    Only the context class is used by the application class <codeInline>Led</codeInline>
+                </para>
+                <para>
+                    The state machine design pattern found in the book "Design Patterns: Elements of Reusable Object-Oriented Software" written by the "Gang of Four" is used as the basic foundation for the generated code.
+                </para>
+                <para>
+                    The class diagram of the generated code is illustrated below:
+                </para>
+                <mediaLink>
+                    <caption>Led generared code class diagram</caption>
+                    <image xlink:href="LedClassDiagramAll"/>
+                </mediaLink>
+            </content>
+        </section>
+
+        <section address="FiniteStateMachineDissection">
+            <title>Finite State Machine Dissection</title>
+            <content>
+                <para>
+                    In the section, we'll analyze the three different elements that compose the finite state machine: the <codeInline>settings</codeInline>, <codeInline>events</codeInline>
+                    and <codeInline>state</codeInline>.
+                </para>
+            </content>
+            <sections>
+                <section address="LedExampleSettings">
+                    <title>Settings</title>
+                    <content>
+                        <para>
+                            Let's analyze the <codeInline>settings</codeInline> tag:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+    <settings asynchronous="false" namespace="com.stateforge.statemachine.examples.Led">
+        <object instance="led" class="Led"/>
+    </settings>
+                    ]]>
+                        </code>
+                        <para>
+                            The context class generated has its name inferred from the filename:
+                            <command>
+                                <replaceable>Led</replaceable>.fsmhava => <replaceable>Led</replaceable>Context
+                            </command>
+                        </para>
+                        <para>
+                            The namespace for the generated class is given through the <codeInline>namespace</codeInline> tag.
+                        </para>
+                        <para>
+                            This state machine controls one object <codeInline>led</codeInline> of type <codeInline>Led</codeInline>
+                        </para>
+                        <para>
+                            The oject instance name <codeInline>led</codeInline> is referenced in the actions to get access to this object.
+                        </para>
+                        <para>
+                            From the object class name <codeInline>Led</codeInline>, the context class constructor is : <codeInline>LedContext(Led led)</codeInline>
+                        </para>
+                    </content>
+                </section>
+
+                <section address="LedExampleEvents">
+                    <title>Events</title>
+                    <content>
+                        <para>
+                            Let's analyze the <codeInline>events</codeInline> tag:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+                      <events>
+                        <eventSource name="LedControl">
+                          <event id="on"/>
+                          <event id="off"/>
+                        </eventSource>
+                      </events>
+                    ]]>
+                        </code>
+                        <para>
+                            The <codeInline>events</codeInline> tag has a group of different event source
+                        </para>
+                        <para>
+                            The context class has a method for each event:
+                        </para>
+
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    void LedContext.on()
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    void LedContext.off()
+                                </para>
+                            </listItem>
+                        </list>
+                        <para>
+                            From now on, we know how the create an instance of the context class and send events to the context.
+                        </para>
+                    </content>
+                </section>
+
+                <section address="LedExampleStates">
+                    <title>States and transitions</title>
+                    <content>
+                        <para>
+                            Let's analyze the <codeInline>state</codeInline> tag:
+                        </para>
+                        <code language="xml">
+                            <![CDATA[
+                 <state name="Root">
+                     <state name="SwitchedOff">
+                         <onEntry action="led.doOff()"/>
+                         <transition event="on" nextState="SwitchedOn"/>
+                     </state>
+                     <state name="SwitchedOn">
+                         <onEntry action="led.doOn()"/>
+                         <transition event="off" nextState="SwitchedOff"/>
+                     </state>
+                 </state>
+                    ]]>
+                        </code>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    State <codeInline>SwitchedOff</codeInline>
+                                </para>
+                                <list class="bullet">
+                                    <listItem>
+                                        <para>
+                                            <codeInline>ledPrivate.doOff()</codeInline> is executed when the state <codeInline>SwitchedOff</codeInline> is entered.
+                                        </para>
+                                    </listItem>
+                                    <listItem>
+                                        <para>
+                                            When the event <codeInline>on()</codeInline> is received, go to the <codeInline>SwitchedOn</codeInline> state.
+                                        </para>
+                                    </listItem>
+                                </list>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    State <codeInline>SwitchedOn</codeInline>
+                                </para>
+                                <list class="bullet">
+                                    <listItem>
+                                        <para>
+                                            <codeInline>ledPrivate.doOn()</codeInline> is executed when the state <codeInline>SwitchedOn</codeInline> is entered.
+                                        </para>
+                                    </listItem>
+                                    <listItem>
+                                        <para>
+                                            When the event <codeInline>off()</codeInline> is received, go to the <codeInline>SwitchedOff</codeInline> state.
+                                        </para>
+                                    </listItem>
+                                </list>
+                            </listItem>
+                        </list>
+                    </content>
+                </section>
+            </sections>
+        </section>
+
+        <section address="LedClassDiagram">
+            <title>Class Diagram</title>
+            <content>
+                <para>The following picture is a UML class diagram of the Led system:</para>
+                <mediaLink>
+                    <caption>Led class diagram</caption>
+                    <image xlink:href="LedClassDiagram"/>
+                </mediaLink>
+                <para>
+                    Here is a brief description of the relationships between <codeInline>LedPrivate</codeInline>, <codeInline>LedContext</codeInline> and <codeInline>LedPrivate</codeInline>.
+                </para>
+                <list class="ordered">
+                    <listItem>
+                        <para>
+                            <codeInline>LedContext:</codeInline>
+                        </para>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    is generated by <application>StateBuilderJava</application>.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    has an instance of <codeInline>Led</codeInline> which is given through its constructor.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    invokes the methods <codeInline>led.doOn()</codeInline> and <codeInline>led.doOff()</codeInline> depending on the current state.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    holds the current state.
+                                </para>
+                            </listItem>
+                        </list>
+                    </listItem>
+                    
+                    <listItem>
+                        <para>
+                            <codeInline>Led:</codeInline>
+                        </para>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    is exposed to the outside world through the public method <codeInline>on()</codeInline> and <codeInline>off()</codeInline>.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    holds and creates <codeInline>LedContext</codeInline>.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    invokes <codeInline>LedContext.On()</codeInline> and <codeInline>LedContext.Off()</codeInline>.
+                                </para>
+                            </listItem>
+                        </list>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+
+        <section address="LedCode">
+            <title>Led Source Code</title>
+            <content>
+            </content>
+            <sections address="SourceCode">
+                <section address="MainFile">
+                    <title>Main</title>
+                    <content>
+                        <para>
+                            Finally, here the code which uses the Led class:
+                        </para>
+                        <code source="..\Examples\Led\src\main\java\com\stateforge\statemachine\examples\Led\Led.java" language="j#"/>
+                    </content>
+                </section>
+            </sections>
+        </section>
+
+        <section address="RuntimeOutput">
+            <title>Runtime Output</title>
+            <content>
+                <para>
+                    Here is the output:
+                </para>
+                <code>
+                    LedContext: entering in state Root
+                    LedContext: entering in state SwitchedOff
+                    doOff
+                    LedContext: transition begins from state SwitchedOff to SwitchedOn, event on
+                    LedContext: leaving from state SwitchedOff
+                    LedContext: entering in state SwitchedOn
+                    doOn
+                    LedContext: transition has ended from state SwitchedOff to SwitchedOn, event on
+                    LedContext: transition begins from state SwitchedOn to SwitchedOff, event off
+                    LedContext: leaving from state SwitchedOn
+                    LedContext: entering in state SwitchedOff
+                    doOff
+                    LedContext: transition has ended from state SwitchedOn to SwitchedOff, event off
+                </code>
+            </content>
+        </section>
+        <section address="FurtherReading">
+            <title>Further reading</title>
+            <content>
+                <para>
+                    This guide illustrates how <application>StateBuilderJava</application> can be used to implement and integrate a finite state machine into an application.
+                </para>
+                <para>
+                    For more complex state machines, please have a look at the numerous examples. See how asynchrounous, hierarchical and concurrent state machines can be used to solve complex real world problems.
+                </para>
+            </content>
+        </section>
+        <relatedTopics>
+            
+            <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">List of examples</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

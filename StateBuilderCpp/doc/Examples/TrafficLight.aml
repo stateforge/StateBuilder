@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="f03632ac-f9ac-4db4-b793-29a8250e3629" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>Here is the documentation for the TrafficLight example</para>
+            <autoOutline/>
+        </introduction>
+        <section address="Description">
+            <title>Description</title>
+            <content>
+                <para>
+                    The TrafficLight example demonstrates an asynchronous state machine with timers.
+                </para>
+            </content>
+        </section>
+
+        <section address="TrafficLight_fsmcpp">
+            <title>TrafficLight.fsmcpp</title>
+            <content>
+                <code source="..\examples\qt\TrafficLight\TrafficLight.fsmcpp" language="xml"/>
+            </content>
+        </section>
+        <section address="TrafficLight_h">
+            <title>TrafficLight.h</title>
+            <content>
+                <code source="..\examples\qt\TrafficLight\TrafficLight.h" language="cpp"/>
+            </content>
+        </section>
+        <section address="TrafficLight_cpp">
+            <title>TrafficLight.cpp</title>
+            <content>
+                <code source="..\examples\qt\TrafficLight\TrafficLight.cpp" language="cpp"/>
+            </content>
+        </section>
+        <section address="Light_h">
+            <title>Light.h</title>
+            <content>
+                <code source="..\examples\qt\TrafficLight\Light.h" language="cpp"/>
+            </content>
+        </section>
+        <section address="Light_cpp">
+            <title>Light.cpp</title>
+            <content>
+                <code source="..\examples\qt\TrafficLight\Light.cpp" language="cpp"/>
+            </content>
+        </section>
+        <section address="main">
+            <title>main.cpp</title>
+            <content>
+                <code source="..\examples\qt\TrafficLight\main.cpp" language="cpp"/>
+            </content>
+        </section>
+        <section address="CMakeList">
+            <title>CMakeLists.txt</title>
+            <content>
+                <code source="..\examples\qt\TrafficLight\CMakeLists.txt"/>
+            </content>
+        </section>
+        
+        <relatedTopics>
+            <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">List of examples</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

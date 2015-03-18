@@ -1,0 +1,41 @@
+# Doxyfile 1.7.4
+PROJECT_NAME           = Ping
+PROJECT_BRIEF          = "Ping implemented with a finite state machine"
+OUTPUT_DIRECTORY       = ..\..\..\..\..\..\StateForgeWebSite\dev\StateForgeWebSite\Help\StateBuilderCpp\examples\Ping
+INPUT                  = .
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_METHODS  = YES
+EXTRACT_ANON_NSPACES   = YES
+INTERNAL_DOCS          = YES
+GENERATE_TODOLIST      = NO
+GENERATE_TESTLIST      = NO
+GENERATE_BUGLIST       = NO
+GENERATE_DEPRECATEDLIST= NO
+FILE_PATTERNS          = *.c \
+                         *.cc \
+                         *.cxx \
+                         *.cpp \
+                         *.h \
+                         *.hpp \
+                         *.fsmcpp \
+                         *.fsmjava \
+                         *.fsmcs \
+                         *.fsmvb
+
+RECURSIVE              = YES
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = YES
+HTML_HEADER            = ..\..\..\..\..\..\StateForgeWebSite\dev\StateForgeWebSite\Help\StateBuilderCpp\doxygen\header.html
+HTML_FOOTER            = ..\..\..\..\..\..\StateForgeWebSite\dev\StateForgeWebSite\Help\doxygen\footer.html
+HTML_STYLESHEET        = ..\..\..\..\..\..\StateForgeWebSite\dev\StateForgeWebSite\Content\css\doxygen.css
+SEARCHENGINE           = NO
+GENERATE_LATEX         = NO
+CLASS_DIAGRAMS         = NO
+HAVE_DOT               = NO
+UML_LOOK               = YES
+INCLUDE_GRAPH          = NO
+INCLUDED_BY_GRAPH      = NO
+
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<processing>
+    <logfiledir>$INSTALL_PATH/logs</logfiledir>
+
+    <job name="Post install">
+        <executefile name="$INSTALL_PATH/script/postInstall.bat">
+            <arg>$INSTALL_PATH</arg>
+        </executefile>
+    </job>
+</processing>

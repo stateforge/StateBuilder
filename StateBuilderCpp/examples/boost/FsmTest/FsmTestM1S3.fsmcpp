@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+
+  <!-- general settings -->
+  <settings asynchronous="true" library="boost">
+    <description>FsmTestM1S3</description>
+    <object instance="fsmTest" class="FsmTest" include="FsmTest.h"/>
+    <context class="FsmTestContext"/>
+  </settings>
+  <!-- events -->
+  <events>
+    <eventSource name="Main">
+      <event id="EvStart"/>
+      <event id="EvStop"/>
+      <event id="EvMessage">
+        <parameter type="std::string" name="msg" passedBy="reference" const="true"/>
+      </event>
+    </eventSource>
+    <eventSource name="Timers">
+        <timer id="evTimerTestParallelState" name="TimerTestParallelState"/>
+        <timer id="evTimerMaxDuration" name="TimerMaxDuration"/>
+        <timer id="evTimerEndWarning" name="TimerEndWarning"/>
+        <timer id="evTimerRetry" name="TimerRetry"/>
+    </eventSource>
+  </events>
+
+  <!-- Root state -->
+  <state name="FsmTestM1S3">
+    <transition event="evTimerTestParallelState" nextState="S1"/>
+
+    <state name="S0">
+      <transition event="EvStart" nextState="S2">
+        <timerStart timer="TimerTestParallelState" duration="100"/>
+        <timerStart timer="TimerMaxDuration" duration="10000"/>
+        <timerStart timer="TimerEndWarning" duration="8000"/>
+      </transition>
+    </state>
+    <state name="S1">
+      <parallel nextState="S0End">
+        <!--state S11-->
+        <state name="S11">
+          <state name="S110">
+            <onEntry>
+              <timerStart timer="TimerRetry" duration="1000"/>
+              <action>fsmTest.Print("OnEntry S110");</action>
+            </onEntry>
+            <onExit>
+              <action>fsmTest.Print("OnExit S110");</action>
+            </onExit>
+            <transition event="evTimerRetry" nextState="S111"/>
+          </state>
+          <state name="S111">
+            <onEntry>
+              <timerStart timer="TimerRetry" duration="1000"/>
+            </onEntry>
+            <transition event="evTimerRetry" nextState="S0End"/>
+          </state>
+          <state name="S11End" kind="final"/>
+        </state>
+        <!--state S12-->
+        <state name="S12">
+          <state name="S120">
+            <onEntry>
+              <timerStart timer="TimerRetry" duration="2000"/>
+            </onEntry>
+            <transition event="evTimerRetry" nextState="S121"/>
+          </state>
+          <state name="S121">
+            <onEntry>
+              <timerStart timer="TimerRetry" duration="1000"/>
+            </onEntry>
+            <transition event="evTimerRetry" nextState="S12End"/>
+          </state>
+          <state name="S12End" kind="final"/>
+        </state>
+      </parallel>
+    </state>
+
+    <state name="S2">
+      <parallel nextState="S0End">
+        <!--state S21-->
+        <state name="S21">
+          <state name="S210">
+            <!-- special case to make sure that if the event is not handle by this transition
+          		it must be handle by the parent -->
+            <transition event="evTimerTestParallelState"/>
+          </state>
+          <state name="S21End" kind="final"/>
+        </state>
+        <!--state S22-->
+        <state name="S22">
+          <state name="S220"></state>
+          <state name="S22End" kind="final"/>
+        </state>
+      </parallel>
+    </state>
+
+    <state name="S0End" kind="final"/>
+  </state>
+</sm:StateMachine>
+

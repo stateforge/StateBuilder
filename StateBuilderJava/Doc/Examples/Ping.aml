@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="99660248-3054-43f2-9a97-e9f8a77f9e24" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <autoOutline/>
+            <para>Ping example</para>
+        </introduction>
+        <section address="Description">
+            <title>Description</title>
+            <content>
+                <para>
+                    The Ping example uses the UDP echo protocol to send echo request at regular interval.
+                </para>
+            </content>
+        </section>
+        <section address="Ping_fsmjava">
+            <title>Ping.fsmjava</title>
+            <content>
+                <code source="..\Examples\Ping\src\main\statemachine\Ping.fsmjava" language="xml"/>
+            </content>
+        </section>
+        <section address="Ping_java">
+            <title>Ping.java</title>
+            <content>
+                <code source="..\Examples\Ping\src\main\java\com\stateforge\statemachine\examples\Ping\Ping.java" language="j#"/>
+            </content>
+        </section>
+       
+
+        <relatedTopics>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

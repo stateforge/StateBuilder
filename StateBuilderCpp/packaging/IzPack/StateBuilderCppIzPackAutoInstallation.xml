@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AutomatedInstallation langpack="eng">
+<com.izforge.izpack.panels.HTMLInfoPanel id="readme"/>
+<com.izforge.izpack.panels.LicencePanel id="UNKNOWN (com.izforge.izpack.panels.LicencePanel)"/>
+<com.izforge.izpack.panels.TargetPanel id="UNKNOWN (com.izforge.izpack.panels.TargetPanel)">
+<installpath>C:\Users\frederic\AppData\Local\StateForge\StateBuilderCpp</installpath>
+</com.izforge.izpack.panels.TargetPanel>
+<com.izforge.izpack.panels.InstallPanel id="UNKNOWN (com.izforge.izpack.panels.InstallPanel)"/>
+<com.izforge.izpack.panels.ShortcutPanel id="UNKNOWN (com.izforge.izpack.panels.ShortcutPanel)">
+<programGroup name="StateBuilderCpp"/>
+<shortcut KdeSubstUID="false" categories="" commandLine="" createForAll="false" description="State Machine Editor" encoding="" group="true" icon="C:\Users\frederic\AppData\Local\StateForge\StateBuilderCpp\bin\StateEditor.exe" iconIndex="0" initialState="1" mimetype="" name="StateEditor" target="C:\Users\frederic\AppData\Local\StateForge\StateBuilderCpp\bin\StateEditor.exe" terminal="" terminalOptions="" tryexec="" type="1" url="" usertype="0" workingDirectory=""/>
+<shortcut KdeSubstUID="false" categories="" commandLine="" createForAll="false" description="StateBuilderCpp online help" encoding="" group="true" icon="%SystemRoot%\system32\url.dll" iconIndex="0" initialState="1" mimetype="" name="StateBuilderCpp Help" target="C:\Users\frederic\AppData\Local\StateForge\StateBuilderCpp\doc\StateBuilderCpp.url" terminal="" terminalOptions="" tryexec="" type="1" url="" usertype="0" workingDirectory=""/>
+<shortcut KdeSubstUID="false" categories="" commandLine="" createForAll="false" description="StateBuilderCpp home directory" encoding="" group="false" icon="" iconIndex="0" initialState="1" mimetype="" name="StateBuilderCpp Home" target="C:\Users\frederic\AppData\Local\StateForge\StateBuilderCpp" terminal="" terminalOptions="" tryexec="" type="3" url="" usertype="0" workingDirectory=""/>
+<shortcut KdeSubstUID="false" categories="" commandLine="" createForAll="false" description="StateBuilderCpp home directory" encoding="" group="true" icon="" iconIndex="0" initialState="1" mimetype="" name="StateBuilderCpp Home" target="C:\Users\frederic\AppData\Local\StateForge\StateBuilderCpp" terminal="" terminalOptions="" tryexec="" type="1" url="" usertype="0" workingDirectory=""/>
+<shortcut KdeSubstUID="false" categories="" commandLine="" createForAll="false" description="This uninstalls StateBuilderCpp 1.3.3" encoding="" group="true" icon="%SystemRoot%\system32\SHELL32.dll" iconIndex="31" initialState="1" mimetype="" name="StateBuilderCpp Uninstaller" target="C:\Users\frederic\AppData\Local\StateForge\StateBuilderCpp\Uninstaller\uninstaller.jar" terminal="" terminalOptions="" tryexec="" type="1" url="" usertype="0" workingDirectory=""/>
+</com.izforge.izpack.panels.ShortcutPanel>
+<com.izforge.izpack.panels.ProcessPanel id="UNKNOWN (com.izforge.izpack.panels.ProcessPanel)"/>
+<com.izforge.izpack.panels.FinishPanel id="UNKNOWN (com.izforge.izpack.panels.FinishPanel)"/>
+</AutomatedInstallation>

@@ -1,0 +1,1 @@
+call ..\..\..\..\StateForgeWebSite\StateForgeWebSite\Files\StateBuilderCpp-WinSetup.exe ..\..\packaging\IzPack\StateBuilderCppIzPackAutoInstallation.xml

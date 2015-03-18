@@ -1,0 +1,88 @@
+
+2010-07-18
+
+add example with fsm::IManagement
+
+/home/ubuntu/Documents/FsmStudio/StateBuilderCpp/build/examples/boost/Microwave02/Microwave02Fsm.h: In constructor ‘MicrowaveContext::MicrowaveContext(Microwave&)’:                
+/home/ubuntu/Documents/FsmStudio/StateBuilderCpp/build/examples/boost/Microwave02/Microwave02Fsm.h:187: warning: ‘MicrowaveContext::m_microwave’ will be initialized after
+/home/ubuntu/Documents/FsmStudio/StateBuilderCpp/build/examples/boost/Microwave02/Microwave02Fsm.h:186: warning:   ‘Microwave02ParallelOperating MicrowaveContext::m_parallelOperating’
+/home/ubuntu/Documents/FsmStudio/StateBuilderCpp/build/examples/boost/Microwave02/Microwave02Fsm.cpp:181: warning:   when initialized here
+Linking CXX executable Microwave02
+
+
+remove GetContext and use smart pointer
+Add example with parallel and lock and Qt
+change IObserver& in IObserver*
+check OnEnd(true) even for subcontext  
+
+compile boost statically so PATH doesn't have to be set
+add an attribute to timer: singleshot or autoshot
+change "state.equals(getFsm().getState())" in isRootState
+
+add observer to parameter to context contructor
+**** C++ ****** 
+* add SetMaxEvents to limit the number of events if the queue, handle error nicely
+PACKAGING 
+* remove last installed version
+* #TODO file association
+* .spec.in pc.in
+* Add StateBuilderCpp.sh to wrap the jar
+
+
+Missing functionnality/bugs
+---------------------------
+
+
+Done
+----
+* handle case where command line option is invalid, see StateBuilder.java
+* Change project name for StateBuilderCpp.
+* use another CMakeLists.txt to use in the distributed package, it shall not include the install and package target
+* add attribute called nextState to the element action in oder to perform the action only when going to this next state
+* check that initial state is a state which are first child 
+* Timers generation without timers's string but function
+* internal transition and self transition
+* next state is a valid state, use xsd:ID and xsd:IDREF
+* composite state must have initial state.
+
+############################################################
+# FORMAL VERIFICATION
+############################################################
+* same transition to different state
+* transitions without guard must be the last one for a given event
+* check for black hole state: A black hole state is one that has transitions into it but none out.
+* check for miracles States. A miracle state is one that has transitions out of it but none into it.
+* Guards Should Not Overlap.  The guards on similar transitions leaving a state must be consistent with one another.  For example guards such as x <0, x = 0, and x > 0 are consistent whereas guard such as x <= 0 and x >= 0 are not consistent because they overlap.
+
+############################################################
+# Documentation
+############################################################
+
+* Document on how to integrate on VS2008, fsm.rules
+* Document on how to use code completion by adding StateMachineCpp.xsd to the list od schema in VS
+* Document that clicking on the error in the BuildOupput view open the fsm at the right line and column
+* Document on how to integrate on cmake
+* Documented macro FRIEND_CLASS_FSM
+* Document interaction OnEntry OnExit bug for hierarchical substate
+* Document on how to add prepend a copyright file
+* History state
+* Threading 
+* Document timerStart and timerStop tag
+* Table examples/features
+* Transition may occur within a region or from a region to outside the <parallel> (see below), but never from one region to another ("across" regions).
+
+############################################################
+#Low priority
+############################################################
+* Add generation with cmake from pom.xml.in to pom.xml to set the sw version, at the moment both files need to be modified to change the version.
+* try XL Ibm compiler
+* add set_source_files_properties for fsm files to HEADER_FILE_ONLY so they appear in IDE, seems broken
+* remove warning related to jaxb2 whem compiling StateBuilderCpp.jar, in other word, remove sun api dependency
+* remove unused HelloWorld& helloWorld = mycontext.GetObjectControlled();
+* -Weff32
+* output file and line number  when error such as "reorder transition".
+* error when on entry of the initial state is not executed
+* find unused timer or event
+* check transition in parallel or its parent state
+* Concurrent state shall be able to set as a next state any state
+* <invoke>

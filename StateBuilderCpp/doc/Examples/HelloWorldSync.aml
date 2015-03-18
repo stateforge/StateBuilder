@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="5fa4b9c5-fb3e-4df2-85b6-c510e4761169" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <introduction>
+          <para>Here is the documentation for the HelloWorld synchronous example</para>
+          <autoOutline/>
+      </introduction>
+      <section address="Description">
+          <title>Description</title>
+          <content>
+              <para>
+                  As for every new language, HelloWorld is usually the first examples to know about.
+                  This has the most simple state machine: 3 leaf states, 2 events, one action and 2 transitions.
+              </para>
+          </content>
+      </section>
+
+      <section address="HelloWorld_fsmcpp">
+          <title>HelloWorld.fsmcpp</title>
+          <content>
+              <code source="..\examples\stdcpp\HelloWorldSync\HelloWorld.fsmcpp" language="xml"/>
+          </content>
+      </section>
+      <section address="HelloWorld_h">
+          <title>HelloWorld.h</title>
+          <content>
+              <code source="..\examples\stdcpp\HelloWorldSync\HelloWorld.h" language="cpp"/>
+          </content>
+      </section>
+      <section address="HelloWorld_cpp">
+          <title>HelloWorld.cpp</title>
+          <content>
+              <code source="..\examples\stdcpp\HelloWorldSync\HelloWorld.cpp" language="cpp"/>
+          </content>
+      </section>
+      <section address="main">
+          <title>main.cpp</title>
+          <content>
+              <code source="..\examples\stdcpp\HelloWorldSync\main.cpp" language="cpp"/>
+          </content>
+      </section>
+      <section address="CMakeList">
+          <title>CMakeLists.txt</title>
+          <content>
+              <code source="..\examples\stdcpp\HelloWorldSync\CMakeLists.txt"/>
+          </content>
+      </section>
+      <section address="Output">
+          <title>Output</title>
+          <content>
+              <code>
+                  <![CDATA[
+HelloWorldSync
+HelloWorld::ctor()
+HelloWorld::start()
+HelloWorldContext: transition begins from state Idle to Running, event evStart
+Ciao
+HelloWorldContext: transition has ended from state Idle to Running, event evStart
+HelloWorld::stop()
+HelloWorldContext: transition begins from state Running to End, event evStop
+Bye
+HelloWorldContext: transition has ended from state Running to End, event evStop
+HelloWorld::OnEnd() context has ended
+HelloWorld::dtor()                    
+                    
+                    ]]>
+              </code>
+          </content>
+      </section>
+      <relatedTopics>
+          <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">List of examples</link>
+      </relatedTopics>
+
+  </developerConceptualDocument>
+</topic>

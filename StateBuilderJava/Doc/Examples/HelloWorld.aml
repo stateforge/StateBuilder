@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="28bb5d53-b5dd-48c2-99ad-14be11a49af5" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>Here is the documentation for the HelloWorld example </para>
+            <autoOutline/>
+        </introduction>
+        <section address="Description">
+            <title>Description</title>
+            <content>
+                <para>
+                    This example illustrates the famous HelloWorld program.
+                </para>
+            </content>
+        </section>
+
+        <section address="HelloWorld_fsmjava">
+            <title>HelloWorld.fsmjava</title>
+            <content>
+                <code source="..\Examples\HelloWorld\src\main\statemachine\HelloWorld.fsmjava" language="xml"/>
+            </content>
+        </section>
+        <section address="HelloWorld_java">
+            <title>HelloWorld.java</title>
+            <content>
+                <code source="..\Examples\HelloWorld\src\main\java\com\stateforge\statemachine\examples\HelloWorld\HelloWorld.java" language="j#"/>
+            </content>
+        </section>
+        
+        <section address="Output">
+            <title>Output</title>
+            <content>
+                <code>
+                    <![CDATA[
+         
+                    
+                    ]]>
+                </code>
+            </content>
+        </section>        
+        <relatedTopics>
+            <link xlink:href="e255e8c9-98cd-4479-bb31-bb106056f709">List of examples</link>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

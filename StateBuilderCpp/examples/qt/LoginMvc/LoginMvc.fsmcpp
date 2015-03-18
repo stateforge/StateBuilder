@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1
+                                     http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd" >
+
+  <!-- General settings -->
+  <settings asynchronous="true" library="qt">
+    <description>Login Model View Controller</description>
+    <object instance="loginMvc" class="LoginMvc" include="LoginMvc.h"/>
+    <object instance="view" class="MyView" include="LoginMvc.h"/>
+  </settings>
+
+  <!-- Events -->
+  <events>
+    <eventSource name="Management">
+      <event id="evStart"/>
+      <event id="evStop"/>
+    </eventSource>
+    <eventSource name="View">
+      <event id="evIntentLogin"/>
+      <event id="evCancelLogin"/>
+      <event id="evIntentContinue"/>
+      <event id="evIntentLogout"/>
+    </eventSource>
+    <eventSource name="Model">
+      <event id="evLoginComplete">
+        <parameter name="success" type="bool"/>
+      </event>
+    </eventSource>
+    <eventSource name="Timers">
+      <timer id="evTimerLogin" name="TimerLogin"/>
+    </eventSource>    
+  </events>
+
+  <!-- States -->
+  <state name="LoginMvc">
+    <!-- transition valid for all substate -->
+    <transition event="evStop" nextState="End"/>
+    <!-- Initial -->
+    <state name="Initial">
+      <transition event="evStart" action="view.notifyWelcome();" nextState="Idle"/>
+    </state>
+    <!-- Idle -->
+    <state name="Idle">
+      <!-- Idle onEntry -->
+      <onEntry>
+        <action>view.loginButton->setEnabled(true);</action>
+        <action>view.logoutButton->setEnabled(false);</action>
+        <action>view.cancelButton->setEnabled(false);</action>
+      </onEntry>
+      <!-- Idle transition -->
+      <transition event="evIntentLogin" nextState="TryingToLogin"/>
+    </state>
+    <!-- TryingToLogin -->
+    <state name="TryingToLogin">
+      <!-- TryingToLogin onEntry -->
+      <onEntry>
+        <action>view.loginButton->setEnabled(false);</action>
+        <action>view.logoutButton->setEnabled(false);</action>
+        <action>view.cancelButton->setEnabled(true);</action>
+        <action>loginMvc.login();</action>
+        <timerStart timer="TimerLogin" duration="loginMvc.getLoginTimeout()"/>
+      </onEntry>
+      <!-- TryingToLogin onExit -->
+      <onExit>
+        <timerStop timer="TimerLogin"/>
+      </onExit>
+      <!-- TryingToLogin transitions -->
+      <!-- transition triggered the push button Ok -->
+      <transition event="evCancelLogin" nextState="LoginCancelled" />
+
+      <!-- transition triggered on timer event-->
+      <transition event="evTimerLogin" nextState="LoginTimeout"/>
+      <!-- transition triggered but the model-->
+      <transition event="evLoginComplete" condition="success == true" nextState="LoggedIn"/>
+      <transition event="evLoginComplete" nextState="LoginError"/>
+    </state>
+    <!-- LoggedIn -->
+    <state name="LoggedIn">
+      <onEntry action="view.notifyLogin();"/>
+      <transition event="evIntentContinue" nextState="Active"/>
+    </state>    
+    <!-- Active -->
+    <state name="Active">
+      <onEntry>
+        <action>view.loginButton->setEnabled(false);</action>
+        <action>view.logoutButton->setEnabled(true);</action>
+        <action>view.cancelButton->setEnabled(false);</action>
+      </onEntry>
+      <transition event="evIntentLogout" nextState="Idle"/>
+    </state>
+
+    <state name="TopError">
+      <transition event="evIntentContinue" nextState="Idle"/>
+      <!-- LoginCancelled -->
+      <state name="LoginCancelled">
+        <onEntry action="view.notifyCancel();"/>
+      </state>
+      <!-- LoginTimeout -->
+      <state name="LoginTimeout">
+        <onEntry action="view.notifyTimeout();"/>
+      </state>
+      <!-- LoginError -->
+      <state name="LoginError">
+        <onEntry action="view.notifyError();"/>
+      </state>
+    </state>
+    <!-- End -->
+    <state name="End" kind="final">
+    </state>
+  </state>
+</sm:StateMachine>
+

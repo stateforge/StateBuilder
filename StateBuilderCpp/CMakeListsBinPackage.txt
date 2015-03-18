@@ -1,0 +1,37 @@
+################################################################################
+# StateBuilderCpp CMakeLists.txt
+################################################################################
+#The project name is the same as the generated MS Visual solution file(.sln)
+set(PROJECT_NAME StateBuilderCpp)
+
+project(${PROJECT_NAME})
+
+cmake_minimum_required(VERSION 2.6)
+
+set(ENV{STATEBUILDERCPP_HOME} ${CMAKE_SOURCE_DIR})
+
+#Where to find all FindXXX.cmake
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/share/cmake/ ${CMAKE_MODULE_PATH})
+
+################################################################################
+# Configuration options
+################################################################################
+
+#Examples
+option(STATEBUILDERCPP_EXAMPLES "Build the examples directory." ON)
+if(STATEBUILDERCPP_EXAMPLES)
+  add_subdirectory(examples)
+endif()
+
+################################################################################
+# Test
+################################################################################
+
+set(MEMORYCHECK_COMMAND "/usr/bin/valgrind")
+enable_testing()
+                  
+################################################################################
+#Subdirectory
+################################################################################
+
+add_subdirectory(src)
