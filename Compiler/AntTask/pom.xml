@@ -4,14 +4,14 @@
     <groupId>com.stateforge.statebuilder.ant</groupId>
     <artifactId>statebuilder-ant-task</artifactId>
     <packaging>jar</packaging>
-    <version>2.4</version>
+    <version>3.0</version>
     <name>StateBuilder Ant Task</name>
 
     <dependencies>
         <dependency>
             <groupId>com.stateforge.statebuilder</groupId>
             <artifactId>statebuilder-java</artifactId>
-            <version>2.4</version>
+            <version>3.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.ant</groupId>
@@ -29,7 +29,7 @@
                     <addMavenDescriptor>false</addMavenDescriptor>
                     <archive>
                         <manifestEntries>
-                            <Class-Path>statebuilder-java-2.4.jar</Class-Path>
+                            <Class-Path>statebuilder-java-3.0.jar</Class-Path>
                         </manifestEntries>
                         <manifest>
                         </manifest>

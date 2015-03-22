@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.stateforge</groupId>
             <artifactId>statemachine</artifactId>
-            <version>2.4</version>
+            <version>3.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -40,7 +40,7 @@
             <plugin>
                 <groupId>com.stateforge.statebuilder.maven</groupId>
                 <artifactId>maven-statebuilder-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.0</version>
                 <executions>
                     <execution>
                         <goals>
