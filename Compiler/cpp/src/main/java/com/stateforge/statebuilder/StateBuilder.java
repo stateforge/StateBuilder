@@ -30,7 +30,7 @@ public class StateBuilder extends StateBuilderAppBase {
 	 * Default constructor
 	 */
 	public StateBuilder()  {
-		super(new LicensingInfo());
+		super();
 		setAppName("StateBuilderCpp");
 		setPomProperties("META-INF/maven/com.stateforge.statebuilder/statebuilder-cpp/pom.properties");
 		setSchemaName("StateMachineCpp-v1.xsd");
