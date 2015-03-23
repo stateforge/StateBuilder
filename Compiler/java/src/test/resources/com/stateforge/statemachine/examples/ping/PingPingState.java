@@ -1,7 +1,7 @@
 
 package com.stateforge.statemachine.examples.ping;
 
-import com.stateforge.statemachine.state.AbstractState;
+import com.stateforge.statemachine.state.AbstractState<PingContext, PingPingState>;
 
 public class PingPingState
     extends AbstractState<PingContext, PingPingState>

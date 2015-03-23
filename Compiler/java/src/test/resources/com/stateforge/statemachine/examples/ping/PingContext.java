@@ -3,7 +3,7 @@ package com.stateforge.statemachine.examples.ping;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import com.stateforge.statemachine.context.AbstractContext;
+import com.stateforge.statemachine.context.AbstractContext<PingPingState, PingContext>;
 
 public class PingContext
     extends AbstractContext<PingPingState, PingContext>
