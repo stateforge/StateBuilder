@@ -4,7 +4,7 @@
     <groupId>com.stateforge</groupId>
     <artifactId>statemachine</artifactId>
     <packaging>jar</packaging>
-    <version>2.4</version>
+    <version>3.0</version>
     <name>StateMachine</name>
     
     <dependencies>

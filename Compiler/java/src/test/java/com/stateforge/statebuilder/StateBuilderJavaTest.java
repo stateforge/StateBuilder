@@ -12,8 +12,6 @@ import com.stateforge.statebuilder.StateBuilderAppBase.ErrorCode;
 public class StateBuilderJavaTest {
 	
 	private StateBuilderJava stateBuilder;
-	private String license = "src/test/resources/genericStateBuilderJava.lic";
-	private String licenseKo = "src/test/resources/genericStateBuilderCpp.lic";
 	private String fsmFile = "src/test/resources/Ping.fsmjava";
 	
     @Before
@@ -76,25 +74,13 @@ public class StateBuilderJavaTest {
     @Test
     public void testSequence()
     {
-    	testUnLicense();
     	testGenerateFsm();
-    	testLicenseOk();
     	testGenerateFsm();
-    	testLicenseOk();
-    	testUnLicense();
     	testGenerateFsm();
-    	testLicenseOkShort();
     	testGenerateFsm();
-    	testUnLicense();
     }
     
-    public void testUnLicense()
-    {
-    	String args[] = new String[] {"--UnLic"};
-    	ErrorCode error = stateBuilder.generate(args);
-        assertTrue(error == ErrorCode.OK_UNLICENSE);
-    }
-    
+        
     public void testGenerateFsm()
     {
     	String args[] = new String[] {fsmFile};
@@ -102,41 +88,4 @@ public class StateBuilderJavaTest {
         assertTrue(error == ErrorCode.OK);
     }
     
-    public void testLicenseOk()
-    {
-    	String args[] = new String[] {"--license", license};
-    	ErrorCode error = stateBuilder.generate(args);    	
-        assertTrue(error == ErrorCode.OK_LICENSE);
-    }
-    
-    @Test
-    public void testLicenseKo()
-    {
-    	String args[] = new String[] {"--license", licenseKo};
-    	ErrorCode error = stateBuilder.generate(args);    	
-        assertTrue(error == ErrorCode.KO_LICENSE);
-    }
-    
-    public void testLicenseOkShort()
-    {
-    	String args[] = new String[] {"-l", license};
-    	ErrorCode error = stateBuilder.generate(args);
-        assertTrue(error == ErrorCode.OK_LICENSE);
-    }
-    
-    @Test
-    public void testLicenseCliInvalid()
-    {
-    	String args[] = new String[] {"-l"};
-    	ErrorCode error = stateBuilder.generate(args);
-        assertTrue(error == ErrorCode.KO_COMMAND_LINE);
-    }
-    
-    @Test
-    public void testLicenseFileNotFound()
-    {
-    	String args[] = new String[] {"--license", "notexist.lic"};
-    	ErrorCode error = stateBuilder.generate(args);
-        assertTrue(error == ErrorCode.KO_LICENSE_NOTFOUND);
-    }
 }

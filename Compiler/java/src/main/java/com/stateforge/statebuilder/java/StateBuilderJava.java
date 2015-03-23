@@ -21,7 +21,7 @@ public class StateBuilderJava extends StateBuilderAppBase {
 	 * Default constructor
 	 */
 	public StateBuilderJava() {
-		super(new StateBuilderJavaLicensingInfo());
+		super();
 		setAppName("StateBuilderJava");
 		
 		m_logger = Logger.getLogger(getClass().getName());

@@ -16,7 +16,6 @@
         <module>../Compiler/MavenPlugin</module>
         <module>../Compiler/AntTask</module>
         <module>../CodeModel</module>
-        <module>../tlc</module>
         
         <module>Examples</module>
     </modules>

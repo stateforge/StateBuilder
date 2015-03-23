@@ -1,9 +1,9 @@
 // MinimalFsm.h has been generated automatically by StateBuilderCpp x.y.z
 // Executable: 
-// /C:/Users/frederic/Documents/projects/StateForge/dev/StateBuilder/Compiler/cpp/target/classes/
+// /Users/frederic/StateBuilder/Compiler/cpp/target/classes/
 // Command line options: 
 //  src/test/resources/Minimal.fsmcpp
-// Date: 24-lug-2013 8.57.45
+// Date: 23-mar-2015 0.07.17
 
 #ifndef MINIMALFSM_H
 #define MINIMALFSM_H
@@ -14,7 +14,6 @@
 #include <fsm/Fsm.h>
 
 // Object classes forward declaration
-class Minimal;
 
 // Context classes forward declaration
 class MinimalContext;
@@ -23,6 +22,10 @@ class MinimalContext;
 class MinimalTopState;
 class MinimalOffState;
 class MinimalOnState;
+
+// Object classes forward declaration within the custom namepace
+class Minimal;
+
 
 // Context declaration for state Top
 class MinimalContext : public fsm::Context<MinimalTopState, MinimalContext> {
@@ -33,6 +36,8 @@ public:
   // Destructor
   virtual ~MinimalContext();
 
+
+  static const fsm::StateNameToId* GetStateNameToId();
   // MinimalEvent's events 
   void EvStart();
 
@@ -43,7 +48,7 @@ public:
   // Leave the current state: walk the onExit chain from the current state to the top state.
   void LeaveCurrentState();
 
-  Minimal& getMinimal(){return m_minimal;};
+  Minimal& getMinimal(){return m_minimal;}
 
 private:
   Minimal& m_minimal;
@@ -56,7 +61,7 @@ private:
 class MinimalTopState : public fsm::State<MinimalContext, MinimalTopState> {
 public:
   // Constructor
-  MinimalTopState(const char* pName);
+  MinimalTopState(const char* pName, int id);
 
   // Singleton pattern
   static const MinimalTopState& GetInstance();
@@ -78,7 +83,7 @@ public:
 class MinimalOnState : public MinimalTopState {
 public:
   // Constructor
-  MinimalOnState(const char* pName);
+  MinimalOnState(const char* pName, int id);
 
   // Singleton pattern
   static const MinimalOnState& GetInstance();
@@ -99,7 +104,7 @@ public:
 class MinimalOffState : public MinimalTopState {
 public:
   // Constructor
-  MinimalOffState(const char* pName);
+  MinimalOffState(const char* pName, int id);
 
   // Singleton pattern
   static const MinimalOffState& GetInstance();

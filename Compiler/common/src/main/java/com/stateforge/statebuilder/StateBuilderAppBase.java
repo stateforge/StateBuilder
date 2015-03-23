@@ -36,15 +36,11 @@ public class StateBuilderAppBase {
 		OK(0),
 		OK_VERSION(1),
 		OK_HELP(2),
-		OK_LICENSE(3), 
-		OK_UNLICENSE(4),
 		// Cannot be -1 because of Launch4j
 		KO(-2),
 		KO_COMMAND_LINE(-3), 
 		KO_SAX_PARSING(-4), 
 		KO_PARSER(-5),  
-		KO_LICENSE(-6),
-		KO_LICENSE_NOTFOUND(-7),
 		KO_IO(-8), 
 		KO_INVALID_CONFIG_FILE(-9), 
 		KO_UNKNOWN(-10);
@@ -61,9 +57,6 @@ public class StateBuilderAppBase {
 	
 	private ErrorCode errorCode;
 	public final static String FSM_SUFFIX = "Fsm";
-	protected final static String LICENSE = "license";
-	protected final static String LICENSE_SHORT = "l";
-	protected final static String LICENSE_REMOVE = "--UnLic";
 	protected final static String DIRECTORY = "directory";
 	protected final static String DIRECTORY_SHORT = "d";
 	protected final static String PREPEND_FILE = "prepend-file";
@@ -97,20 +90,13 @@ public class StateBuilderAppBase {
 	protected static String pomProperties;
     private String schemaName;
     
-    protected LicenseController licenseController;
 	/**
 	 * Default constructor
-	 * @param licensingInfo 
 	 */
-	public StateBuilderAppBase(LicenseableClass licensingInfo) {
-		this.licenseController = new LicenseController(licensingInfo);
+	public StateBuilderAppBase() {
 		m_fsmCompilerList = new ArrayList<StateBuilderInterface>();
 	}
 	
-	protected void createLicenseController(LicenseableClass licensingInfo){
-		this.licenseController = new LicenseController(licensingInfo);
-		
-	}
 	public ErrorCode getErrorCode() {
 		return errorCode;
 	}
@@ -297,7 +283,6 @@ public class StateBuilderAppBase {
 		
 		options.addOption(new Option(HELP_SHORT, HELP, false, "Show help"));
 		
-		options.addOption(new Option(LICENSE_SHORT, LICENSE, true, "install license"));
 		setOptions(options);
 		
 		return options;
@@ -322,8 +307,6 @@ public class StateBuilderAppBase {
 		if (cmd.hasOption(VERSION)) {
 			System.out.println(getAppName() + " version: " + getVersion());
 			setErrorCode(ErrorCode.OK_VERSION);
-		} else if (cmd.hasOption(LICENSE)) {
-			licenseInstall(cmd.getOptionValue(LICENSE));
 		} else if (cmd.hasOption(HELP_SHORT) || (cmd.getArgs().length == 0)) {
 			HelpFormatter hf = new HelpFormatter();
 			hf.printHelp(getAppName() + " [option] myStateMachine." + getFileExtension(),
@@ -415,45 +398,7 @@ public class StateBuilderAppBase {
 		this.fileExtension = fileExtension;
 	}
 	
-    public boolean verifyLicense() {
-        return this.licenseController.verifyLicense();
-    }
-      
-    public void licenseInstall(String licenseFileName){
-    	 try {
-    		 File licenceFile = new File(licenseFileName);
-    		 if(licenceFile.exists() == true){
-    			 if(this.licenseController.installLicense(licenseFileName) == true){
-    				 System.out.println("License installed successfully");
-    				 setErrorCode(ErrorCode.OK_LICENSE);
-    			 } else {
-    				 System.err.println("License file \"" + licenseFileName + "\" was **NOT** installed successfully");
-    				 setErrorCode(ErrorCode.KO_LICENSE);
-    			 }
-    		 } else {
-    			 System.err.println("Cannot find the license " + licenceFile.getCanonicalPath());
-    			 setErrorCode(ErrorCode.KO_LICENSE_NOTFOUND);
-    		 }
-         }
-         catch (Exception failure) {
-        	 failure.printStackTrace();
-        	 System.err.println("Exception while installing license: " + failure.getLocalizedMessage());
-        	 setErrorCode(ErrorCode.KO_LICENSE);
-         }	
-    }
-    
-    public boolean removeLicense() {
-        try {
-            this.licenseController.removeLicense();
-            System.out.println("License removed successfully");
-            setErrorCode(ErrorCode.OK_UNLICENSE);
-        } catch (Exception ex) {
-            setErrorCode(ErrorCode.KO_LICENSE_NOTFOUND);
-            return false;
-        }
-        return true;
-    }
-    
+   
     protected void generate(
     		String fsmcppInputFileName, 
     		CommandLine cmd) 
@@ -478,36 +423,27 @@ public class StateBuilderAppBase {
 	}
 	
     public ErrorCode generate(String[] args) {
-		System.out.println(getAppName() + " "+ getVersion() + " : All rights reserved, 2011-2013");
+		System.out.println(getAppName() + " "+ getVersion() + " : All rights reserved, 2011-2015");
 		setErrorCode(ErrorCode.KO_UNKNOWN);
 				
-		// Unlicense is hidden
-		for(String argument : args){
-			if(argument.compareTo(LICENSE_REMOVE) == 0){
-				removeLicense();
-				return getErrorCode();
-			}
-		}
 		
 		try {
 			CommandLine cmd = commandLineParse(args);
 			// Generate from all fsm files given on the command line
 			if(processCliCommon(cmd) == false){
-				if(verifyLicense() == false){
-					setErrorCode(ErrorCode.KO_LICENSE);
-				} else {
-					if(hasConfigFile(cmd)){
-						readConfigFile(cmd.getArgs()[0]);
-					} else {
-						for (int i = 0; i < cmd.getArgs().length; i++) {
-							//System.out.print(cmd.getArgs()[i]);
-							_fileList.add(cmd.getArgs()[i]);
-						}
-					}
-					
-					generateAll(cmd);
-					setErrorCode(ErrorCode.OK);
-				}
+				
+			    if(hasConfigFile(cmd)){
+			        readConfigFile(cmd.getArgs()[0]);
+			    } else {
+			        for (int i = 0; i < cmd.getArgs().length; i++) {
+			            //System.out.print(cmd.getArgs()[i]);
+			            _fileList.add(cmd.getArgs()[i]);
+			        }
+			    }
+
+			    generateAll(cmd);
+			    setErrorCode(ErrorCode.OK);
+
 			}
 		} catch (ParseException e){
 			System.err.println(getAppName() + ": Invalid command line argument, "
