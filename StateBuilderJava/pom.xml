@@ -15,7 +15,6 @@
         <module>StateMachine</module>
         <module>../Compiler/MavenPlugin</module>
         <module>../Compiler/AntTask</module>
-        <module>../CodeModel</module>
         
         <module>Examples</module>
     </modules>

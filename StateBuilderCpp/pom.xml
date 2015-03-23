@@ -12,8 +12,6 @@
     <modules>
         <module>../Compiler/cpp</module>
         <module>../Compiler/Common</module>
-        <module>../CodeModel</module>
-        <module>../tlc</module>
     </modules>
 
     <build>
