@@ -5,12 +5,10 @@ package com.stateforge.statemachine.examples.ping;
 public class PingIdleState
     extends PingPingState
 {
-
     private final static PingIdleState instance = new PingIdleState();
 
     /**
      * Protected Constructor
-     * 
      */
     protected PingIdleState() {
         setName("Idle");
@@ -19,7 +17,6 @@ public class PingIdleState
 
     /**
      * Get the State Instance
-     * 
      */
     public static PingPingState getInstance() {
         return instance;
@@ -27,7 +24,6 @@ public class PingIdleState
 
     /**
      * onEntry
-     * 
      */
     @Override
     public void onEntry(PingContext context) {
@@ -36,7 +32,6 @@ public class PingIdleState
 
     /**
      * onExit
-     * 
      */
     @Override
     public void onExit(PingContext context) {
@@ -45,7 +40,6 @@ public class PingIdleState
 
     /**
      * Event id: evStart
-     * 
      */
     public void evStart(PingContext context) {
         Ping ping = context.getPing();
@@ -56,5 +50,4 @@ public class PingIdleState
         com.stateforge.statemachine.algorithm.StateOperation.processTransitionEnd(context, PingSendPingAndWaitForReplyState.getInstance());
         return ;
     }
-
 }

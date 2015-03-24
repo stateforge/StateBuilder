@@ -5,12 +5,10 @@ package com.stateforge.statemachine.examples.ping;
 public class PingSendPingAndWaitForReplyState
     extends PingPingState
 {
-
     private final static PingSendPingAndWaitForReplyState instance = new PingSendPingAndWaitForReplyState();
 
     /**
      * Protected Constructor
-     * 
      */
     protected PingSendPingAndWaitForReplyState() {
         setName("SendPingAndWaitForReply");
@@ -19,7 +17,6 @@ public class PingSendPingAndWaitForReplyState
 
     /**
      * Get the State Instance
-     * 
      */
     public static PingPingState getInstance() {
         return instance;
@@ -27,7 +24,6 @@ public class PingSendPingAndWaitForReplyState
 
     /**
      * onEntry
-     * 
      */
     @Override
     public void onEntry(PingContext context) {
@@ -39,7 +35,6 @@ public class PingSendPingAndWaitForReplyState
 
     /**
      * onExit
-     * 
      */
     @Override
     public void onExit(PingContext context) {
@@ -50,7 +45,6 @@ public class PingSendPingAndWaitForReplyState
 
     /**
      * Event id: evCancel
-     * 
      */
     public void evCancel(PingContext context) {
         Ping ping = context.getPing();
@@ -65,7 +59,6 @@ public class PingSendPingAndWaitForReplyState
 
     /**
      * Event id: evPingReply
-     * 
      */
     public void evPingReply(PingContext context) {
         Ping ping = context.getPing();
@@ -82,7 +75,6 @@ public class PingSendPingAndWaitForReplyState
 
     /**
      * Event id: evTimer
-     * 
      */
     public void evTimer(PingContext context) {
         Ping ping = context.getPing();
@@ -101,5 +93,4 @@ public class PingSendPingAndWaitForReplyState
         com.stateforge.statemachine.algorithm.StateOperation.processTransitionEnd(context, PingSendPingAndWaitForReplyState.getInstance());
         return ;
     }
-
 }

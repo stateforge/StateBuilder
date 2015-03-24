@@ -18,6 +18,7 @@ import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JConditional;
+import com.sun.codemodel.JTypeVar;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JInvocation;
@@ -46,9 +47,12 @@ public class CoderState extends CoderBaseJava {
             if(state.getParent() != null){
                 stateClass._extends(getCode().directClass(getStateClassName(state.getParent())));
             } else {
-                // extends AbstractState<AbstractHelloWorldContext, HelloWorldRootState>
-                String abstractStateBaseClassName = "com.stateforge.statemachine.state.AbstractState<" + getContextClassName(state)  + ", " +  getStateClassName(getModel().getStateTop(state)) + ">";
-                stateClass._extends(getCode().directClass(abstractStateBaseClassName));
+                // extends com.stateforge.statemachine.state.AbstractState<AbstractHelloWorldContext, HelloWorldRootState>
+                JDefinedClass parentClass = getCode()._class("com.stateforge.statemachine.state.AbstractState");
+                JTypeVar contextTypeVar = parentClass.generify(getContextClassName(state));
+                JTypeVar topStateTypeVar = parentClass.generify(getStateClassName(getModel().getStateTop(state)));
+
+                stateClass._extends(parentClass.narrow(contextTypeVar, topStateTypeVar));
             }
 
             writeContructor(state, stateClass);

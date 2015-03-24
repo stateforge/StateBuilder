@@ -5,12 +5,10 @@ package com.stateforge.statemachine.examples.ping;
 public class PingEndState
     extends PingPingState
 {
-
     private final static PingEndState instance = new PingEndState();
 
     /**
      * Protected Constructor
-     * 
      */
     protected PingEndState() {
         setName("End");
@@ -19,7 +17,6 @@ public class PingEndState
 
     /**
      * Get the State Instance
-     * 
      */
     public static PingPingState getInstance() {
         return instance;
@@ -27,7 +24,6 @@ public class PingEndState
 
     /**
      * onEntry
-     * 
      */
     @Override
     public void onEntry(PingContext context) {
@@ -36,7 +32,6 @@ public class PingEndState
 
     /**
      * onExit
-     * 
      */
     @Override
     public void onExit(PingContext context) {
@@ -45,37 +40,31 @@ public class PingEndState
 
     /**
      * Event id: evStart
-     * 
      */
     public void evStart(PingContext context) {
     }
 
     /**
      * Event id: evCancel
-     * 
      */
     public void evCancel(PingContext context) {
     }
 
     /**
      * Event id: evError
-     * 
      */
     public void evError(PingContext context) {
     }
 
     /**
      * Event id: evPingReply
-     * 
      */
     public void evPingReply(PingContext context) {
     }
 
     /**
      * Event id: evTimer
-     * 
      */
     public void evTimer(PingContext context) {
     }
-
 }

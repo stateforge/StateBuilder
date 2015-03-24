@@ -22,6 +22,7 @@ import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
 import com.sun.codemodel.JTryBlock;
 import com.sun.codemodel.JVar;
+import com.sun.codemodel.JTypeVar;
 
 public class CoderContext extends CoderBaseJava {
 
@@ -56,10 +57,13 @@ public class MicrowaveEngineContext
                 JDefinedClass contextClass = getCode()._class(contextClassName);
                 String contextParentClassName = getContextParentClassName(state);
                 String stateTopClassName = getStateClassName(getModel().getStateTop(state));
-                String abstractContextBaseClassName = "com.stateforge.statemachine.context.AbstractContext<" + stateTopClassName + ", " + contextParentClassName + ">";
-                // extends AbstractContext<HelloWorldTopState, MicrowaveContext>
-                contextClass._extends(getCode().directClass(abstractContextBaseClassName));
+                
+                JDefinedClass parentClass = getCode()._class("com.stateforge.statemachine.context.AbstractContext");
+                JTypeVar parentContextTypeVar = parentClass.generify(contextParentClassName);
+                JTypeVar topStateTypeVar = parentClass.generify(stateTopClassName);
 
+                contextClass._extends(parentClass.narrow(topStateTypeVar, parentContextTypeVar));
+                
                 JMethod constructor = writeContructor(state, contextClass);
                 writeEnterInitialState(state, contextClass);
                 writeLeaveCurrentState(state, contextClass);

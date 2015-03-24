@@ -1,17 +1,15 @@
 
 package com.stateforge.statemachine.examples.ping;
 
-import com.stateforge.statemachine.state.AbstractState<PingContext, PingPingState>;
+import com.stateforge.statemachine.state.AbstractState;
 
 public class PingPingState
     extends AbstractState<PingContext, PingPingState>
 {
-
     private final static PingPingState instance = new PingPingState();
 
     /**
      * Protected Constructor
-     * 
      */
     protected PingPingState() {
         setName("Ping");
@@ -19,7 +17,6 @@ public class PingPingState
 
     /**
      * Get the State Instance
-     * 
      */
     public static PingPingState getInstance() {
         return instance;
@@ -27,7 +24,6 @@ public class PingPingState
 
     /**
      * onEntry
-     * 
      */
     @Override
     public void onEntry(PingContext context) {
@@ -36,7 +32,6 @@ public class PingPingState
 
     /**
      * onExit
-     * 
      */
     @Override
     public void onExit(PingContext context) {
@@ -45,37 +40,31 @@ public class PingPingState
 
     /**
      * Event id: evStart
-     * 
      */
     public void evStart(PingContext context) {
     }
 
     /**
      * Event id: evCancel
-     * 
      */
     public void evCancel(PingContext context) {
     }
 
     /**
      * Event id: evError
-     * 
      */
     public void evError(PingContext context) {
     }
 
     /**
      * Event id: evPingReply
-     * 
      */
     public void evPingReply(PingContext context) {
     }
 
     /**
      * Event id: evTimer
-     * 
      */
     public void evTimer(PingContext context) {
     }
-
 }
