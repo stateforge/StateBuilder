@@ -57,10 +57,9 @@ public class MicrowaveEngineContext
                 JDefinedClass contextClass = getCode()._class(contextClassName);
                 String contextParentClassName = getContextParentClassName(state);
                 String stateTopClassName = getStateClassName(getModel().getStateTop(state));
-                
-                JDefinedClass parentClass = getCode()._class("com.stateforge.statemachine.context.AbstractContext");
-                JTypeVar parentContextTypeVar = parentClass.generify(contextParentClassName);
-                JTypeVar topStateTypeVar = parentClass.generify(stateTopClassName);
+                JClass parentClass = getCode().directClass("com.stateforge.statemachine.context.AbstractContext");
+                JClass parentContextTypeVar = getCode().directClass(contextParentClassName);
+                JClass topStateTypeVar = getCode().directClass(stateTopClassName);
 
                 contextClass._extends(parentClass.narrow(topStateTypeVar, parentContextTypeVar));
                 

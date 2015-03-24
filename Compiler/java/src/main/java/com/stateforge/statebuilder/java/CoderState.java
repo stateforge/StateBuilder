@@ -48,11 +48,11 @@ public class CoderState extends CoderBaseJava {
                 stateClass._extends(getCode().directClass(getStateClassName(state.getParent())));
             } else {
                 // extends com.stateforge.statemachine.state.AbstractState<AbstractHelloWorldContext, HelloWorldRootState>
-                JDefinedClass parentClass = getCode()._class("com.stateforge.statemachine.state.AbstractState");
-                JTypeVar contextTypeVar = parentClass.generify(getContextClassName(state));
-                JTypeVar topStateTypeVar = parentClass.generify(getStateClassName(getModel().getStateTop(state)));
+                JClass parentClass = getCode().directClass("com.stateforge.statemachine.state.AbstractState");
+                JClass contextClass = getCode().directClass(getContextClassName(state));
+                JClass topStateClass = getCode().directClass(getStateClassName(getModel().getStateTop(state)));
 
-                stateClass._extends(parentClass.narrow(contextTypeVar, topStateTypeVar));
+                stateClass._extends(parentClass.narrow(contextClass, topStateClass));
             }
 
             writeContructor(state, stateClass);
