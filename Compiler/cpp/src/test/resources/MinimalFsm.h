@@ -3,7 +3,7 @@
 // /Users/frederic/StateBuilder/Compiler/cpp/target/classes/
 // Command line options: 
 //  src/test/resources/Minimal.fsmcpp
-// Date: 23-mar-2015 0.07.17
+// Date: 25-mar-2015 0.13.09
 
 #ifndef MINIMALFSM_H
 #define MINIMALFSM_H

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>com.stateforge.statebuilder</groupId>
+        <artifactId>statebuilder-java-project</artifactId>
+        <version>3.0</version>
+        <relativePath>../../StateBuilderJava</relativePath>
+    </parent>
+    
     <groupId>com.stateforge.statebuilder.maven</groupId>
     <artifactId>maven-statebuilder-plugin</artifactId>
     <packaging>maven-plugin</packaging>
@@ -38,14 +46,6 @@
         </dependency>    
     </dependencies>
     <build>
-        <extensions>
-            <!-- Enabling the use of FTP -->
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ftp</artifactId>
-                <version>1.0-beta-7</version>
-            </extension>
-        </extensions>
         <plugins>
             
             <plugin>
@@ -79,18 +79,4 @@
             </plugin>
         </plugins>
     </build>
-    
-    <repositories>
-        <repository>
-            <id>stateforge.com</id>
-            <url>http://stateforge.com/repository</url>
-        </repository>
-    </repositories>  
-    
-    <distributionManagement>
-        <repository>
-            <id>ftp-repository</id>
-            <url>ftp://ftp.stateforge.com/repository</url>
-        </repository>
-    </distributionManagement>
 </project>
