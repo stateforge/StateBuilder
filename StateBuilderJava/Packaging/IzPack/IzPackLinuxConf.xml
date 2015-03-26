@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <installation version="1.0">
     <info>
         <appname>StateBuilderJava</appname>
@@ -42,13 +42,13 @@
         <pack name="Core" preselected="yes" required="yes">
             <description/>
             
-            <file override="update" src="../Compiler/java/target/statebuilder-java-3.0.jar" targetdir="$INSTALL_PATH/lib/">
+            <file override="update" src="../Compiler/java/target/statebuilder-java-3.0-SNAPSHOT.jar" targetdir="$INSTALL_PATH/lib/">
             </file>
 
-            <file override="update" src="../Compiler/AntTask/target/statebuilder-ant-task-3.0.jar" targetdir="$INSTALL_PATH/lib/">
+            <file override="update" src="../Compiler/AntTask/target/statebuilder-ant-task-3.0-SNAPSHOT.jar" targetdir="$INSTALL_PATH/lib/">
             </file>
             
-            <file override="update" src="StateMachine/target/statemachine-3.0.jar" targetdir="$INSTALL_PATH/lib/">
+            <file override="update" src="StateMachine/target/statemachine-3.0-SNAPSHOT.jar" targetdir="$INSTALL_PATH/lib/">
             </file>
 
             <file override="update" src="icons/48-uninstall.png" targetdir="$INSTALL_PATH/icons">

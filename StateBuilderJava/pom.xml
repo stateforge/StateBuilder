@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-    http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0     http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.stateforge.statebuilder</groupId>
-    <version>3.0</version>
+    <version>2.9-SNAPSHOT</version>
     <artifactId>statebuilder-java-project</artifactId>
     <packaging>pom</packaging>
     <name>StateBuilderJavaProject</name>
@@ -31,7 +30,6 @@
     </developers>
     <modules>
         <module>../Compiler/common</module>
-        <module>../Compiler/cpp</module>
         <module>../Compiler/java</module>
         <module>../Compiler/MavenPlugin</module>
         <module>../Compiler/AntTask</module>
