@@ -11,11 +11,11 @@
 	<property name="version.major" value="3"/>
 	<property name="version.minor" value="0"/>
 	<property name="version.revision" value="0"/>
-	<property name="version.extra" value=""/>
+	<property name="version.extra" value="-SNAPSHOT"/>
 	<property name="version" value="${version.major}-${version.minor}-${version.revision}"/>
 	<property name="version-jar" value="${version.major}-${version.minor}"/>
 	<property name="version.dot" value="${version.major}.${version.minor}.${version.revision}"/>
-	<property name="version-jar.dot" value="${version.major}.${version.minor}"/>
+	<property name="version-jar.dot" value="${version.major}.${version.minor}${version.extra}"/>
 	<!-- For 'beta' or 'alpha' -->
 
 
@@ -144,8 +144,11 @@
 		<echo message="uploading all files" />
 	</target>
 
-	<taskdef name="xmltask" 
-	            classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+    <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"
+        classpath="xmltask.jar">
+        <classpath path="vendor/xmltask.jar" />
+
+    </taskdef>
 
 	<target name="setVersion">
 		<xmltask source="Packaging/IzPack/IzPackWinConf.xml" dest="Packaging/IzPack/IzPackWinConf.xml">
