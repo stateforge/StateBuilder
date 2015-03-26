@@ -11,7 +11,8 @@
 	<property name="version.major" value="3"/>
 	<property name="version.minor" value="0"/>
 	<property name="version.revision" value="0"/>
-	<property name="version.extra" value="-SNAPSHOT"/>
+<!-- 	<property name="version.extra" value="-SNAPSHOT"/> -->
+    <property name="version.extra" value=""/>
 	<property name="version" value="${version.major}-${version.minor}-${version.revision}"/>
 	<property name="version-jar" value="${version.major}-${version.minor}"/>
 	<property name="version.dot" value="${version.major}.${version.minor}.${version.revision}"/>

@@ -11,7 +11,7 @@
     <groupId>com.stateforge</groupId>
     <artifactId>statemachine</artifactId>
     <packaging>jar</packaging>
-    <version>3.0-SNAPSHOT</version>
+    <version>3.0</version>
 
     <dependencies>
         <dependency>
@@ -37,4 +37,8 @@
             </plugin>
         </plugins>
     </build>
+
+  <scm>
+    <tag>statebuilder-java-project-3.0</tag>
+  </scm>
 </project>

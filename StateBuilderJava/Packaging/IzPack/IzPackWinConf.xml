@@ -47,11 +47,11 @@
         <pack name="Core" preselected="yes" required="yes">
             <description/>
             
-            <file override="update" src="../Compiler/java/target/statebuilder-java-3.0-SNAPSHOT.jar" targetdir="$INSTALL_PATH/lib/">
+            <file override="update" src="../Compiler/java/target/statebuilder-java-3.0.jar" targetdir="$INSTALL_PATH/lib/">
             </file>
-            <file override="update" src="../Compiler/AntTask/target/statebuilder-ant-task-3.0-SNAPSHOT.jar" targetdir="$INSTALL_PATH/lib/">
+            <file override="update" src="../Compiler/AntTask/target/statebuilder-ant-task-3.0.jar" targetdir="$INSTALL_PATH/lib/">
             </file>
-            <file override="update" src="StateMachine/target/statemachine-3.0-SNAPSHOT.jar" targetdir="$INSTALL_PATH/lib/">
+            <file override="update" src="StateMachine/target/statemachine-3.0.jar" targetdir="$INSTALL_PATH/lib/">
             </file>
 
             <file override="update" src="..\..\StateEditor\bin\StateEditor.exe" targetdir="$INSTALL_PATH/bin">
