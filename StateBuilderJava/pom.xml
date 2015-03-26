@@ -7,7 +7,7 @@
     <artifactId>statebuilder-java-project</artifactId>
     <packaging>pom</packaging>
     <name>StateBuilderJavaProject</name>
-
+    <description>Sate machine code generator for java</description>
     <url>http://www.stateforge.com</url>
     <licenses>
         <license>
@@ -17,9 +17,18 @@
         </license>
     </licenses>
     <scm>
+        <connection>scm:git:git@github.com:stateforge/StateBuilder.git</connection>
+        <developerConnection>scm:git:git@github.com:stateforge/StateBuilder.git</developerConnection>
         <url>https://github.com/stateforge/StateBuilder</url>
     </scm>
-
+    <developers>
+        <developer>
+            <name>Frederic Heem</name>
+            <email>frederic.heem@gmail.com</email>
+            <organization>StateForge</organization>
+            <organizationUrl>http://stateforge.com</organizationUrl>
+        </developer>
+    </developers>
     <modules>
         <module>../Compiler/common</module>
         <module>../Compiler/cpp</module>
