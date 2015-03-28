@@ -11,8 +11,8 @@
 	<condition property="statebuilder.dir" value="${user.home}/AppData/Local/StateForge/StateBuilderJava">
 		<os family="windows"/>
 	</condition>
-	<property name="statebuilder-ant-task.jar" value="${statebuilder.dir}/lib/statebuilder-ant-task-3.1.jar"/>
-	<property name="statemachine.jar" value="${statebuilder.dir}/lib/statemachine-3.1.jar"/>
+	<property name="statebuilder-ant-task.jar" value="${statebuilder.dir}/lib/statebuilder-ant-task-3.5.jar"/>
+	<property name="statemachine.jar" value="${statebuilder.dir}/lib/statemachine-3.5.jar"/>
 	<property name="statemachine.input.dir" value="${basedir}/src/main/statemachine"/>
 	<property name="statemachine.output.dir" value="${build.target}/generated-sources/statebuilder"/>
 
