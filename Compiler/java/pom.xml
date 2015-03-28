@@ -4,13 +4,13 @@
     <parent>
         <groupId>com.stateforge.statebuilder</groupId>
         <artifactId>statebuilder-java-project</artifactId>
-        <version>3.2</version>
+        <version>3.6-SNAPSHOT</version>
         <relativePath>../../StateBuilderJava</relativePath>
     </parent>
     <artifactId>statebuilder-java</artifactId>
     <packaging>jar</packaging>
     <name>State machine code generator</name>
-    <version>3.2</version>
+    <version>3.5</version>
 
     <dependencies>
         <dependency>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.stateforge.statebuilder</groupId>
             <artifactId>statebuilder-common</artifactId>
-            <version>3.2</version>
+            <version>3.5</version>
         </dependency>
     </dependencies>
     <build>
@@ -80,6 +80,6 @@
     </repositories>
 
     <scm>
-        <tag>statebuilder-java-project-3.2</tag>
+        <tag>statebuilder-java-project-3.3</tag>
     </scm>
 </project>
