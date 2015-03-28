@@ -9,7 +9,7 @@
 	<!-- Optional add this file to override any of the properties below -->
 	<!--<property file="${basedir}/build/build.properties"/>-->
 	<property name="version.major" value="3"/>
-	<property name="version.minor" value="0"/>
+	<property name="version.minor" value="1"/>
 	<property name="version.revision" value="0"/>
 <!-- 	<property name="version.extra" value="-SNAPSHOT"/> -->
     <property name="version.extra" value=""/>
@@ -169,9 +169,11 @@
 		</xmltask>
 		<xmltask source="../Compiler/java/pom.xml" dest="../Compiler/java/pom.xml">
 			<replace path="/:project/:version/text()" withText="${version-jar.dot}" />
+            <replace path="/:project/:dependencies/:dependency/:artifactId[text()='statebuilder-common']/following-sibling::*[1]/text()" withText="${version-jar.dot}" />
 		</xmltask>
             <xmltask source="../Compiler/common/pom.xml" dest="../Compiler/common/pom.xml">
             <replace path="/:project/:version/text()" withText="${version-jar.dot}" />
+            
         </xmltask>
 		<xmltask source="../Compiler/AntTask/pom.xml" dest="../Compiler/AntTask/pom.xml">
 			<replace path="/:project/:version/text()" withText="${version-jar.dot}" />

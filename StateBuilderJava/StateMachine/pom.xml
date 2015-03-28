@@ -4,14 +4,14 @@
     <parent>
         <groupId>com.stateforge.statebuilder</groupId>
         <artifactId>statebuilder-java-project</artifactId>
-        <version>3.0</version>
+        <version>3.1</version>
         <relativePath>../../StateBuilderJava</relativePath>
     </parent>
     <name>State machine library</name>
     <groupId>com.stateforge</groupId>
     <artifactId>statemachine</artifactId>
     <packaging>jar</packaging>
-    <version>3.0</version>
+    <version>3.1</version>
 
     <dependencies>
         <dependency>

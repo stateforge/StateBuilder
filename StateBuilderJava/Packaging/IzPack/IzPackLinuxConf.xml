@@ -2,7 +2,7 @@
 <installation version="1.0">
     <info>
         <appname>StateBuilderJava</appname>
-        <appversion>3.0.0</appversion>
+        <appversion>3.1.0</appversion>
         <authors>
             <author email="frederic.heem@stateforge.com" name="Frederic Heem"/>
         </authors>
@@ -42,13 +42,13 @@
         <pack name="Core" preselected="yes" required="yes">
             <description/>
             
-            <file override="update" src="../Compiler/java/target/statebuilder-java-3.0.jar" targetdir="$INSTALL_PATH/lib/">
+            <file override="update" src="../Compiler/java/target/statebuilder-java-3.1.jar" targetdir="$INSTALL_PATH/lib/">
             </file>
 
-            <file override="update" src="../Compiler/AntTask/target/statebuilder-ant-task-3.0.jar" targetdir="$INSTALL_PATH/lib/">
+            <file override="update" src="../Compiler/AntTask/target/statebuilder-ant-task-3.1.jar" targetdir="$INSTALL_PATH/lib/">
             </file>
             
-            <file override="update" src="StateMachine/target/statemachine-3.0.jar" targetdir="$INSTALL_PATH/lib/">
+            <file override="update" src="StateMachine/target/statemachine-3.1.jar" targetdir="$INSTALL_PATH/lib/">
             </file>
 
             <file override="update" src="icons/48-uninstall.png" targetdir="$INSTALL_PATH/icons">
