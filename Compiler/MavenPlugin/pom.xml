@@ -5,14 +5,14 @@
     <parent>
         <groupId>com.stateforge.statebuilder</groupId>
         <artifactId>statebuilder-java-project</artifactId>
-        <version>3.1</version>
+        <version>3.2</version>
         <relativePath>../../StateBuilderJava</relativePath>
     </parent>
     
     <groupId>com.stateforge.statebuilder.maven</groupId>
     <artifactId>maven-statebuilder-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>3.1</version>
+    <version>3.2</version>
     <name>StateBuilder Maven plugin</name>
  
     <dependencies>
@@ -42,12 +42,12 @@
         <dependency>
             <groupId>com.stateforge.statebuilder</groupId>
             <artifactId>statebuilder-java</artifactId>
-            <version>3.1</version>
+            <version>3.2</version>
         </dependency>    
         <dependency>
             <groupId>com.stateforge</groupId>
             <artifactId>statemachine</artifactId>
-            <version>3.1</version>
+            <version>3.2</version>
         </dependency>    
     </dependencies>
     <build>
@@ -86,6 +86,6 @@
     </build>
 
   <scm>
-    <tag>statebuilder-java-project-3.1</tag>
+    <tag>statebuilder-java-project-3.2</tag>
   </scm>
 </project>

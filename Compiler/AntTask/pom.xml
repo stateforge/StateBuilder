@@ -4,21 +4,21 @@
    <parent>
         <groupId>com.stateforge.statebuilder</groupId>
         <artifactId>statebuilder-java-project</artifactId>
-        <version>3.1</version>
+        <version>3.2</version>
         <relativePath>../../StateBuilderJava</relativePath>
     </parent>
     
     <groupId>com.stateforge.statebuilder.ant</groupId>
     <artifactId>statebuilder-ant-task</artifactId>
     <packaging>jar</packaging>
-    <version>3.1</version>
+    <version>3.2</version>
     <name>StateBuilder Ant Task</name>
 
     <dependencies>
         <dependency>
             <groupId>com.stateforge.statebuilder</groupId>
             <artifactId>statebuilder-java</artifactId>
-            <version>3.1</version>
+            <version>3.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.ant</groupId>
@@ -47,6 +47,6 @@
     </build>
 
   <scm>
-    <tag>statebuilder-java-project-3.1</tag>
+    <tag>statebuilder-java-project-3.2</tag>
   </scm>
 </project>
