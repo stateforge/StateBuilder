@@ -25,7 +25,7 @@
     </locale>
     <resources>
         <res id="HTMLInfoPanel.readme" src="README.html"/>
-        <res id="LicencePanel.licence" parse="yes" src="Copyright.txt"/>
+        <res id="LicencePanel.licence" parse="yes" src="../license.md"/>
         <res id="Installer.image" src="packaging/IzPack/LogoCppSide_200x300.png"/>
         <!--<res id="Heading.image" src="doc\Images\LogoCpp_320x320.png"/>-->
         <res id="shortcutSpec.xml" src="packaging/IzPack/default_shortcut_specification.xml" />
