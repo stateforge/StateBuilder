@@ -1,4 +1,4 @@
-StateForge Licensing
+*StateForge* Licensing
 ====================
 
 *StateForge* is released under a dual license model. Designed to meet the requirements of different users and their needs for distribution and usage we offer *StateForge* under two flexible licenses. Whichever license model you choose, we are here to support you in your projects.
