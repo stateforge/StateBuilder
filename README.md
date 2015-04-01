@@ -10,4 +10,4 @@ The XML state machine description can be authored with the [web based state diag
 Please visit [StateForge](http://www.stateforge.com) for more information about the various state machine tools.
 
 
-
+[![Build Status](https://travis-ci.org/stateforge/StateBuilder.svg)](https://travis-ci.org/stateforge/StateBuilder)
