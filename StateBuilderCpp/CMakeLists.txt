@@ -21,7 +21,7 @@ SET(RELEASES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../StateForgeWebSite/StateForgeW
 ################################################################################
 # Requirements
 ################################################################################
-#Find java, 1.6 is required 
+#Find java, 1.6 is required
 INCLUDE(FindJava)
 
 ################################################################################
@@ -32,7 +32,7 @@ SET(CPACK_PACKAGE_NAME StateBuilderCpp)
 SET(JAR_NAME statebuilder-cpp)
 
 SET(CPACK_PACKAGE_VERSION_MAJOR "3")
-SET(CPACK_PACKAGE_VERSION_MINOR "0")
+SET(CPACK_PACKAGE_VERSION_MINOR "1")
 SET(CPACK_PACKAGE_VERSION_PATCH "0")
 SET(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 
@@ -65,10 +65,10 @@ SET(STATEBUILDERCPP_MACDMG StateBuilderCpp.dmg)
 #The state machine builder jar name with version
 SET(STATEBUILDERCPP_JAR_WITH_VERSION "${JAR_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.one-jar.jar")
 
-#The state machine builder jar name 
+#The state machine builder jar name
 SET(STATEBUILDERCPP_JAR_NAME "${JAR_NAME}.jar")
 
-#The state machine builder executable name 
+#The state machine builder executable name
 SET(STATEBUILDERCPP_EXE "${CPACK_PACKAGE_NAME}.exe")
 
 ################################################################################
@@ -83,13 +83,13 @@ ADD_CUSTOM_TARGET(Maven
                   COMMAND ${MAVEN_EXECUTABLE} -Dmaven.test.skip=true package
                   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/pom.xml
                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-  
+
 ADD_CUSTOM_TARGET(CopyJar
 	          COMMAND ${CMAKE_COMMAND} -E copy "${STATEBUILDERCPP_COMPILER_HOME}/target/${STATEBUILDERCPP_JAR_WITH_VERSION}" "${CMAKE_CURRENT_SOURCE_DIR}/bin/${STATEBUILDERCPP_JAR_NAME}"
               COMMAND ${CMAKE_COMMAND} -E copy "${STATEBUILDERCPP_COMPILER_HOME}/src/main/resources/StateMachineCpp-v1.xsd" "${CMAKE_CURRENT_SOURCE_DIR}/share/xsd"
               WORKING_DIRECTORY ${STATEBUILDERCPP_COMPILER_HOME})
-				  
-ADD_DEPENDENCIES(CopyJar Maven) 
+
+ADD_DEPENDENCIES(CopyJar Maven)
 ################################################################################
 #Install
 ################################################################################
@@ -103,27 +103,27 @@ FIND_PACKAGE(LAUNCH4J )
 IF(LAUNCH4J_FOUND)
   MESSAGE(STATUS "Launch4j has been found")
   #launch4j.xml is used to generated an exe from a jar, as well as other things.
-  SET(STATEBUILDERCPP_LAUNCH4J "Launch4j")                  
+  SET(STATEBUILDERCPP_LAUNCH4J "Launch4j")
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/packaging/Launch4j/${STATEBUILDERCPP_LAUNCH4J}.in.xml ${CMAKE_CURRENT_BINARY_DIR}/${STATEBUILDERCPP_LAUNCH4J}.xml @ONLY)
   ADD_CUSTOM_TARGET(Launch4j
                     COMMAND ${LAUNCH4J_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/${STATEBUILDERCPP_LAUNCH4J}.xml
-                    DEPENDS packaging/Launch4j/${STATEBUILDERCPP_LAUNCH4J}.in.xml 
+                    DEPENDS packaging/Launch4j/${STATEBUILDERCPP_LAUNCH4J}.in.xml
                     )
-                    
-  ADD_DEPENDENCIES(Launch4j CopyJar) 
+
+  ADD_DEPENDENCIES(Launch4j CopyJar)
 
   #WinSetup.jar => WinSetup.exe
-  SET(STATEBUILDERCPP_SETUP_LAUNCH4J "Launch4jSetup")                  
+  SET(STATEBUILDERCPP_SETUP_LAUNCH4J "Launch4jSetup")
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/packaging/Launch4j/${STATEBUILDERCPP_SETUP_LAUNCH4J}.in.xml ${CMAKE_CURRENT_BINARY_DIR}/${STATEBUILDERCPP_SETUP_LAUNCH4J}.xml @ONLY)
   ADD_CUSTOM_TARGET(Launch4jSetupWin
                     ${LAUNCH4J_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/${STATEBUILDERCPP_SETUP_LAUNCH4J}.xml
                     COMMAND ${CMAKE_COMMAND} -E copy ${RELEASES_DIR}/${STATEBUILDERCPP_WINSETUP_EXE} ${RELEASES_DIR}/${STATEBUILDERCPP_WINSETUP_VERSION_EXE}
-                    DEPENDS packaging/Launch4j/${STATEBUILDERCPP_SETUP_LAUNCH4J}.in.xml 
+                    DEPENDS packaging/Launch4j/${STATEBUILDERCPP_SETUP_LAUNCH4J}.in.xml
                     )
-                    
-  ADD_DEPENDENCIES(Launch4jSetupWin IzPackWin) 
 
-  
+  ADD_DEPENDENCIES(Launch4jSetupWin IzPackWin)
+
+
 ELSE()
   MESSAGE(STATUS "Launch4j has not been found")
 ENDIF()
@@ -143,14 +143,14 @@ SET(IZPACK_DEPLOYDIR ${CMAKE_CURRENT_SOURCE_DIR})
 #Windows
 #IzPackWinConf.xml => StateBuilderCpp-WinSetup.jar
 
-SET(IZPACK_WIN_CONF "IzPackWinConf")                  
+SET(IZPACK_WIN_CONF "IzPackWinConf")
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/packaging/IzPack/${IZPACK_WIN_CONF}.in.xml ${CMAKE_CURRENT_BINARY_DIR}/${IZPACK_WIN_CONF}.xml @ONLY)
 ADD_CUSTOM_TARGET(IzPackWin
                   COMMAND ${IZPACK_COMPILE} ${CMAKE_CURRENT_BINARY_DIR}/${IZPACK_WIN_CONF}.xml -b ${IZPACK_DEPLOYDIR} -o ${CMAKE_CURRENT_BINARY_DIR}/${STATEBUILDERCPP_WINSETUP_JAR}
-                  DEPENDS packaging/IzPack/${IZPACK_WIN_CONF}.in.xml 
+                  DEPENDS packaging/IzPack/${IZPACK_WIN_CONF}.in.xml
                   )
-  
+
 ADD_DEPENDENCIES(IzPackWin Launch4j)
 
 #Linux
@@ -160,7 +160,7 @@ SET(IZPACK_LINUX_CONF "IzPackLinuxConf")
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/packaging/IzPack/${IZPACK_LINUX_CONF}.in.xml ${CMAKE_CURRENT_BINARY_DIR}/${IZPACK_LINUX_CONF}.xml @ONLY)
 ADD_CUSTOM_TARGET(IzPackUnix
                   ${IZPACK_COMPILE} ${CMAKE_CURRENT_BINARY_DIR}/${IZPACK_LINUX_CONF}.xml -b ${IZPACK_DEPLOYDIR} -o ${RELEASES_DIR}/${STATEBUILDERCPP_LINUXSETUP_JAR}
-                  DEPENDS packaging/IzPack/${IZPACK_LINUX_CONF}.in.xml 
+                  DEPENDS packaging/IzPack/${IZPACK_LINUX_CONF}.in.xml
                   )
 
 ADD_DEPENDENCIES(IzPackUnix CopyJar)
@@ -169,9 +169,9 @@ ADD_CUSTOM_TARGET(IzPackUnixPost
                   COMMAND ${CMAKE_COMMAND} -E copy ${RELEASES_DIR}/${STATEBUILDERCPP_LINUXSETUP_JAR} ${RELEASES_DIR}/${STATEBUILDERCPP_MACSETUP_JAR}
                   COMMAND ${CMAKE_COMMAND} -E copy ${RELEASES_DIR}/${STATEBUILDERCPP_MACSETUP_JAR} ${RELEASES_DIR}/${STATEBUILDERCPP_MACSETUP_VERSION_JAR}
                   COMMAND ${CMAKE_COMMAND} -E copy ${RELEASES_DIR}/${STATEBUILDERCPP_LINUXSETUP_JAR} ${RELEASES_DIR}/${STATEBUILDERCPP_LINUXSETUP_VERSION_JAR}
-                  DEPENDS ${RELEASES_DIR}/${STATEBUILDERCPP_LINUXSETUP_JAR} 
+                  DEPENDS ${RELEASES_DIR}/${STATEBUILDERCPP_LINUXSETUP_JAR}
                   )
-				  
+
 ADD_DEPENDENCIES(IzPackUnixPost IzPackUnix)
 
 ################################################################################
@@ -207,4 +207,3 @@ ENABLE_TESTING()
 #Subdirectory
 ################################################################################
 add_subdirectory(src)
-

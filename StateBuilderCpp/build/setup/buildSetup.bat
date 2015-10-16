@@ -5,6 +5,6 @@ set PATH=%QTDIR%\bin;%PATH%
 del ..\..\bin\statebuilder-cpp.jar
 del ..\..\bin\statebuildercpp.exe
 
-call cmake.exe -G "Visual Studio 9 2008" ../../
+call cmake.exe  ../../
 call cmake.exe --build . --target Launch4jSetupWin
 call cmake.exe --build . --target IzPackUnixPost
