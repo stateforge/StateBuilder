@@ -1,0 +1,81 @@
+<sm:StateMachine xmlns:sm="http://www.stateforge.com/StateMachineCpp-v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.stateforge.com/StateMachineCpp-v1                                      http://www.stateforge.com/xsd/StateMachineCpp-v1.xsd">
+    <!-- General settings -->
+    <settings asynchronous="false" library="std">
+        <object instance="action" class="Action" include="Action.h"/>
+    </settings>
+    <!-- Events -->
+    <events>
+        <eventSource name="Management">
+            <event id="evStart"/>
+            <event id="evStop"/>
+        </eventSource>
+        <eventSource name="Level">
+            <event id="evLiftUp"/>
+            <event id="evBringDown"/>
+        </eventSource>
+        <eventSource name="Direction">
+            <event id="evTurnRight"/>
+            <event id="evTurnLeft"/>
+            <event id="evPaint">
+                <parameter name="color" type="int" />
+            </event>
+        </eventSource>
+    </events>
+    <!-- States -->
+    <state name="Root">
+        <state name="Idle">
+            <transition event="evStart" nextState="Running"/>
+        </state>
+        <state name="Running">
+            <parallel nextState="End">
+                <state name="Level">
+                    <state name="High">
+                        <onEntry>
+                            <action>action.printEntryHigh()</action>
+                        </onEntry>
+                        <onExit>
+                            <action>action.printExitHigh()</action>
+                        </onExit>
+                        <transition event="evBringDown" nextState="Low"/>
+                        <transition event="evLiftUp">
+                            <action>action.printAlreadyHigh()</action>
+                        </transition>
+                    </state>
+                    <state name="Low">
+                        <onEntry>
+                            <action>action.printEntryLow()</action>
+                        </onEntry>
+                        <onExit>
+                            <action>action.printExitLow()</action>
+                        </onExit>
+                        <transition event="evLiftUp" nextState="High"/>
+                        <transition event="evBringDown">
+                            <action>action.printAlreadyLow()</action>
+                        </transition>
+                    </state>
+                </state>
+                <state name="Direction">
+                    <state name="Left">
+                        <transition event="evTurnRight" nextState="Right"/>
+                        <state name="Red">
+                            <onEntry>
+                                <action>action.changeColor(RED)</action>
+                            </onEntry>
+                            <transition event="evPaint" condition="color == BLUE" nextState="Blue"/>
+                        </state>
+                        <state name="Blue">
+                            <onEntry>
+                                <action>action.changeColor(BLUE)</action>
+                            </onEntry>
+                            <transition event="evPaint" condition="color == RED" nextState="Red"/>
+                        </state>
+                    </state>
+                    <state name="Right">
+                        <transition event="evTurnLeft" nextState="Left"/>
+                    </state>
+                </state>
+            </parallel>
+        </state>
+        <state name="End" kind="final"/>
+    </state>
+</sm:StateMachine>
